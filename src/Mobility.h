@@ -11,6 +11,7 @@
 class Mobility {
 public:
 	static Mobility* getInstance();
+	void process();
 
 private:
 	Mobility();

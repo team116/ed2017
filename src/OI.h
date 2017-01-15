@@ -11,6 +11,7 @@
 class OI {
 public:
 	static OI* getInstance();
+	void process();
 
 private:
 	OI();

@@ -14,6 +14,10 @@ Shooter::Shooter() {
 
 }
 
+void Shooter::process() {
+
+}
+
 Shooter* Shooter::getInstance()
 {
 	if(INSTANCE == nullptr) {

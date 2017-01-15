@@ -14,6 +14,10 @@ Climber::Climber() {
 
 }
 
+void Climber::process() {
+
+}
+
 Climber* Climber::getInstance()
 {
 	if(INSTANCE == nullptr) {

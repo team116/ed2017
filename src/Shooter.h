@@ -11,6 +11,7 @@
 class Shooter {
 public:
 	static Shooter* getInstance();
+	void process();
 
 private:
 	Shooter();

@@ -11,6 +11,7 @@
 class Vision {
 public:
 	static Vision* getInstance();
+	void process();
 
 private:
 	Vision();

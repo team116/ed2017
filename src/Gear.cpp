@@ -15,6 +15,10 @@ Gear::Gear() {
 
 }
 
+void Gear::process() {
+
+}
+
 Gear* Gear::getInstance()
 {
 	if(INSTANCE == nullptr) {

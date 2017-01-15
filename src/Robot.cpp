@@ -5,9 +5,26 @@
 #include <IterativeRobot.h>
 
 class Robot: public frc::IterativeRobot {
+private:
+	Autonomous* autonomous;
+	Climber* climber;
+	Gear* gear;
+	Intake* intake;
+	Mobility* mobility;
+	OI* oi;
+	Shooter* shooter;
+	Vision* vision;
+
 public:
 	void RobotInit() {
-
+		autonomous = Autonomous::getInstance();
+		climber = Climber::getInstance();
+		gear = Gear::getInstance();
+		intake = Intake::getInstance();
+		mobility = Mobility::getInstance();
+		oi = OI::getInstance();
+		shooter = Shooter::getInstance();
+		vision = Vision::getInstance();
 	}
 
 	void AutonomousInit() override {
@@ -15,6 +32,13 @@ public:
 	}
 
 	void AutonomousPeriodic() {
+		vision->process();
+		autonomous->process();
+		mobility->process();
+		climber->process();
+		gear->process();
+		intake->process();
+		shooter->process();
 	}
 
 	void TeleopInit() {
@@ -22,7 +46,13 @@ public:
 	}
 
 	void TeleopPeriodic() {
-
+		oi->process();
+		vision->process();
+		mobility->process();
+		climber->process();
+		gear->process();
+		intake->process();
+		shooter->process();
 	}
 
 	void TestPeriodic() {

@@ -13,6 +13,10 @@ Mobility::Mobility() {
 
 }
 
+void Mobility::process() {
+
+}
+
 Mobility* Mobility::getInstance()
 {
 	if(INSTANCE == nullptr) {

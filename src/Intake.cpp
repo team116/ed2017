@@ -14,6 +14,10 @@ Intake::Intake() {
 
 }
 
+void Intake::process() {
+
+}
+
 Intake* Intake::getInstance()
 {
 	if(INSTANCE == nullptr) {

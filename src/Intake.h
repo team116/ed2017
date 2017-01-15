@@ -11,6 +11,7 @@
 class Intake {
 public:
 	static Intake* getInstance();
+	void process();
 
 private:
 	Intake();

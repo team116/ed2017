@@ -11,6 +11,7 @@
 class Gear {
 public:
 	static Gear* getInstance();
+	void process();
 
 private:
 	Gear();

@@ -14,6 +14,10 @@ Vision::Vision() {
 
 }
 
+void Vision::process() {
+
+}
+
 Vision* Vision::getInstance()
 {
 	if(INSTANCE == nullptr) {

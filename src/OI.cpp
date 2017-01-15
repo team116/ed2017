@@ -14,6 +14,10 @@ OI::OI() {
 
 }
 
+void OI::process() {
+
+}
+
 OI* OI::getInstance()
 {
 	if(INSTANCE == nullptr) {

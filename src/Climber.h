@@ -12,6 +12,8 @@ class Climber {
 public:
 	static Climber* getInstance();
 
+	void process();
+
 private:
 	Climber();
 	static Climber* INSTANCE;
