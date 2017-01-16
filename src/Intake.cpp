@@ -11,11 +11,15 @@ Intake* Intake::INSTANCE = nullptr;
 
 Intake::Intake() {
 	// TODO Auto-generated constructor stub
-
+	intake_Motor = new VictorSP(10);
 }
 
 void Intake::process() {
 
+}
+
+void Intake::setSpeedIntake(float speed) {
+	intake_Motor->Set(1.0);
 }
 
 Intake* Intake::getInstance()
