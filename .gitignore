@@ -64,4 +64,4 @@
 
 #Eclipse
 .settings/
-FRCUserProgram
+Debug/FRCUserProgram.*
