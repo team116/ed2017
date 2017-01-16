@@ -1,6 +1,14 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <Autonomous.h>
+#include <Climber.h>
+#include <Gear.h>
+#include <Intake.h>
+#include <Mobility.h>
+#include <OI.h>
+#include <Shooter.h>
+#include <Vision.h>
 
 #include <IterativeRobot.h>
 
