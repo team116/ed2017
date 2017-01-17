@@ -13,15 +13,20 @@ class Gear {
 public:
 	static Gear* getInstance();
 	void process();
-	void open();
-	void close();
+	void openLeft();
+	void closeLeft();
+	void openRight();
+	void closeRight();
 
 private:
 	Gear();
 	static Gear* INSTANCE;
-	static const float CLOSED_ANGLE;
-	static const float OPEN_ANGLE;
-	Servo* servo;
+	static const float LEFT_CLOSED_ANGLE;
+	static const float LEFT_OPEN_ANGLE;
+	static const float RIGHT_OPEN_ANGLE;
+	static const float RIGHT_CLOSED_ANGLE;
+	Servo* servo_one;
+	Servo* servo_two;
 };
 
 #endif /* SRC_GEAR_H_ */
