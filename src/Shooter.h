@@ -15,6 +15,7 @@ public:
 	void setSpeedAzimuth(float speed);
 	void setSpeedShooter(float speed);
 	void setSpeedFeeder(float speed);
+	void setAngleDirection(float angle);
 
 private:
 	Shooter();
@@ -22,6 +23,7 @@ private:
 	VictorSP* ball_holder;
 	VictorSP* shooter;
 	VictorSP* azimuth;
+	float target_azimuth_angle;
 };
 
 #endif /* SRC_SHOOTER_H_ */

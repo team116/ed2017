@@ -32,7 +32,7 @@ void Mobility::process() {
 		setLeft(straight_speed - SPEED_ADJUSTMENT);
 		setRight(straight_speed + SPEED_ADJUSTMENT);
 	}
-	else if (angle_offset < DRIVE_STRAIGHT_TOLERANCE) {
+	else if (angle_offset < -DRIVE_STRAIGHT_TOLERANCE) {
 		// Too far to the left, need to turn right
 		setLeft(straight_speed + SPEED_ADJUSTMENT);
 		setRight(straight_speed - SPEED_ADJUSTMENT);
