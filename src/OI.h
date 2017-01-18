@@ -7,6 +7,8 @@
 
 #ifndef SRC_OI_H_
 #define SRC_OI_H_
+#include <Joystick.h>
+#include <Mobility.h>
 
 class OI {
 public:
@@ -16,6 +18,9 @@ public:
 private:
 	OI();
 	static OI* INSTANCE;
+	Mobility* mobility;
+	Joystick* joy_one;
+	Joystick* joy_two;
 };
 
 #endif /* SRC_OI_H_ */
