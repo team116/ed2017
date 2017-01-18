@@ -12,7 +12,6 @@ class Shooter {
 public:
 	static Shooter* getInstance();
 	void process();
-	void setSpeedPitch(float speed);
 	void setSpeedAzimuth(float speed);
 	void setSpeedShooter(float speed);
 	void setSpeedFeeder(float speed);
@@ -23,7 +22,6 @@ private:
 	VictorSP* ball_holder;
 	VictorSP* shooter;
 	VictorSP* azimuth;
-	VictorSP* pitch;
 };
 
 #endif /* SRC_SHOOTER_H_ */

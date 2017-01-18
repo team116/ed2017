@@ -14,15 +14,10 @@ Shooter::Shooter() {
 	ball_holder = new VictorSP(6);
 	shooter = new VictorSP(7);
 	azimuth = new VictorSP(8);
-	pitch = new VictorSP(9);
 }
 
 void Shooter::process() {
 
-}
-
-void Shooter::setSpeedPitch(float speed) {
-	pitch->Set(speed);
 }
 
 void Shooter::setSpeedAzimuth(float speed) {
