@@ -25,8 +25,8 @@ private:
 	static const float LEFT_OPEN_ANGLE;
 	static const float RIGHT_OPEN_ANGLE;
 	static const float RIGHT_CLOSED_ANGLE;
-	Servo* servo_one;
-	Servo* servo_two;
+	Servo* servo_left;
+	Servo* servo_right;
 };
 
 #endif /* SRC_GEAR_H_ */

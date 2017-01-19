@@ -6,19 +6,20 @@
  */
 
 #include <OI.h>
+#include "Ports.h"
 
 OI* OI::INSTANCE = nullptr;
 
 OI::OI() {
 	// TODO Auto-generated constructor stub
 	mobility = Mobility::getInstance();
-	joy_one = new Joystick(0);
-	joy_two = new Joystick(1);
+	joy_left = new Joystick(OIPorts::JOYSTICK_LEFT);
+	joy_right = new Joystick(OIPorts::JOYSTICK_RIGHT);
 }
 
 void OI::process() {
-	mobility->setLeft(joy_one->GetRawAxis(1) * -1);
-	mobility->setRight(joy_two->GetRawAxis(1) * -1);
+	mobility->setLeft(joy_left->GetRawAxis(1) * -1);
+	mobility->setRight(joy_right->GetRawAxis(1) * -1);
 	/*if (joy_one->GetRawButton(1)) {
 		mobility->setAngle()
 	} */

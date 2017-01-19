@@ -6,12 +6,13 @@
  */
 
 #include <Intake.h>
+#include "Ports.h"
 
 Intake* Intake::INSTANCE = nullptr;
 
 Intake::Intake() {
 	// TODO Auto-generated constructor stub
-	intake_Motor = new VictorSP(10);
+	intake_motor = new VictorSP(RobotPorts::MOTOR_INTAKE);
 }
 
 void Intake::process() {
@@ -19,7 +20,7 @@ void Intake::process() {
 }
 
 void Intake::setSpeedIntake(float speed) {
-	intake_Motor->Set(1.0);
+	intake_motor->Set(1.0);
 }
 
 Intake* Intake::getInstance()

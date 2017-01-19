@@ -6,12 +6,12 @@
  */
 
 #include <Climber.h>
+#include "Ports.h"
 
 Climber* Climber::INSTANCE = nullptr;
 
 Climber::Climber() {
-	// TODO Auto-generated constructor stub
-	climber = new VictorSP(5);
+	climber = new VictorSP(RobotPorts::MOTOR_CLIMBER);
 }
 
 void Climber::process() {

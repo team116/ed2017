@@ -17,7 +17,7 @@ public:
 private:
 	Intake();
 	static Intake* INSTANCE;
-	VictorSP* intake_Motor;
+	VictorSP* intake_motor;
 };
 
 #endif /* SRC_INTAKE_H_ */
