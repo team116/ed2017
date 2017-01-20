@@ -11,6 +11,8 @@
 #include <AnalogGyro.h>
 #include <VictorSP.h>
 
+#include "..\navx\AHRS.h"
+
 class Mobility {
 public:
 	static Mobility* getInstance();
@@ -32,7 +34,7 @@ private:
 	frc::VictorSP* front_right;
 	frc::VictorSP* back_right;
 	frc::VictorSP* back_left;
-	frc::AnalogGyro* gyro;
+	AHRS* gyro;
 	float target_angle;
 	float straight_speed;
 
