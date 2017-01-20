@@ -21,6 +21,13 @@ Mobility::Mobility() {
 	gyro = new AnalogGyro(11);
 	straight_speed = 0;
 	acceptable_error = 0.5;
+	current_angle = 0;
+	degree_range=0;
+	degrees=0;
+	starting_degree=0;
+	target_angle=0;
+	target_degree=0;
+
 }
 
 void Mobility::process() {
