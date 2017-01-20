@@ -4,9 +4,10 @@
  *  Created on: Jan 15, 2017
  *      Author: Will
  */
-#include <VictorSP.h>
 #ifndef SRC_CLIMBER_H_
 #define SRC_CLIMBER_H_
+
+#include <VictorSP.h>
 
 class Climber {
 public:
@@ -20,7 +21,7 @@ public:
 private:
 	Climber();
 	static Climber* INSTANCE;
-	VictorSP* climber;
+	frc::VictorSP* climber;
 };
 
 #endif /* SRC_CLIMBER_H_ */

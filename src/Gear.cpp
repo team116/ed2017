@@ -17,8 +17,8 @@ const float Gear::RIGHT_OPEN_ANGLE = 270.0;
 
 Gear::Gear() {
 	// TODO Auto-generated constructor stub
-	servo_left = new Servo(RobotPorts::SERVO_GEAR_LEFT);
-	servo_right = new Servo(RobotPorts::SERVO_GEAR_RIGHT);
+	servo_left = new frc::Servo(RobotPorts::SERVO_GEAR_LEFT);
+	servo_right = new frc::Servo(RobotPorts::SERVO_GEAR_RIGHT);
 }
 
 void Gear::openLeft() {

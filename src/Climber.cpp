@@ -11,7 +11,7 @@
 Climber* Climber::INSTANCE = nullptr;
 
 Climber::Climber() {
-	climber = new VictorSP(RobotPorts::MOTOR_CLIMBER);
+	climber = new frc::VictorSP(RobotPorts::MOTOR_CLIMBER);
 }
 
 void Climber::process() {

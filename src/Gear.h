@@ -4,10 +4,10 @@
  *  Created on: Jan 15, 2017
  *      Author: Will
  */
-#include <Servo.h>
-
 #ifndef SRC_GEAR_H_
 #define SRC_GEAR_H_
+
+#include <Servo.h>
 
 class Gear {
 public:
@@ -25,8 +25,8 @@ private:
 	static const float LEFT_OPEN_ANGLE;
 	static const float RIGHT_OPEN_ANGLE;
 	static const float RIGHT_CLOSED_ANGLE;
-	Servo* servo_left;
-	Servo* servo_right;
+	frc::Servo* servo_left;
+	frc::Servo* servo_right;
 };
 
 #endif /* SRC_GEAR_H_ */
