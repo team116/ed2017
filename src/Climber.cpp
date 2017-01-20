@@ -18,7 +18,10 @@ void Climber::process() {
 
 }
 
-void Climber::climbUp(float speed) {
+void Climber::moveClimber(float speed) {
+	climber->Set(speed);
+}
+/*void Climber::climbUp(float speed) {
 	climber->Set(1.0);
 }
 
@@ -28,7 +31,7 @@ void Climber::climbDown(float speed) {
 
 void Climber::climbStop(float speed) {
 	climber->Set(0.0);
-}
+} */
 
 Climber* Climber::getInstance()
 {
