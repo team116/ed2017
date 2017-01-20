@@ -8,7 +8,7 @@
 #ifndef SRC_MOBILITY_H_
 #define SRC_MOBILITY_H_
 
-#include <AnalogGyro.h>
+#include "AHRS.h"
 #include <VictorSP.h>
 
 class Mobility {
@@ -27,7 +27,7 @@ private:
 	VictorSP* front_right;
 	VictorSP* back_right;
 	VictorSP* back_left;
-	AnalogGyro* gyro;
+	AHRS* gyro;
 	float target_angle;
 	float straight_speed;
 };
