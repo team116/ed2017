@@ -17,6 +17,8 @@ Shooter::Shooter() {
 	ball_holder = new VictorSP(RobotPorts::MOTOR_SHOOTER_FEEDER);
 	shooter = new VictorSP(RobotPorts::MOTOR_SHOOTER_WHEEL);
 	azimuth = new VictorSP(RobotPorts::MOTOR_SHOOTER_AZIMUTH);
+
+	target_azimuth_angle = 0;
 }
 
 void Shooter::process() {

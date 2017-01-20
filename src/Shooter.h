@@ -4,9 +4,10 @@
  *  Created on: Jan 15, 2017
  *      Author: Will
  */
-#include <VictorSP.h>
 #ifndef SRC_SHOOTER_H_
 #define SRC_SHOOTER_H_
+
+#include <VictorSP.h>
 
 class Shooter {
 public:
