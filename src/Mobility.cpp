@@ -18,7 +18,7 @@ Mobility::Mobility() {
 	front_right = new VictorSP(RobotPorts::MOTOR_RIGHT_FRONT);
 	back_right = new VictorSP(RobotPorts::MOTOR_RIGHT_BACK);
 	back_left = new VictorSP(RobotPorts::MOTOR_RIGHT_FRONT);
-	gyro = new AHRS(SPI::Port::kMXP);
+	gyro = new AnalogGyro(11);
 	straight_speed = 0;
 	acceptable_error = 0.5;
 }
