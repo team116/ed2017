@@ -10,35 +10,29 @@
 #include "Ports.h"
 
 Gear* Gear::INSTANCE = nullptr;
-const float Gear::LEFT_CLOSED_ANGLE = 0.0;
-const float Gear::LEFT_OPEN_ANGLE = 30.0;
-const float Gear::RIGHT_CLOSED_ANGLE = 360.0;
-const float Gear::RIGHT_OPEN_ANGLE = 270.0;
 
 Gear::Gear() {
 	// TODO Auto-generated constructor stub
-	servo_left = new frc::Servo(RobotPorts::SERVO_GEAR_LEFT);
-	servo_right = new frc::Servo(RobotPorts::SERVO_GEAR_RIGHT);
+	gear_motor = new frc::VictorSP(RobotPorts::MOTOR_GEAR);
+	LS_open = new frc::DigitalInput(RobotPorts::LS_GEAR_OPEN);
+	LS_close = new frc::DigitalInput(RobotPorts::LS_GEAR_CLOSED);
 }
-
-void Gear::openLeft() {
-	servo_left->SetAngle(LEFT_OPEN_ANGLE);
+void Gear::open() {
+	gear_motor->Set(1.0);
 }
-
-void Gear::closeLeft() {
-	servo_left->SetAngle(LEFT_CLOSED_ANGLE);
+void Gear::close() {
+	gear_motor->Set(-1.0);
 }
-
-void Gear::openRight() {
-	servo_right->SetAngle(RIGHT_OPEN_ANGLE);
-}
-
-void Gear::closeRight() {
-	servo_right->SetAngle(RIGHT_CLOSED_ANGLE);
-}
-
+//numbers are subject to change
 void Gear::process() {
-
+	if (LS_open->Get()) {
+		if (gear_motor->Get() > 0.0)
+				gear_motor->Set(0.0);
+	}
+	if (LS_close->Get()) {
+		if (gear_motor->Get() < 0.0)
+			gear_motor->Set(0.0);
+	}
 }
 
 Gear* Gear::getInstance()

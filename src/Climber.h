@@ -14,9 +14,7 @@ public:
 	static Climber* getInstance();
 
 	void process();
-	void climbUp(float speed);
-	void climbDown(float speed);
-	void climbStop(float speed);
+	void moveClimber (float speed);
 
 private:
 	Climber();
