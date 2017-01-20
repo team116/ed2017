@@ -21,9 +21,9 @@ public:
 private:
 	Shooter();
 	static Shooter* INSTANCE;
-	VictorSP* ball_holder;
-	VictorSP* shooter;
-	VictorSP* azimuth;
+	frc::VictorSP* ball_holder;
+	frc::VictorSP* shooter;
+	frc::VictorSP* azimuth;
 	float target_azimuth_angle;
 };
 

@@ -12,7 +12,7 @@ Intake* Intake::INSTANCE = nullptr;
 
 Intake::Intake() {
 	// TODO Auto-generated constructor stub
-	intake_motor = new VictorSP(RobotPorts::MOTOR_INTAKE);
+	intake_motor = new frc::VictorSP(RobotPorts::MOTOR_INTAKE);
 }
 
 void Intake::process() {

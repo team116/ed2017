@@ -11,14 +11,17 @@
 Climber* Climber::INSTANCE = nullptr;
 
 Climber::Climber() {
-	climber = new VictorSP(RobotPorts::MOTOR_CLIMBER);
+	climber = new frc::VictorSP(RobotPorts::MOTOR_CLIMBER);
 }
 
 void Climber::process() {
 
 }
 
-void Climber::climbUp(float speed) {
+void Climber::moveClimber(float speed) {
+	climber->Set(speed);
+}
+/*void Climber::climbUp(float speed) {
 	climber->Set(1.0);
 }
 
@@ -28,7 +31,7 @@ void Climber::climbDown(float speed) {
 
 void Climber::climbStop(float speed) {
 	climber->Set(0.0);
-}
+} */
 
 Climber* Climber::getInstance()
 {
