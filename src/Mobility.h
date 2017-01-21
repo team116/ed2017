@@ -13,7 +13,7 @@
 #include <PIDController.h>
 #include <MobilityRotationPID.h>
 
-#include "..\navx\AHRS.h"
+#include "../navx/AHRS.h"
 
 class Mobility {
 public:
