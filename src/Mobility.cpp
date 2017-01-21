@@ -23,11 +23,10 @@ Mobility::Mobility() {
 	straight_speed = 0;
 	acceptable_error = 0.5;
 	current_angle = 0;
-	degree_range=0;
-	degrees=0;
-	starting_degree=0;
-	target_angle=0;
-	target_degree=0;
+	degree_range = 0;
+	degrees = 0;
+	target_angle = 0;
+	target_degree = 0;
 
 	rotation_output = new MobilityRotationPID();
 	rotation_PID = new frc::PIDController(1, 0, 0, gyro, rotation_output);
@@ -40,19 +39,19 @@ Mobility::Mobility() {
 }
 
 void Mobility::process() {
-	processTurningDegrees();
+
+	if (turning_degrees) {
+		processTurningDegrees();
+	}
 
 }
 
 void Mobility::processTurningDegrees() {
-	if (target_degree < -180 || (target_degree > 180 && target_degree > 0.0)) {
-		setLeft(-TURNING_SPEED);
-		setRight(TURNING_SPEED);
+	if (rotation_PID->OnTarget()) {
+		rotation_PID->Disable();
+		turning_degrees = false;
 	}
-	else {
-		setLeft(TURNING_SPEED);
-		setRight(-TURNING_SPEED);
-	}
+
 }
 
 
@@ -84,9 +83,11 @@ void Mobility::setRight(float speed) {
 }
 
 void Mobility::setTurningDegrees(float degrees) {
-	current_angle = degrees;
+	turning_degrees = true;
 
-	target_degree = starting_degree + degrees;
+	gyro->Reset();
+	rotation_PID->SetSetpoint(degrees);
+	rotation_PID->Enable();
 }
 
 Mobility* Mobility::getInstance()

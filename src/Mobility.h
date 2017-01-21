@@ -43,6 +43,8 @@ private:
 	float target_angle;
 	float straight_speed;
 
+	bool turning_degrees;
+
 	float acceptable_error;
 	float degrees;
 	float starting_degree;
