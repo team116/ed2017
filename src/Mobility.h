@@ -10,6 +10,8 @@
 
 #include <AnalogGyro.h>
 #include <VictorSP.h>
+#include <PIDController.h>
+#include <MobilityRotationPID.h>
 
 #include "..\navx\AHRS.h"
 
@@ -22,19 +24,21 @@ public:
 	void setAngle(float angle);
 	void setStraightSpeed(float speed);
 	void setTurningDegrees(float degrees);
+	PIDOutput* rotation_output;
 
 private:
 	Mobility();
 	static Mobility* INSTANCE;
-
-	void processDriveStraight();
 	void processTurningDegrees();
+	void startDriveStraight();
+	void stopDriveStraight();
 
 	frc::VictorSP* front_left;
 	frc::VictorSP* front_right;
 	frc::VictorSP* back_right;
 	frc::VictorSP* back_left;
 	AHRS* gyro;
+	frc::PIDController* rotation_PID;
 	float target_angle;
 	float straight_speed;
 

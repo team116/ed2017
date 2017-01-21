@@ -19,6 +19,7 @@ Mobility::Mobility() {
 	back_right = new frc::VictorSP(RobotPorts::MOTOR_RIGHT_BACK);
 	back_left = new frc::VictorSP(RobotPorts::MOTOR_RIGHT_FRONT);
 	gyro = new AHRS(SPI::kMXP);
+
 	straight_speed = 0;
 	acceptable_error = 0.5;
 	current_angle = 0;
@@ -28,10 +29,17 @@ Mobility::Mobility() {
 	target_angle=0;
 	target_degree=0;
 
+	rotation_output = new MobilityRotationPID();
+	rotation_PID = new frc::PIDController(1, 0, 0, gyro, rotation_output);
+	rotation_PID->SetContinuous(true);
+	rotation_PID->SetInputRange(-180, 180);
+	rotation_PID->SetOutputRange(-1, 1);
+	rotation_PID->SetPIDSourceType(PIDSourceType::kDisplacement);
+	rotation_PID->SetAbsoluteTolerance(0.5);
+	rotation_PID->Disable();
 }
 
 void Mobility::process() {
-	processDriveStraight();
 	processTurningDegrees();
 
 }
@@ -47,29 +55,14 @@ void Mobility::processTurningDegrees() {
 	}
 }
 
-void Mobility::processDriveStraight() {
-	float current_angle = gyro->GetAngle();
 
-	float angle_offset = target_angle - current_angle;
-
-	if (angle_offset > DRIVE_STRAIGHT_TOLERANCE) {
-		// Too far to the right, need to turn left
-		setLeft(straight_speed - SPEED_ADJUSTMENT);
-		setRight(straight_speed + SPEED_ADJUSTMENT);
-	}
-	else if (angle_offset < -DRIVE_STRAIGHT_TOLERANCE) {
-		// Too far to the left, need to turn right
-		setLeft(straight_speed + SPEED_ADJUSTMENT);
-		setRight(straight_speed - SPEED_ADJUSTMENT);
-	}
-	else {
-		setLeft(SPEED_ADJUSTMENT);
-		setRight(SPEED_ADJUSTMENT);
-	}
+void Mobility::startDriveStraight() {
+	rotation_PID->SetSetpoint(gyro->GetRawGyroX());
+	rotation_PID->Enable();
 }
 
-void Mobility::setAngle(float angle) {
-	target_angle = angle;
+void Mobility::stopDriveStraight() {
+	rotation_PID->Disable();
 }
 
 void Mobility::setStraightSpeed(float speed) {
