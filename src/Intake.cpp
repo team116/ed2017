@@ -20,7 +20,7 @@ void Intake::process() {
 }
 
 void Intake::setSpeedIntake(float speed) {
-	intake_motor->Set(1.0);
+	intake_motor->Set(speed);
 }
 
 Intake* Intake::getInstance()
