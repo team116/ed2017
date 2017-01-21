@@ -13,7 +13,7 @@
 #include <PIDController.h>
 #include <MobilityRotationPID.h>
 
-#include "..\navx\AHRS.h"
+#include "../navx/AHRS.h"
 
 class Mobility {
 public:
@@ -42,8 +42,9 @@ public:
 	/**
 	 * Stops the drive straight PID loop, allowing the robot to turn in any direction
 	 */
-	void stopDriveStraight();
 
+	void stopDriveStraight();
+    bool isDrivingStraight();
 	/**
 	 * Sets the speed the robot should attempt to maintain while in drive straight mode
 	 * Speed is from -1 to 1, positive being forward and negative being reverse
@@ -87,6 +88,7 @@ frc::SpeedController* back_left;
 	//Other variables
 	float straight_speed;
 	bool turning_degrees;
+	bool driving_straight;
 };
 
 #endif /* SRC_MOBILITY_H_ */

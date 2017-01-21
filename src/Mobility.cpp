@@ -23,6 +23,7 @@ Mobility::Mobility() {
 	//Initialize class variables to default value
 	straight_speed = 0.0;
 	turning_degrees = false;
+	driving_straight = false;
 
 	//PID controllers
 	rotation_output = new MobilityRotationPID();
@@ -50,12 +51,16 @@ void Mobility::processTurningDegrees() {
 
 
 void Mobility::startDriveStraight() {
+	driving_straight = true;
 	rotation_PID->SetSetpoint(gyro->GetRawGyroX());
 	rotation_PID->Enable();
 }
-
+bool Mobility::isDrivingStraight() {
+	return driving_straight;
+}
 void Mobility::stopDriveStraight() {
 	rotation_PID->Disable();
+	driving_straight = false;
 }
 
 float Mobility::getStraightSpeed() {

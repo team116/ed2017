@@ -20,9 +20,22 @@ OI::OI() {
 void OI::process() {
 	mobility->setLeft(joy_left->GetRawAxis(1) * -1);
 	mobility->setRight(joy_right->GetRawAxis(1) * -1);
-	/*if (joy_one->GetRawButton(1)) {
-		mobility->setAngle()
-	} */
+	if (joy_left->GetRawButton(1)) {
+		if (!mobility->isDrivingStraight()) {
+			mobility->startDriveStraight();
+		}
+		mobility->setStraightSpeed(joy_left->GetRawAxis(1) * -1);
+
+	}
+	else if (joy_right->GetRawButton(1)) {
+		if (!mobility->isDrivingStraight()) {
+			mobility->startDriveStraight();
+		}
+		mobility->setStraightSpeed(joy_right->GetRawAxis(1) * -1);
+	}
+	else {
+		mobility->stopDriveStraight();
+	}
 }
 
 OI* OI::getInstance()
