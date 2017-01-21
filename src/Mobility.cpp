@@ -9,25 +9,22 @@
 #include "Ports.h"
 
 Mobility* Mobility::INSTANCE = nullptr;
-const float DRIVE_STRAIGHT_TOLERANCE = 5.0;
-const float SPEED_ADJUSTMENT = 0.10;
-static const float TURNING_SPEED = 5.0;
 
 Mobility::Mobility() {
+	//Motor Controllers
 	front_left = new frc::VictorSP(RobotPorts::MOTOR_LEFT_FRONT);
 	front_right = new frc::VictorSP(RobotPorts::MOTOR_RIGHT_FRONT);
 	back_right = new frc::VictorSP(RobotPorts::MOTOR_RIGHT_BACK);
 	back_left = new frc::VictorSP(RobotPorts::MOTOR_RIGHT_FRONT);
+
+	//Sensors
 	gyro = new AHRS(SPI::kMXP);
 
-	straight_speed = 0;
-	acceptable_error = 0.5;
-	current_angle = 0;
-	degree_range = 0;
-	degrees = 0;
-	target_angle = 0;
-	target_degree = 0;
+	//Initialize class variables to default value
+	straight_speed = 0.0;
+	turning_degrees = false;
 
+	//PID controllers
 	rotation_output = new MobilityRotationPID();
 	rotation_PID = new frc::PIDController(1, 0, 0, gyro, rotation_output);
 	rotation_PID->SetContinuous(true);
@@ -39,11 +36,9 @@ Mobility::Mobility() {
 }
 
 void Mobility::process() {
-
 	if (turning_degrees) {
 		processTurningDegrees();
 	}
-
 }
 
 void Mobility::processTurningDegrees() {
@@ -51,7 +46,6 @@ void Mobility::processTurningDegrees() {
 		rotation_PID->Disable();
 		turning_degrees = false;
 	}
-
 }
 
 
@@ -74,7 +68,6 @@ void Mobility::setStraightSpeed(float speed) {
 void Mobility::setLeft(float speed) {
 	front_left->Set(speed);
 	back_left->Set(speed);
-
 }
 
 void Mobility::setRight(float speed) {
@@ -82,7 +75,7 @@ void Mobility::setRight(float speed) {
 	back_right->Set(speed);
 }
 
-void Mobility::setTurningDegrees(float degrees) {
+void Mobility::turnDegrees(float degrees) {
 	turning_degrees = true;
 
 	gyro->Reset();
