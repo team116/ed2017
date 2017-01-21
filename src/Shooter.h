@@ -7,7 +7,7 @@
 #ifndef SRC_SHOOTER_H_
 #define SRC_SHOOTER_H_
 
-#include <VictorSP.h>
+#include <SpeedController.h>
 
 class Shooter {
 public:
@@ -21,9 +21,9 @@ public:
 private:
 	Shooter();
 	static Shooter* INSTANCE;
-	frc::VictorSP* ball_holder;
-	frc::VictorSP* shooter;
-	frc::VictorSP* azimuth;
+	frc::SpeedController* ball_holder;
+	frc::SpeedController* shooter;
+	frc::SpeedController* azimuth;
 	float target_azimuth_angle;
 };
 

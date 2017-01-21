@@ -8,14 +8,22 @@
 #ifndef SRC_PORTS_H_
 #define SRC_PORTS_H_
 
+#include <SpeedController.h>
 
 namespace RobotPorts
 {
 	//PWM Motors
+/*  VICTORSP PORTS
 	const unsigned int MOTOR_LEFT_FRONT = 0;
 	const unsigned int MOTOR_RIGHT_FRONT = 1;
 	const unsigned int MOTOR_LEFT_BACK = 2;
-	const unsigned int MOTOR_RIGHT_BACK = 3;
+	const unsigned int MOTOR_RIGHT_BACK = 3; */
+/*  CANTALON PORTS */
+	const unsigned int MOTOR_LEFT_FRONT = 4;
+	const unsigned int MOTOR_RIGHT_FRONT = 6;
+	const unsigned int MOTOR_LEFT_BACK = 5;
+	const unsigned int MOTOR_RIGHT_BACK = 7;
+
 	const unsigned int MOTOR_SHOOTER_AZIMUTH = 4;
 	const unsigned int MOTOR_SHOOTER_FEEDER = 5;
 	const unsigned int MOTOR_INTAKE = 6;
@@ -47,6 +55,18 @@ namespace OIPorts
 
 	//Buttons
 
+}
+
+namespace Utils
+{
+	enum MotorType {
+		VictorSP,
+		CANTalonSRX
+	};
+
+	const MotorType motor_type = MotorType::CANTalonSRX;
+
+	frc::SpeedController* constructMotor(unsigned int port);;
 }
 
 #endif /* SRC_PORTS_H_ */

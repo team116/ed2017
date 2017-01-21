@@ -9,7 +9,7 @@
 #define SRC_MOBILITY_H_
 
 #include <AnalogGyro.h>
-#include <VictorSP.h>
+#include <SpeedController.h>
 #include <PIDController.h>
 #include <MobilityRotationPID.h>
 
@@ -34,10 +34,10 @@ private:
 	void stopDriveStraight();
 	PIDOutput* rotation_output;
 
-	frc::VictorSP* front_left;
-	frc::VictorSP* front_right;
-	frc::VictorSP* back_right;
-	frc::VictorSP* back_left;
+	frc::SpeedController* front_left;
+	frc::SpeedController* front_right;
+	frc::SpeedController* back_right;
+	frc::SpeedController* back_left;
 	AHRS* gyro;
 	frc::PIDController* rotation_PID;
 	float target_angle;

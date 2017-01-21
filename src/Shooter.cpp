@@ -14,9 +14,9 @@ const float AUTO_AZIMUTH_SPEED = 0.5;
 
 Shooter::Shooter() {
 	// TODO Auto-generated constructor stub
-	ball_holder = new frc::VictorSP(RobotPorts::MOTOR_SHOOTER_FEEDER);
-	shooter = new frc::VictorSP(RobotPorts::MOTOR_SHOOTER_WHEEL);
-	azimuth = new frc::VictorSP(RobotPorts::MOTOR_SHOOTER_AZIMUTH);
+	ball_holder = Utils::constructMotor(RobotPorts::MOTOR_SHOOTER_FEEDER);
+	shooter = Utils::constructMotor(RobotPorts::MOTOR_SHOOTER_WHEEL);
+	azimuth = Utils::constructMotor(RobotPorts::MOTOR_SHOOTER_AZIMUTH);
 
 	target_azimuth_angle = 0;
 }

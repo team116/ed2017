@@ -7,7 +7,7 @@
 #ifndef SRC_INTAKE_H_
 #define SRC_INTAKE_H_
 
-#include <VictorSP.h>
+#include <SpeedController.h>
 
 class Intake {
 public:
@@ -18,7 +18,7 @@ public:
 private:
 	Intake();
 	static Intake* INSTANCE;
-	frc::VictorSP* intake_motor;
+	frc::SpeedController* intake_motor;
 };
 
 #endif /* SRC_INTAKE_H_ */

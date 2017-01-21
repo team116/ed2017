@@ -8,7 +8,7 @@
 #ifndef SRC_GEAR_H_
 #define SRC_GEAR_H_
 
-#include <VictorSP.h>
+#include <SpeedController.h>
 #include <DigitalInput.h>
 
 class Gear {
@@ -21,9 +21,9 @@ public:
 private:
 	Gear();
 	static Gear* INSTANCE;
-	VictorSP* gear_motor;
-	DigitalInput* LS_open;
-	DigitalInput* LS_close;
+	frc::SpeedController* gear_motor;
+	frc::DigitalInput* LS_open;
+	frc::DigitalInput* LS_close;
 };
 
 #endif /* SRC_GEAR_H_ */

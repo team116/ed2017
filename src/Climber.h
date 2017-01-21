@@ -7,7 +7,7 @@
 #ifndef SRC_CLIMBER_H_
 #define SRC_CLIMBER_H_
 
-#include <VictorSP.h>
+#include <SpeedController.h>
 
 class Climber {
 public:
@@ -19,7 +19,7 @@ public:
 private:
 	Climber();
 	static Climber* INSTANCE;
-	frc::VictorSP* climber;
+	frc::SpeedController* climber;
 };
 
 #endif /* SRC_CLIMBER_H_ */

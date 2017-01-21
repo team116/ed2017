@@ -14,10 +14,10 @@ const float SPEED_ADJUSTMENT = 0.10;
 static const float TURNING_SPEED = 5.0;
 
 Mobility::Mobility() {
-	front_left = new frc::VictorSP(RobotPorts::MOTOR_LEFT_FRONT);
-	front_right = new frc::VictorSP(RobotPorts::MOTOR_RIGHT_FRONT);
-	back_right = new frc::VictorSP(RobotPorts::MOTOR_RIGHT_BACK);
-	back_left = new frc::VictorSP(RobotPorts::MOTOR_RIGHT_FRONT);
+	front_left = Utils::constructMotor(RobotPorts::MOTOR_LEFT_FRONT);
+	front_right = Utils::constructMotor(RobotPorts::MOTOR_RIGHT_FRONT);
+	back_right = Utils::constructMotor(RobotPorts::MOTOR_RIGHT_BACK);
+	back_left = Utils::constructMotor(RobotPorts::MOTOR_RIGHT_FRONT);
 	gyro = new AHRS(SPI::kMXP);
 
 	straight_speed = 0;
