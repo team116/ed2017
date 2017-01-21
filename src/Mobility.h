@@ -24,7 +24,7 @@ public:
 	void setAngle(float angle);
 	void setStraightSpeed(float speed);
 	void setTurningDegrees(float degrees);
-	PIDOutput* rotation_output;
+	float getStraightSpeed();
 
 private:
 	Mobility();
@@ -32,6 +32,7 @@ private:
 	void processTurningDegrees();
 	void startDriveStraight();
 	void stopDriveStraight();
+	PIDOutput* rotation_output;
 
 	frc::VictorSP* front_left;
 	frc::VictorSP* front_right;

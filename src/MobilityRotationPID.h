@@ -17,6 +17,9 @@ public:
 	void PIDWrite(double output);
 
 	virtual ~MobilityRotationPID(){};
+
+private:
+	float forward;
 };
 
 #endif /* MOBILITYROTATIONPID_H_ */

@@ -65,9 +65,11 @@ void Mobility::stopDriveStraight() {
 	rotation_PID->Disable();
 }
 
+float Mobility::getStraightSpeed() {
+	return straight_speed;
+}
 void Mobility::setStraightSpeed(float speed) {
 	straight_speed = speed;
-
 }
 
 void Mobility::setLeft(float speed) {
