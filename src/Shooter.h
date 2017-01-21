@@ -13,15 +13,15 @@ class Shooter {
 public:
 	static Shooter* getInstance();
 	void process();
-	void setSpeedAzimuth(float speed);
-	void setSpeedShooter(float speed);
-	void setSpeedFeeder(float speed);
-	void setAngleDirection(float angle);
+
+	void setAzimuthSpeed(float speed);
+	void setAzimuthAngle(float angle);
+
+	void setShooterSpeed(float speed);
 
 private:
 	Shooter();
 	static Shooter* INSTANCE;
-	frc::SpeedController* ball_holder;
 	frc::SpeedController* shooter;
 	frc::SpeedController* azimuth;
 	float target_azimuth_angle;

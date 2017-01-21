@@ -18,37 +18,75 @@
 class Mobility {
 public:
 	static Mobility* getInstance();
+
 	void process();
+
+	/**
+	 * Sets the speed of the left motors
+	 * speed -1 to 1, positive being forward and negative being reverse
+	 */
 	void setLeft(float speed);
+	/**
+	 * Sets the speed of the right motors
+	 * Speed is from -1 to 1, positive being forward and negative being reverse
+	 */
 	void setRight(float speed);
-	void setAngle(float angle);
+
+	/**
+	 * Starts the drive straight PID loop.
+	 * The robot will lock onto the current angle of the robot until stopDriveStraight() is called
+	 * Use setStraightSpeed(float) to adjust the speed of the robot while in Drive Straight mode
+	 */
+	void startDriveStraight();
+
+	/**
+	 * Stops the drive straight PID loop, allowing the robot to turn in any direction
+	 */
+	void stopDriveStraight();
+
+	/**
+	 * Sets the speed the robot should attempt to maintain while in drive straight mode
+	 * Speed is from -1 to 1, positive being forward and negative being reverse
+	 */
 	void setStraightSpeed(float speed);
-	void setTurningDegrees(float degrees);
+
+	/**
+	 * Gets the speed the robot is currently set to maintain in drive straight mode
+	 * Speed is from -1 to 1, positive being forward and negative being reverse
+	 */
 	float getStraightSpeed();
+
+	/**
+	 * Starts the turn degrees PID loop
+	 * The robot will turn the specified amount of degrees
+	 * NOTE this function will return before the robot has completed its turn
+	 * Degrees ranges from -180 to 180
+	 */
+	void turnDegrees(float degrees);
 
 private:
 	Mobility();
 	static Mobility* INSTANCE;
+
+	//Functions
 	void processTurningDegrees();
-	void startDriveStraight();
-	void stopDriveStraight();
-	PIDOutput* rotation_output;
 
-	frc::SpeedController* front_left;
-	frc::SpeedController* front_right;
-	frc::SpeedController* back_right;
-	frc::SpeedController* back_left;
+	//Motor Controllers
+frc::SpeedController* front_left;
+frc::SpeedController* front_right;
+frc::SpeedController* back_right;
+frc::SpeedController* back_left;
+
+	//Sensors
 	AHRS* gyro;
-	frc::PIDController* rotation_PID;
-	float target_angle;
-	float straight_speed;
 
-	float acceptable_error;
-	float degrees;
-	float starting_degree;
-	float target_degree;
-	float current_angle;
-	float degree_range;
+	//PID Stuff
+	PIDOutput* rotation_output;
+	frc::PIDController* rotation_PID;
+
+	//Other variables
+	float straight_speed;
+	bool turning_degrees;
 };
 
 #endif /* SRC_MOBILITY_H_ */

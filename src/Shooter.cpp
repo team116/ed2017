@@ -13,8 +13,6 @@ const float AZIMUTH_ANGLE_TOLERANCE = 1.0;
 const float AUTO_AZIMUTH_SPEED = 0.5;
 
 Shooter::Shooter() {
-	// TODO Auto-generated constructor stub
-	ball_holder = Utils::constructMotor(RobotPorts::MOTOR_SHOOTER_FEEDER);
 	shooter = Utils::constructMotor(RobotPorts::MOTOR_SHOOTER_WHEEL);
 	azimuth = Utils::constructMotor(RobotPorts::MOTOR_SHOOTER_AZIMUTH);
 
@@ -40,15 +38,15 @@ void Shooter::process() {
 
 }
 
-void Shooter::setAngleDirection(float angle) {
+void Shooter::setAzimuthAngle(float angle) {
 	azimuth->Set(angle);
 }
 
-void Shooter::setSpeedAzimuth(float speed) {
+void Shooter::setAzimuthSpeed(float speed) {
 	azimuth->Set(speed);
 }
 
-void Shooter::setSpeedShooter(float speed) {
+void Shooter::setShooterSpeed(float speed) {
 	shooter->Set(speed);
 }
 
