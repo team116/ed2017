@@ -14,6 +14,10 @@ Feeder::Feeder() {
 	feeder = new frc::VictorSP(RobotPorts::MOTOR_SHOOTER_FEEDER);
 }
 
+void Feeder::setFeederSpeed(float speed){
+	feeder->Set(speed);
+}
+
 Feeder* Feeder::getInstance()
 {
 	if(INSTANCE == nullptr) {
