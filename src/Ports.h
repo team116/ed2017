@@ -52,7 +52,10 @@ namespace OIPorts
 	const unsigned int JOYSTICK_BUTTONS_2 = 3;
 
 	//Buttons
+	const unsigned int BUTTON_DRIVE_STRAIGHT = 1;
 
+	//Axes
+	const unsigned int AXIS_Y = 1;
 }
 
 namespace Utils

@@ -42,9 +42,13 @@ public:
 	/**
 	 * Stops the drive straight PID loop, allowing the robot to turn in any direction
 	 */
-
 	void stopDriveStraight();
+
+	/**
+	 * Returns true if Drive Straight is currently running, false if not
+	 */
     bool isDrivingStraight();
+
 	/**
 	 * Sets the speed the robot should attempt to maintain while in drive straight mode
 	 * Speed is from -1 to 1, positive being forward and negative being reverse
@@ -72,11 +76,15 @@ private:
 	//Functions
 	void processTurningDegrees();
 
+	//Use these instead of directly enabling/disabling the PID controller and PID output
+	void disableRotationPID();
+	void enableRotationPID();
+
 	//Motor Controllers
-frc::SpeedController* front_left;
-frc::SpeedController* front_right;
-frc::SpeedController* back_right;
-frc::SpeedController* back_left;
+	frc::SpeedController* front_left;
+	frc::SpeedController* front_right;
+	frc::SpeedController* back_right;
+	frc::SpeedController* back_left;
 
 	//Sensors
 	AHRS* gyro;

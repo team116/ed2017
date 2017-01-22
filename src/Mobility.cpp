@@ -51,8 +51,7 @@ void Mobility::process() {
 
 void Mobility::processTurningDegrees() {
 	if (rotation_PID->OnTarget()) {
-		rotation_output->Disable();
-		rotation_PID->Disable();
+		disableRotationPID();
 		turning_degrees = false;
 	}
 }
@@ -62,15 +61,13 @@ void Mobility::startDriveStraight() {
 	driving_straight = true;
 	DriverStation::ReportError("Starting drive straight");
 	rotation_PID->SetSetpoint(gyro->GetAngle());
-	rotation_output->Enable();
-	rotation_PID->Enable();
+	enableRotationPID();
 }
 bool Mobility::isDrivingStraight() {
 	return driving_straight;
 }
 void Mobility::stopDriveStraight() {
-	rotation_output->Disable();
-	rotation_PID->Disable();
+	disableRotationPID();
 	driving_straight = false;
 }
 
@@ -97,6 +94,15 @@ void Mobility::turnDegrees(float degrees) {
 
 	gyro->Reset();
 	rotation_PID->SetSetpoint(degrees);
+	enableRotationPID();
+}
+
+void Mobility::disableRotationPID() {
+	rotation_output->Disable();
+	rotation_PID->Disable();
+}
+
+void Mobility::enableRotationPID() {
 	rotation_output->Enable();
 	rotation_PID->Enable();
 }
