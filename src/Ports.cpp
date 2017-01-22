@@ -14,9 +14,11 @@ namespace Utils {
 	frc::SpeedController* constructMotor(unsigned int port) {
 		switch(motor_type) {
 		case VictorSP:
+			DriverStation::ReportError("Constructin talon on port " + std::to_string(port));
 			return new frc::VictorSP(port);
 			break;
 		case CANTalonSRX:
+			DriverStation::ReportError("Constructin talon on port " + std::to_string(port));
 			return new CANTalon(port);
 			break;
 		default:

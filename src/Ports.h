@@ -24,11 +24,9 @@ namespace RobotPorts
 	const unsigned int MOTOR_LEFT_BACK = 5;
 	const unsigned int MOTOR_RIGHT_BACK = 7;
 
-	const unsigned int MOTOR_SHOOTER_AZIMUTH = 4;
-	const unsigned int MOTOR_SHOOTER_FEEDER = 5;
-	const unsigned int MOTOR_INTAKE = 6;
-	//const unsigned int SERVO_GEAR_RIGHT = 8;
-	//const unsigned int SERVO_GEAR_LEFT = 7;
+	const unsigned int MOTOR_SHOOTER_AZIMUTH = 0;
+	const unsigned int MOTOR_SHOOTER_FEEDER = 1;
+	const unsigned int MOTOR_INTAKE = 2;
 	const unsigned int SERVO_CONVERTER = 9;
 
 	//navX Motors

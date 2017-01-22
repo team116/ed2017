@@ -18,8 +18,6 @@ OI::OI() {
 }
 
 void OI::process() {
-	mobility->setLeft(joy_left->GetRawAxis(1) * -1);
-	mobility->setRight(joy_right->GetRawAxis(1) * -1);
 	if (joy_left->GetRawButton(1)) {
 		if (!mobility->isDrivingStraight()) {
 			mobility->startDriveStraight();
@@ -35,6 +33,8 @@ void OI::process() {
 	}
 	else {
 		mobility->stopDriveStraight();
+		mobility->setLeft(joy_left->GetRawAxis(1) * -1);
+		mobility->setRight(joy_right->GetRawAxis(1) * -1);
 	}
 }
 

@@ -11,7 +11,7 @@
 Feeder* Feeder::INSTANCE = nullptr;
 
 Feeder::Feeder() {
-	feeder = new frc::VictorSP(RobotPorts::MOTOR_SHOOTER_FEEDER);
+	feeder = Utils::constructMotor(RobotPorts::MOTOR_SHOOTER_FEEDER);
 }
 
 void Feeder::setFeederSpeed(float speed){

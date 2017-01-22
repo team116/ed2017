@@ -20,7 +20,7 @@ private:
 	Feeder();
 	static Feeder* INSTANCE;
 
-	frc::VictorSP* feeder;
+	frc::SpeedController* feeder;
 };
 
 #endif /* SRC_FEEDER_H_ */

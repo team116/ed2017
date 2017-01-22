@@ -6,14 +6,36 @@
  */
 
 #include "MobilityRotationPID.h"
+#include <DriverStation.h>
 
-MobilityRotationPID::MobilityRotationPID() {
+MobilityRotationPID::MobilityRotationPID(frc::SpeedController* fl, frc::SpeedController* fr, frc::SpeedController* bl,
+		frc::SpeedController* br) {
 	forward = 0.0;
+	front_left = fl;
+	front_right = fr;
+	back_left = bl;
+	back_right = br;
+
+	enabled = false;
+}
+
+void MobilityRotationPID::setForwardSpeed(float speed) {
+	forward = speed;
+}
+
+void MobilityRotationPID::Enable() {
+	enabled = true;
+}
+
+void MobilityRotationPID::Disable() {
+	enabled = false;
 }
 
 void MobilityRotationPID::PIDWrite(double output) {
-	forward = Mobility::getInstance()->getStraightSpeed();
-
+	if(!enabled) {
+		return;
+	}
+	DriverStation::ReportError("PID Write: " + std::to_string(output));
 	float leftSpeed = forward + output;
 	float rightSpeed = forward - output;
 
@@ -31,6 +53,9 @@ void MobilityRotationPID::PIDWrite(double output) {
 		rightSpeed = -1.0;
 	}
 
-	Mobility::getInstance()->setLeft(output);
-	Mobility::getInstance()->setRight(-output);
+	front_left->Set(leftSpeed);
+	back_left->Set(leftSpeed);
+
+	front_right->Set(rightSpeed);
+	back_right->Set(rightSpeed);
 }

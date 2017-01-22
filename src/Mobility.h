@@ -82,13 +82,15 @@ frc::SpeedController* back_left;
 	AHRS* gyro;
 
 	//PID Stuff
-	PIDOutput* rotation_output;
+	MobilityRotationPID* rotation_output;
 	frc::PIDController* rotation_PID;
 
 	//Other variables
 	float straight_speed;
 	bool turning_degrees;
 	bool driving_straight;
+
+	static int counter;
 };
 
 #endif /* SRC_MOBILITY_H_ */
