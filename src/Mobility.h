@@ -69,16 +69,16 @@ public:
 	 */
 	void turnDegrees(float degrees);
 
+	//Use these instead of directly enabling/disabling the PID controller and PID output
+	void disableRotationPID();
+	void enableRotationPID();
+
 private:
 	Mobility();
 	static Mobility* INSTANCE;
 
 	//Functions
 	void processTurningDegrees();
-
-	//Use these instead of directly enabling/disabling the PID controller and PID output
-	void disableRotationPID();
-	void enableRotationPID();
 
 	//Motor Controllers
 	frc::SpeedController* front_left;
