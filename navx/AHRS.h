@@ -209,7 +209,9 @@ private:
     void StopLiveWindowMode();
 
     /* PIDSource implementation */
+public:
     double PIDGet();
+private:
 
     uint8_t GetActualUpdateRateInternal(uint8_t update_rate);
 };

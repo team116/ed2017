@@ -20,7 +20,6 @@ namespace Utils {
 			return new CANTalon(port);
 			break;
 		default:
-			DriverStation::ReportError("Error constructing motors");
 			return nullptr;
 		}
 	}

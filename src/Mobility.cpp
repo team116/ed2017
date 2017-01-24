@@ -10,32 +10,40 @@
 
 Mobility* Mobility::INSTANCE = nullptr;
 
+int Mobility::counter = 0;
+
 Mobility::Mobility() {
 	//Motor Controllers
 	front_left = Utils::constructMotor(RobotPorts::MOTOR_LEFT_FRONT);
 	front_right = Utils::constructMotor(RobotPorts::MOTOR_RIGHT_FRONT);
 	back_right = Utils::constructMotor(RobotPorts::MOTOR_RIGHT_BACK);
-	back_left = Utils::constructMotor(RobotPorts::MOTOR_RIGHT_FRONT);
+	back_left = Utils::constructMotor(RobotPorts::MOTOR_LEFT_BACK);
+
+	front_right->SetInverted(true);
+	back_right->SetInverted(true);
 
 	//Sensors
-	gyro = new AHRS(SPI::kMXP);
+	gyro = new AHRS(SPI::Port::kMXP);
 
 	//Initialize class variables to default value
 	straight_speed = 0.0;
 	turning_degrees = false;
+	driving_straight = false;
 
 	//PID controllers
-	rotation_output = new MobilityRotationPID();
-	rotation_PID = new frc::PIDController(1, 0, 0, gyro, rotation_output);
+	rotation_output = new MobilityRotationPID(front_left, front_right, back_left, back_right);
+	rotation_output->Disable();
+	rotation_PID = new frc::PIDController(0.03, 0.0001, 0.1, gyro, rotation_output);
+	rotation_PID->Disable();
 	rotation_PID->SetContinuous(true);
 	rotation_PID->SetInputRange(-180, 180);
 	rotation_PID->SetOutputRange(-1, 1);
 	rotation_PID->SetPIDSourceType(PIDSourceType::kDisplacement);
 	rotation_PID->SetAbsoluteTolerance(0.5);
-	rotation_PID->Disable();
 }
 
 void Mobility::process() {
+	DriverStation::ReportError("Gyro: " + std::to_string(gyro->PIDGet()));
 	if (turning_degrees) {
 		processTurningDegrees();
 	}
@@ -43,19 +51,24 @@ void Mobility::process() {
 
 void Mobility::processTurningDegrees() {
 	if (rotation_PID->OnTarget()) {
-		rotation_PID->Disable();
+		disableRotationPID();
 		turning_degrees = false;
 	}
 }
 
 
 void Mobility::startDriveStraight() {
-	rotation_PID->SetSetpoint(gyro->GetRawGyroX());
-	rotation_PID->Enable();
+	driving_straight = true;
+	DriverStation::ReportError("Starting drive straight");
+	rotation_PID->SetSetpoint(gyro->GetAngle());
+	enableRotationPID();
 }
-
+bool Mobility::isDrivingStraight() {
+	return driving_straight;
+}
 void Mobility::stopDriveStraight() {
-	rotation_PID->Disable();
+	disableRotationPID();
+	driving_straight = false;
 }
 
 float Mobility::getStraightSpeed() {
@@ -63,6 +76,7 @@ float Mobility::getStraightSpeed() {
 }
 void Mobility::setStraightSpeed(float speed) {
 	straight_speed = speed;
+	rotation_output->setForwardSpeed(speed);
 }
 
 void Mobility::setLeft(float speed) {
@@ -80,6 +94,16 @@ void Mobility::turnDegrees(float degrees) {
 
 	gyro->Reset();
 	rotation_PID->SetSetpoint(degrees);
+	enableRotationPID();
+}
+
+void Mobility::disableRotationPID() {
+	rotation_output->Disable();
+	rotation_PID->Disable();
+}
+
+void Mobility::enableRotationPID() {
+	rotation_output->Enable();
 	rotation_PID->Enable();
 }
 

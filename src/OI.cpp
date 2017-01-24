@@ -18,11 +18,26 @@ OI::OI() {
 }
 
 void OI::process() {
-	mobility->setLeft(joy_left->GetRawAxis(1) * -1);
-	mobility->setRight(joy_right->GetRawAxis(1) * -1);
-	/*if (joy_one->GetRawButton(1)) {
-		mobility->setAngle()
-	} */
+	if (joy_left->GetRawButton(OIPorts::BUTTON_DRIVE_STRAIGHT)) {
+		if (!mobility->isDrivingStraight()) {
+			mobility->startDriveStraight();
+		}
+		mobility->setStraightSpeed(joy_left->GetRawAxis(OIPorts::AXIS_Y) * -1);
+
+	}
+	else if (joy_right->GetRawButton(OIPorts::BUTTON_DRIVE_STRAIGHT)) {
+		if (!mobility->isDrivingStraight()) {
+			mobility->startDriveStraight();
+		}
+		mobility->setStraightSpeed(joy_right->GetRawAxis(OIPorts::AXIS_Y) * -1);
+	}
+	else {
+		if(mobility->isDrivingStraight()) {
+			mobility->stopDriveStraight();
+		}
+		mobility->setLeft(joy_left->GetRawAxis(OIPorts::AXIS_Y) * -1);
+		mobility->setRight(joy_right->GetRawAxis(OIPorts::AXIS_Y) * -1);
+	}
 }
 
 OI* OI::getInstance()
