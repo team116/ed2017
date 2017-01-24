@@ -43,6 +43,8 @@ namespace RobotPorts
 	//Sensors
 	const unsigned int LS_GEAR_OPEN = 1;
 	const unsigned int LS_GEAR_CLOSED = 2;
+	const unsigned int SHOOTER_ENCODER_1 = 3;
+	const unsigned int SHOOTER_ENCODER_2 = 4;
 }
 
 namespace OIPorts
