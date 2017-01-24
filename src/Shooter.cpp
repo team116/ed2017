@@ -17,14 +17,14 @@ Shooter::Shooter() {
 	azimuth = Utils::constructMotor(RobotPorts::MOTOR_SHOOTER_AZIMUTH);
 	target_azimuth_angle = 0;
 
-	shooter_encoder = new Encoder(RobotPorts::SHOOTER_ENCODER_1, RobotPorts::SHOOTER_ENCODER_2);
+	shooter_encoder = new frc::Encoder(RobotPorts::SHOOTER_ENCODER_1, RobotPorts::SHOOTER_ENCODER_2);
 
 	//PID STUFF
 	shooter_PID = new frc::PIDController(0.01, 0.0, 0.0, shooter_encoder, shooter);
 	shooter_PID->SetContinuous(false);
 	shooter_PID->SetInputRange(0,9000.0);
 	shooter_PID->SetOutputRange(-1, 1);
-	shooter_PID->SetPIDSourceType(PIDSourceType::kRate);
+	shooter_PID->SetPIDSourceType(frc::PIDSourceType::kRate);
 	shooter_PID->SetAbsoluteTolerance(50);
 	shooter_PID->Disable();
 }
