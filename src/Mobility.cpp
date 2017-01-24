@@ -33,7 +33,7 @@ Mobility::Mobility() {
 	//PID controllers
 	rotation_output = new MobilityRotationPID(front_left, front_right, back_left, back_right);
 	rotation_output->Disable();
-	rotation_PID = new frc::PIDController(0.1, 0, 0.0001, gyro, rotation_output);
+	rotation_PID = new frc::PIDController(0.03, 0.0001, 0.1, gyro, rotation_output);
 	rotation_PID->Disable();
 	rotation_PID->SetContinuous(true);
 	rotation_PID->SetInputRange(-180, 180);
