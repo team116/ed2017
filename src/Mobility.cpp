@@ -24,11 +24,14 @@ Mobility::Mobility() {
 
 	//Sensors
 	gyro = new AHRS(SPI::Port::kMXP);
+	encoders = new MobilityEncoders();
+
 
 	//Initialize class variables to default value
 	straight_speed = 0.0;
 	turning_degrees = false;
 	driving_straight = false;
+
 
 	//PID controllers
 	rotation_output = new MobilityRotationPID(front_left, front_right, back_left, back_right);
@@ -40,6 +43,16 @@ Mobility::Mobility() {
 	rotation_PID->SetOutputRange(-1, 1);
 	rotation_PID->SetPIDSourceType(PIDSourceType::kDisplacement);
 	rotation_PID->SetAbsoluteTolerance(0.5);
+
+	straight_output = new MobilityStraightOutput(front_left, front_right, back_left, back_right);
+	straight_PID = new frc::PIDController(0.1, 0, 0.0001, encoders, straight_output);
+	straight_PID->Disable();
+	straight_PID->SetContinuous(false);
+	straight_PID->SetInputRange(0, 650);
+	straight_PID->SetOutputRange(-1.0, 1.0);
+	straight_PID->SetPIDSourceType(PIDSourceType::kDisplacement);
+	straight_PID->SetAbsoluteTolerance(0.5);
+
 }
 
 void Mobility::process() {
@@ -56,7 +69,13 @@ void Mobility::processTurningDegrees() {
 	}
 }
 
+void Mobility::DriveDistance(float distance)
+{
+	straight_PID->SetSetpoint(distance);
 
+}
+
+//Drive Straight
 void Mobility::startDriveStraight() {
 	driving_straight = true;
 	DriverStation::ReportError("Starting drive straight");

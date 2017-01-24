@@ -12,6 +12,8 @@
 #include <SpeedController.h>
 #include <PIDController.h>
 #include <MobilityRotationPID.h>
+#include <MobilityEncoders.h>
+#include <MobilityStraightOutput.h>
 
 #include "../navx/AHRS.h"
 
@@ -69,6 +71,11 @@ public:
 	 */
 	void turnDegrees(float degrees);
 
+	void setLeftDriveEncoder();
+	void setRightDriveEncoder();
+
+	void DriveDistance(float_t);
+
 private:
 	Mobility();
 	static Mobility* INSTANCE;
@@ -80,11 +87,17 @@ private:
 	void disableRotationPID();
 	void enableRotationPID();
 
+	MobilityEncoders* encoders;
+
 	//Motor Controllers
 	frc::SpeedController* front_left;
 	frc::SpeedController* front_right;
 	frc::SpeedController* back_right;
 	frc::SpeedController* back_left;
+
+
+	frc::PIDController* straight_PID;
+
 
 	//Sensors
 	AHRS* gyro;
@@ -92,6 +105,7 @@ private:
 	//PID Stuff
 	MobilityRotationPID* rotation_output;
 	frc::PIDController* rotation_PID;
+	MobilityStraightOutput* straight_output;
 
 	//Other variables
 	float straight_speed;

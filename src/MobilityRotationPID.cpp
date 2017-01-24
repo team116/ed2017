@@ -35,7 +35,6 @@ void MobilityRotationPID::PIDWrite(double output) {
 	if(!enabled) {
 		return;
 	}
-	DriverStation::ReportError("PID Write: " + std::to_string(output));
 	float leftSpeed = forward + output;
 	float rightSpeed = forward - output;
 
