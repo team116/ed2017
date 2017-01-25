@@ -56,7 +56,9 @@ void Shooter::process() {
 
 
 }
-
+float Shooter::getShooterAzimuth() {
+	return azimuth_encoder->GetDistance();
+}
 void Shooter::enableAzimuthPID() {
 	azimuth_PID->Enable();
 }

@@ -20,7 +20,7 @@ public:
 
 	void setAzimuthSpeed(float speed);
 	void setAzimuthAngle(float angle);
-
+    float getShooterAzimuth();
 	void setShooterSpeed(float speed);
 	void setShooterRPM(float speed);
 	void enableShooterPID();
