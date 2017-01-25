@@ -42,12 +42,17 @@ namespace RobotPorts
 	const unsigned int LS_GEAR_OPEN = 1;
 	const unsigned int LS_GEAR_CLOSED = 2;
 
+
 	//Encoders
 	const unsigned int LEFT_DRIVE_ENCODER_1 = 1;
 	const unsigned int LEFT_DRIVE_ENCODER_2 = 2;
 
 	const unsigned int RIGHT_DRIVE_ENCODER_1 = 3;
 	const unsigned int RIGHT_DRIVE_ENCODER_2 = 4;
+
+
+	const unsigned int SHOOTER_ENCODER_1 = 3;
+	const unsigned int SHOOTER_ENCODER_2 = 4;
 
 }
 

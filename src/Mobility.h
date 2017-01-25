@@ -71,10 +71,16 @@ public:
 	 */
 	void turnDegrees(float degrees);
 
+
 	void setLeftDriveEncoder();
 	void setRightDriveEncoder();
 
 	void DriveDistance(float_t);
+
+	//Use these instead of directly enabling/disabling the PID controller and PID output
+	void disableRotationPID();
+	void enableRotationPID();
+
 
 private:
 	Mobility();
@@ -83,11 +89,9 @@ private:
 	//Functions
 	void processTurningDegrees();
 
-	//Use these instead of directly enabling/disabling the PID controller and PID output
-	void disableRotationPID();
-	void enableRotationPID();
 
 	MobilityEncoders* encoders;
+
 
 	//Motor Controllers
 	frc::SpeedController* front_left;

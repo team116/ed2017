@@ -15,10 +15,12 @@ public:
 	static Feeder* getInstance();
 
 	void setFeederSpeed(float speed);
+	void setBlenderSpeed(float speed);
 
 private:
 	Feeder();
 	static Feeder* INSTANCE;
+	frc::SpeedController* blender;
 
 	frc::SpeedController* feeder;
 };
