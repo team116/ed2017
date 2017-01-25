@@ -10,6 +10,7 @@
 #define SRC_MOBILITYSTRAIGHTOUTPUT_H_
 
 #include <PIDOutput.h>
+#include <SpeedController.h>
 
 class MobilityStraightOutput: public frc::PIDOutput {
 public:
