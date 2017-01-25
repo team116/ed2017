@@ -54,6 +54,9 @@ namespace RobotPorts
 	const unsigned int SHOOTER_ENCODER_1 = 3;
 	const unsigned int SHOOTER_ENCODER_2 = 4;
 
+	const unsigned int AZIMUTH_ENCODER_1 = 5;
+	const unsigned int AZIMUTH_ENCODER_2 = 6;
+
 }
 
 namespace OIPorts
