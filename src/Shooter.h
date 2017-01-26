@@ -20,11 +20,13 @@ public:
 
 	void setAzimuthSpeed(float speed);
 	void setAzimuthAngle(float angle);
-
+    float getShooterAzimuth();
 	void setShooterSpeed(float speed);
 	void setShooterRPM(float speed);
 	void enableShooterPID();
 	void disableShooterPID();
+	void enableAzimuthPID();
+	void disableAzimuthPID();
 
 private:
 	Shooter();
@@ -32,10 +34,12 @@ private:
 	frc::SpeedController* shooter;
 	frc::SpeedController* azimuth;
 	frc::Encoder* shooter_encoder;
+	frc::Encoder* azimuth_encoder;
 	float target_azimuth_angle;
 
 	//PID stuff
 	frc::PIDController* shooter_PID;
+	frc::PIDController* azimuth_PID;
 };
 
 #endif /* SRC_SHOOTER_H_ */

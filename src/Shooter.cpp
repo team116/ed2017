@@ -18,6 +18,7 @@ Shooter::Shooter() {
 	target_azimuth_angle = 0;
 
 	shooter_encoder = new frc::Encoder(RobotPorts::SHOOTER_ENCODER_1, RobotPorts::SHOOTER_ENCODER_2);
+	azimuth_encoder = new frc::Encoder(RobotPorts::AZIMUTH_ENCODER_1, RobotPorts::AZIMUTH_ENCODER_2);
 
 	//PID STUFF
 	shooter_PID = new frc::PIDController(0.01, 0.0, 0.0, shooter_encoder, shooter);
@@ -27,6 +28,14 @@ Shooter::Shooter() {
 	shooter_PID->SetPIDSourceType(frc::PIDSourceType::kRate);
 	shooter_PID->SetAbsoluteTolerance(50);
 	shooter_PID->Disable();
+
+	azimuth_PID = new frc::PIDController(0.1, 0, 0, azimuth_encoder, azimuth);
+	azimuth_PID->SetContinuous(false);
+	azimuth_PID->SetInputRange(-180, 180);
+	azimuth_PID->SetOutputRange(-1, 1);
+	azimuth_PID->SetPIDSourceType(frc::PIDSourceType::kDisplacement);
+	azimuth_PID->SetAbsoluteTolerance(0.5);
+	azimuth_PID->Disable();
 }
 
 void Shooter::process() {
@@ -47,9 +56,19 @@ void Shooter::process() {
 
 
 }
+float Shooter::getShooterAzimuth() {
+	return azimuth_encoder->GetDistance();
+}
+void Shooter::enableAzimuthPID() {
+	azimuth_PID->Enable();
+}
+
+void Shooter::disableAzimuthPID() {
+	azimuth_PID->Disable();
+}
 
 void Shooter::setAzimuthAngle(float angle) {
-	azimuth->Set(angle);
+	azimuth_PID->SetSetpoint(angle);
 }
 
 void Shooter::setAzimuthSpeed(float speed) {

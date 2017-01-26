@@ -9,6 +9,7 @@
 #include <OI.h>
 #include <Shooter.h>
 #include <Vision.h>
+#include "Diagnostics.h"
 
 #include <IterativeRobot.h>
 
@@ -22,6 +23,7 @@ private:
 	OI* oi;
 	Shooter* shooter;
 	Vision* vision;
+	Diagnostics* diagnostics;
 
 public:
 	void RobotInit() {
@@ -33,6 +35,7 @@ public:
 		oi = OI::getInstance();
 		shooter = Shooter::getInstance();
 		vision = Vision::getInstance();
+		diagnostics = Diagnostics::getInstance();
 	}
 
 	void AutonomousInit() override {
@@ -46,6 +49,7 @@ public:
 		gear->process();
 		intake->process();
 		shooter->process();
+		diagnostics->process();
 	}
 
 	void TeleopInit() {
@@ -59,6 +63,8 @@ public:
 		gear->process();
 		intake->process();
 		shooter->process();
+		diagnostics->process();
+
 	}
 
 	void TestPeriodic() {

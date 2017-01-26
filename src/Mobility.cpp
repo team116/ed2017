@@ -56,10 +56,13 @@ Mobility::Mobility() {
 }
 
 void Mobility::process() {
-	DriverStation::ReportError("Gyro: " + std::to_string(gyro->PIDGet()));
+	// DriverStation::ReportError("Gyro: " + std::to_string(gyro->PIDGet()));
 	if (turning_degrees) {
 		processTurningDegrees();
 	}
+
+	DriverStation::ReportError("Left Encoder: " + std::to_string(encoders->getLeftEncoderRates()));
+	DriverStation::ReportError("Right Encoder: " + std::to_string(encoders->getRightEncoderRates()));
 }
 
 void Mobility::processTurningDegrees() {
@@ -67,6 +70,22 @@ void Mobility::processTurningDegrees() {
 		disableRotationPID();
 		turning_degrees = false;
 	}
+}
+
+float Mobility::getLeftEncoderRates() {
+	return encoders->getLeftEncoderRates();
+}
+
+float Mobility::getRightEncoderRates() {
+	return encoders->getRightEncoderRates();
+}
+
+float Mobility::getLeftSetValue() {
+	return front_left->Get();
+}
+
+float Mobility::getRightSetValue() {
+	return front_right->Get();
 }
 
 void Mobility::DriveDistance(float distance)
