@@ -40,7 +40,6 @@ public:
 	}
 
 	void AutonomousPeriodic() {
-		vision->process();
 		autonomous->process();
 		mobility->process();
 		climber->process();
@@ -55,7 +54,6 @@ public:
 
 	void TeleopPeriodic() {
 		oi->process();
-		vision->process();
 		mobility->process();
 		climber->process();
 		gear->process();
