@@ -21,6 +21,9 @@ public:
 
 	frc::Encoder* left_drive_encoder;
 	frc::Encoder* right_drive_encoder;
+	float getLeftEncoderRates();
+	float getRightEncoderRates();
+
 
 	const float pulseperdistance = 250;
 	void DriveEncoderReset();

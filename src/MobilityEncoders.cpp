@@ -20,6 +20,14 @@ void MobilityEncoders::SetPIDSourceType(frc::PIDSourceType source) {
 	pid_source = source;
 }
 
+float MobilityEncoders::getLeftEncoderRates() {
+	return left_drive_encoder->GetRate();
+}
+
+float MobilityEncoders::getRightEncoderRates() {
+	return right_drive_encoder->GetRate();
+}
+
 double MobilityEncoders::PIDGet() {
 	return ((left_drive_encoder->GetDistance() + right_drive_encoder->GetDistance()) / 2);
 }

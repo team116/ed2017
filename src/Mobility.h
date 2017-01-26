@@ -81,6 +81,13 @@ public:
 	void disableRotationPID();
 	void enableRotationPID();
 
+	float getGyroAngle();
+	float getLeftEncoderRates();
+	float getRightEncoderRates();
+
+	float getLeftSetValue();
+	float getRightSetValue();
+
 
 private:
 	Mobility();
