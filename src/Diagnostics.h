@@ -12,11 +12,12 @@
 
 class Diagnostics {
 public:
-	Diagnostics();
-
+	static Diagnostics* getInstance();
 	void process();
 
 private:
+	Diagnostics();
+	static Diagnostics* INSTANCE;
 
 	Mobility* mobility;
 	BuiltInAccelerometer* accel;

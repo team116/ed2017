@@ -56,7 +56,7 @@ Mobility::Mobility() {
 }
 
 void Mobility::process() {
-	DriverStation::ReportError("Gyro: " + std::to_string(gyro->PIDGet()));
+	// DriverStation::ReportError("Gyro: " + std::to_string(gyro->PIDGet()));
 	if (turning_degrees) {
 		processTurningDegrees();
 	}

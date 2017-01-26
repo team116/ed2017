@@ -7,7 +7,9 @@
 
 #include "Diagnostics.h"
 
-const float ACCEL_THRESHOLD = 0.01;
+Diagnostics* Diagnostics::INSTANCE = nullptr;
+
+const float ACCEL_THRESHOLD = 0.1;
 const float LEFT_SPEED_THRESHOLD = 0.25;
 const float RIGHT_SPEED_THRESHOLD = 0.25;
 const float ENCODER_THRESHOLD = 0.01;
@@ -23,6 +25,8 @@ void Diagnostics::process() {
 	mobility->getLeftEncoderRates();
 	mobility->getRightEncoderRates();
 
+	frc::DriverStation::ReportError("Accel: " + std::to_string(accel->GetX()));
+
 	if ((fabs(accel->GetX()) > ACCEL_THRESHOLD) && (fabs(mobility->getLeftSetValue()) > LEFT_SPEED_THRESHOLD)) {
 		if (fabs(mobility->getLeftEncoderRates()) < ENCODER_THRESHOLD) {
 			// Left encoder broken
@@ -37,5 +41,11 @@ void Diagnostics::process() {
 	}
 }
 
+Diagnostics* Diagnostics::getInstance() {
+	if (INSTANCE == nullptr) {
+		INSTANCE = new Diagnostics();
+	}
 
+	return INSTANCE;
+}
 
