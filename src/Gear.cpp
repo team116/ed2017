@@ -16,12 +16,16 @@ Gear::Gear() {
 	gear_motor = Utils::constructMotor(RobotPorts::MOTOR_GEAR);
 	LS_open = new frc::DigitalInput(RobotPorts::LS_GEAR_OPEN);
 	LS_close = new frc::DigitalInput(RobotPorts::LS_GEAR_CLOSED);
+
+	is_open = false;
 }
 void Gear::open() {
 	gear_motor->Set(1.0);
+	is_open = true;
 }
 void Gear::close() {
 	gear_motor->Set(-1.0);
+	is_open = false;
 }
 //numbers are subject to change
 void Gear::process() {
@@ -33,6 +37,9 @@ void Gear::process() {
 		if (gear_motor->Get() < 0.0)
 			gear_motor->Set(0.0);
 	}
+}
+bool Gear::isOpen() {
+	return is_open;
 }
 
 Gear* Gear::getInstance()

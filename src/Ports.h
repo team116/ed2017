@@ -69,6 +69,7 @@ namespace OIPorts
 
 	//Buttons
 	const unsigned int BUTTON_DRIVE_STRAIGHT = 1;
+	const unsigned int OPEN_GEAR_BUTTON = 2;
 
 	//Axes
 	const unsigned int AXIS_Y = 1;

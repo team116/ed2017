@@ -61,8 +61,8 @@ void Mobility::process() {
 		processTurningDegrees();
 	}
 
-	frc::DriverStation::ReportError("Left Encoder: " + std::to_string(encoders->getLeftEncoderRates()));
-	frc::DriverStation::ReportError("Right Encoder: " + std::to_string(encoders->getRightEncoderRates()));
+	//frc::DriverStation::ReportError("Left Encoder: " + std::to_string(encoders->getLeftEncoderRates()));
+	//frc::DriverStation::ReportError("Right Encoder: " + std::to_string(encoders->getRightEncoderRates()));
 }
 
 void Mobility::processTurningDegrees() {

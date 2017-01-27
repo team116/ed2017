@@ -17,13 +17,15 @@ public:
 	void process();
 	void open();
 	void close();
-
+	bool isOpen();
 private:
 	Gear();
 	static Gear* INSTANCE;
 	frc::SpeedController* gear_motor;
 	frc::DigitalInput* LS_open;
 	frc::DigitalInput* LS_close;
+
+	bool is_open;
 };
 
 #endif /* SRC_GEAR_H_ */

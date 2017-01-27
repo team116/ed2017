@@ -13,8 +13,11 @@ OI* OI::INSTANCE = nullptr;
 OI::OI() {
 	// TODO Auto-generated constructor stub
 	mobility = Mobility::getInstance();
+	gear = Gear::getInstance();
 	joy_left = new frc::Joystick(OIPorts::JOYSTICK_LEFT);
 	joy_right = new frc::Joystick(OIPorts::JOYSTICK_RIGHT);
+	button_box_1 = new frc::Joystick(OIPorts::JOYSTICK_BUTTONS_1);
+	button_box_2 = new frc::Joystick(OIPorts::JOYSTICK_BUTTONS_2);
 }
 
 void OI::process() {
@@ -37,6 +40,15 @@ void OI::process() {
 		}
 		mobility->setLeft(joy_left->GetRawAxis(OIPorts::AXIS_Y) * -1);
 		mobility->setRight(joy_right->GetRawAxis(OIPorts::AXIS_Y) * -1);
+	}
+	if (button_box_1->GetRawButton(OIPorts::OPEN_GEAR_BUTTON) && !gear->isOpen()) {
+		gear->open();
+		frc::DriverStation::ReportError("Opening gear");
+
+	}
+	else if(!button_box_1->GetRawButton(OIPorts::OPEN_GEAR_BUTTON) && gear->isOpen()) {
+		gear->close();
+		frc::DriverStation::ReportError("Closing gear");
 	}
 }
 

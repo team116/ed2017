@@ -25,7 +25,7 @@ void Diagnostics::process() {
 	mobility->getLeftEncoderRates();
 	mobility->getRightEncoderRates();
 
-	frc::DriverStation::ReportError("Accel: " + std::to_string(accel->GetX()));
+	//frc::DriverStation::ReportError("Accel: " + std::to_string(accel->GetX()));
 
 	if ((fabs(accel->GetX()) > ACCEL_THRESHOLD) && (fabs(mobility->getLeftSetValue()) > LEFT_SPEED_THRESHOLD)) {
 		if (fabs(mobility->getLeftEncoderRates()) < ENCODER_THRESHOLD) {
