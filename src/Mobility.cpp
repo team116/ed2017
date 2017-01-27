@@ -61,8 +61,8 @@ void Mobility::process() {
 		processTurningDegrees();
 	}
 
-	DriverStation::ReportError("Left Encoder: " + std::to_string(encoders->getLeftEncoderRates()));
-	DriverStation::ReportError("Right Encoder: " + std::to_string(encoders->getRightEncoderRates()));
+	frc::DriverStation::ReportError("Left Encoder: " + std::to_string(encoders->getLeftEncoderRates()));
+	frc::DriverStation::ReportError("Right Encoder: " + std::to_string(encoders->getRightEncoderRates()));
 }
 
 void Mobility::processTurningDegrees() {
@@ -97,7 +97,7 @@ void Mobility::DriveDistance(float distance)
 //Drive Straight
 void Mobility::startDriveStraight() {
 	driving_straight = true;
-	DriverStation::ReportError("Starting drive straight");
+	frc::DriverStation::ReportError("Starting drive straight");
 	rotation_PID->SetSetpoint(gyro->GetAngle());
 	enableRotationPID();
 }

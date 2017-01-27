@@ -9,11 +9,13 @@
 #include <Ports.h>
 
 MobilityEncoders::MobilityEncoders() {
-	left_drive_encoder = new Encoder(RobotPorts::LEFT_DRIVE_ENCODER_1, RobotPorts::LEFT_DRIVE_ENCODER_2);
-	right_drive_encoder = new Encoder(RobotPorts::RIGHT_DRIVE_ENCODER_1, RobotPorts::RIGHT_DRIVE_ENCODER_2);
+	left_drive_encoder = new frc::Encoder(RobotPorts::LEFT_DRIVE_ENCODER_1, RobotPorts::LEFT_DRIVE_ENCODER_2);
+	right_drive_encoder = new frc::Encoder(RobotPorts::RIGHT_DRIVE_ENCODER_1, RobotPorts::RIGHT_DRIVE_ENCODER_2);
 
 	left_drive_encoder->SetDistancePerPulse(3.14 * 7.5 / (float) pulseperdistance);
 	right_drive_encoder->SetDistancePerPulse(3.14 * 7.5 / (float) pulseperdistance);
+
+	pid_source = frc::PIDSourceType::kRate;
 }
 
 void MobilityEncoders::SetPIDSourceType(frc::PIDSourceType source) {

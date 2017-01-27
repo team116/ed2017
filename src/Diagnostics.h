@@ -20,7 +20,7 @@ private:
 	static Diagnostics* INSTANCE;
 
 	Mobility* mobility;
-	BuiltInAccelerometer* accel;
+	frc::BuiltInAccelerometer* accel;
 
 
 };

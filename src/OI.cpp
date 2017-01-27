@@ -13,8 +13,8 @@ OI* OI::INSTANCE = nullptr;
 OI::OI() {
 	// TODO Auto-generated constructor stub
 	mobility = Mobility::getInstance();
-	joy_left = new Joystick(OIPorts::JOYSTICK_LEFT);
-	joy_right = new Joystick(OIPorts::JOYSTICK_RIGHT);
+	joy_left = new frc::Joystick(OIPorts::JOYSTICK_LEFT);
+	joy_right = new frc::Joystick(OIPorts::JOYSTICK_RIGHT);
 }
 
 void OI::process() {

@@ -19,8 +19,8 @@ private:
 	OI();
 	static OI* INSTANCE;
 	Mobility* mobility;
-	Joystick* joy_left;
-	Joystick* joy_right;
+	frc::Joystick* joy_left;
+	frc::Joystick* joy_right;
 };
 
 #endif /* SRC_OI_H_ */
