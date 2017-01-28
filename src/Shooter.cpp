@@ -27,7 +27,7 @@ Shooter::Shooter() {
 	shooter_PID->SetOutputRange(-1, 1);
 	shooter_PID->SetPIDSourceType(frc::PIDSourceType::kRate);
 	shooter_PID->SetAbsoluteTolerance(50);
-	shooter_PID->Disable();
+	shooter_PID->Enable();
 
 	azimuth_PID = new frc::PIDController(0.1, 0, 0, azimuth_encoder, azimuth);
 	azimuth_PID->SetContinuous(false);
@@ -35,7 +35,7 @@ Shooter::Shooter() {
 	azimuth_PID->SetOutputRange(-1, 1);
 	azimuth_PID->SetPIDSourceType(frc::PIDSourceType::kDisplacement);
 	azimuth_PID->SetAbsoluteTolerance(0.5);
-	azimuth_PID->Disable();
+	azimuth_PID->Enable();
 }
 
 void Shooter::process() {
@@ -58,6 +58,9 @@ void Shooter::process() {
 }
 float Shooter::getShooterAzimuth() {
 	return azimuth_encoder->GetDistance();
+}
+float Shooter::getSpeed() {
+	return shooter->Get();
 }
 void Shooter::enableAzimuthPID() {
 	azimuth_PID->Enable();

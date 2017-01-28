@@ -73,6 +73,7 @@ namespace OIPorts
 
 	//Toggle Switches
 	const unsigned int CLIMBER_UP_SWITCH = 5;
+	const unsigned int SHOOTER_ON_SWITCH = 8;
 
 	//Axes
 	const unsigned int AXIS_Y = 1;

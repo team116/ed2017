@@ -27,6 +27,7 @@ public:
 	void disableShooterPID();
 	void enableAzimuthPID();
 	void disableAzimuthPID();
+	float getSpeed();
 
 private:
 	Shooter();

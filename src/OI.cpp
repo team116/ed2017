@@ -10,11 +10,14 @@
 
 OI* OI::INSTANCE = nullptr;
 
+const float CLIMB_SPEED = 1.0;
+const float SHOOTER_SPEED = 1.0;
 OI::OI() {
 	// TODO Auto-generated constructor stub
 	mobility = Mobility::getInstance();
 	gear = Gear::getInstance();
 	climber = Climber::getInstance();
+	shooter = Shooter::getInstance();
 	joy_left = new frc::Joystick(OIPorts::JOYSTICK_LEFT);
 	joy_right = new frc::Joystick(OIPorts::JOYSTICK_RIGHT);
 	button_box_1 = new frc::Joystick(OIPorts::JOYSTICK_BUTTONS_1);
@@ -51,13 +54,21 @@ void OI::process() {
 		gear->close();
 		frc::DriverStation::ReportError("Closing gear");
 	}
-	if(button_box_1->GetRawButton(OIPorts::CLIMBER_UP_SWITCH) && (1.0 != climber->getSpeed())) {
-		climber->moveClimber(1.0);
+	if(button_box_1->GetRawButton(OIPorts::CLIMBER_UP_SWITCH) && (CLIMB_SPEED != climber->getSpeed())) {
+		climber->moveClimber(CLIMB_SPEED);
 		frc::DriverStation::ReportError("Moving up");
 	}
 	else if(!button_box_1->GetRawButton(OIPorts::CLIMBER_UP_SWITCH) || (0.0 != climber->getSpeed())) {
 		climber->moveClimber(0);
 		frc::DriverStation::ReportError("Stopped moving");
+	}
+	if(button_box_1->GetRawButton(OIPorts::SHOOTER_ON_SWITCH) && (SHOOTER_SPEED != shooter->getSpeed())) {
+		shooter->setShooterRPM(SHOOTER_SPEED);
+		frc::DriverStation::ReportError("Shooter on");
+	}
+	else if (!button_box_1->GetRawButton(OIPorts::SHOOTER_ON_SWITCH) || (0.0 != shooter->getSpeed())) {
+		shooter->setShooterRPM(0);
+	    frc::DriverStation::ReportError("Shooter off");
 	}
 }
 

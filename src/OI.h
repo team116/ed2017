@@ -11,6 +11,7 @@
 #include <Mobility.h>
 #include <Gear.h>
 #include <Climber.h>
+#include <Shooter.h>
 class OI {
 public:
 	static OI* getInstance();
@@ -22,6 +23,7 @@ private:
 	Mobility* mobility;
 	Gear* gear;
 	Climber* climber;
+	Shooter* shooter;
 	frc::Joystick* joy_left;
 	frc::Joystick* joy_right;
 	frc::Joystick* button_box_1;
