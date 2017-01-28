@@ -37,6 +37,24 @@ void Diagnostics::process() {
 		accel_values->Push(0);
 	}
 
+	char text [255];
+	snprintf(text, 255, "[%d,%d,%d,%d,%d,%d,%d,%d,%d,%d] LeftSpeed: %f LeftRate: %f RightSpeed: %f RightRate: %f",
+			accel_values->Get(0),
+			accel_values->Get(1),
+			accel_values->Get(2),
+			accel_values->Get(3),
+			accel_values->Get(4),
+			accel_values->Get(5),
+			accel_values->Get(6),
+			accel_values->Get(7),
+			accel_values->Get(8),
+			accel_values->Get(9),
+			fabs(mobility->getLeftSetValue()),
+			fabs(mobility->getLeftEncoderRates()),
+			fabs(mobility->getRightSetValue()),
+			fabs(mobility->getRightEncoderRates()));
+	frc::DriverStation::ReportError(text);
+
 	for (int i = ACCEL_VALUES_CUTOFF; i < accel_values->Size(); i++) {
 		if (accel_values->Get(i) == 1) {
 			if ((fabs(mobility->getLeftSetValue()) > LEFT_SPEED_THRESHOLD)
