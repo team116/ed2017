@@ -27,6 +27,9 @@ private:
 	frc::Timer* right_enc_timer;
 	Queue* accel_values;
 
+	int left_enc_error_count;
+	int right_enc_error_count;
+
 };
 
 #endif /* DIAGNOSTICS_H_ */
