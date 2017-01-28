@@ -5,15 +5,15 @@
  *      Author: amanzeb
  */
 
-#ifndef SRC_MOBILITYENCODERS_H_
-#define SRC_MOBILITYENCODERS_H_
+#ifndef SRC_MOBILITYENCODER_H_
+#define SRC_MOBILITYENCODER_H_
 
 #include <PIDSource.h>
 #include <Encoder.h>
 
-class MobilityEncoders: public frc::PIDSource {
+class MobilityEncoder: public frc::PIDSource {
 public:
-	MobilityEncoders();
+	MobilityEncoder();
 
 	void SetPIDSourceType(frc::PIDSourceType source);
 	frc::PIDSourceType GetPIDSourceType();
@@ -21,11 +21,11 @@ public:
 
 	frc::Encoder* left_drive_encoder;
 	frc::Encoder* right_drive_encoder;
+
 	float getLeftEncoderRates();
 	float getRightEncoderRates();
 
 
-	const float pulseperdistance = 250;
 	void DriveEncoderReset();
 
 
@@ -33,4 +33,4 @@ private:
 	frc::PIDSourceType pid_source;
 };
 
-#endif /* SRC_MOBILITYENCODERS_H_ */
+#endif /* SRC_MOBILITYENCODER_H_ */

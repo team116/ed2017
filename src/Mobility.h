@@ -9,12 +9,11 @@
 #define SRC_MOBILITY_H_
 
 #include <AnalogGyro.h>
+#include <MobilityDistanceOutput.h>
+#include <MobilityEncoder.h>
 #include <SpeedController.h>
 #include <PIDController.h>
 #include <MobilityRotationPID.h>
-#include <MobilityEncoders.h>
-#include <MobilityStraightOutput.h>
-
 #include "../navx/AHRS.h"
 
 class Mobility {
@@ -75,7 +74,11 @@ public:
 	void setLeftDriveEncoder();
 	void setRightDriveEncoder();
 
-	void DriveDistance(float_t);
+	void StartDriveDistance(float_t);
+	bool isDriveDistanceDone();
+	void disableDistancePID();
+	void enableDistancePID();
+
 
 	//Use these instead of directly enabling/disabling the PID controller and PID output
 	void disableRotationPID();
@@ -97,7 +100,7 @@ private:
 	void processTurningDegrees();
 
 
-	MobilityEncoders* encoders;
+	MobilityEncoder* encoders;
 
 
 	//Motor Controllers
@@ -107,7 +110,7 @@ private:
 	frc::SpeedController* back_left;
 
 
-	frc::PIDController* straight_PID;
+	frc::PIDController* distance_PID;
 
 
 	//Sensors
@@ -116,12 +119,16 @@ private:
 	//PID Stuff
 	MobilityRotationPID* rotation_output;
 	frc::PIDController* rotation_PID;
-	MobilityStraightOutput* straight_output;
+	MobilityDistanceOutput* distance_output;
+
 
 	//Other variables
 	float straight_speed;
 	bool turning_degrees;
 	bool driving_straight;
+	bool is_drive_distance_on;
+
+	void processDistance();
 
 	static int counter;
 };

@@ -42,7 +42,7 @@ public:
 	}
 
 	void AutonomousInit() override {
-
+		mobility->StartDriveDistance(24);
 	}
 
 	void AutonomousPeriodic() {

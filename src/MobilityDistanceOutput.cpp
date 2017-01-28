@@ -5,9 +5,9 @@
  *      Author: amanzeb
  */
 
-#include <MobilityStraightOutput.h>
+#include <MobilityDistanceOutput.h>
 
-MobilityStraightOutput::MobilityStraightOutput(frc::SpeedController* fl, frc::SpeedController* fr, frc::SpeedController* bl, frc::SpeedController* br) {
+MobilityDistanceOutput::MobilityDistanceOutput(frc::SpeedController* fl, frc::SpeedController* fr, frc::SpeedController* bl, frc::SpeedController* br) {
 	front_left = fl;
 	front_right = fr;
 	back_left = bl;
@@ -16,7 +16,7 @@ MobilityStraightOutput::MobilityStraightOutput(frc::SpeedController* fl, frc::Sp
 	enabled = false;
 }
 
-void MobilityStraightOutput::PIDWrite(double output) {
+void MobilityDistanceOutput::PIDWrite(double output) {
 	if(!enabled)
 		return;
 	front_left->Set(output);
@@ -25,10 +25,10 @@ void MobilityStraightOutput::PIDWrite(double output) {
 	back_left->Set(output);
 }
 
-void MobilityStraightOutput::Enable() {
+void MobilityDistanceOutput::Enable() {
 	enabled = true;
 }
 
-void MobilityStraightOutput::Disable() {
+void MobilityDistanceOutput::Disable() {
 	enabled = false;
 }
