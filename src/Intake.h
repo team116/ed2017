@@ -14,6 +14,7 @@ public:
 	static Intake* getInstance();
 	void process();
 	void setSpeedIntake(float speed);
+	float getSpeed();
 
 private:
 	Intake();
