@@ -10,6 +10,7 @@
 #include <Shooter.h>
 #include <Vision.h>
 #include "Diagnostics.h"
+#include "Log.h"
 
 #include <IterativeRobot.h>
 
@@ -24,6 +25,7 @@ private:
 	Shooter* shooter;
 	Vision* vision;
 	Diagnostics* diagnostics;
+	Log* log;
 
 public:
 	void RobotInit() {
@@ -36,6 +38,7 @@ public:
 		shooter = Shooter::getInstance();
 		vision = Vision::getInstance();
 		diagnostics = Diagnostics::getInstance();
+		log = Log::getInstance();
 	}
 
 	void AutonomousInit() override {
@@ -65,6 +68,9 @@ public:
 		shooter->process();
 		diagnostics->process();
 
+	}
+
+	void TestInit() {
 	}
 
 	void TestPeriodic() {
