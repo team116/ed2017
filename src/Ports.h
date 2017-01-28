@@ -70,8 +70,12 @@ namespace OIPorts
 	//Buttons
 	const unsigned int BUTTON_DRIVE_STRAIGHT = 1;
 	const unsigned int OPEN_GEAR_BUTTON = 2;
-	const unsigned int INTAKE_ROLLER_SWITCH = 6;
-	const unsigned int OPPOSITE_INTAKE_SWITCH = 7;
+	//const unsigned int INTAKE_ROLLER_SWITCH = 3;
+	//const unsigned int OPPOSITE_INTAKE_SWITCH = 4;
+	//const unsigned int BLENDER_FORWARD_SWITCH = 6;
+	//const unsigned int BLENDER_REVERSE_SWITCH = 7;
+	const unsigned int FEEDER_FORWARD_SWITCH = 6;
+	const unsigned int FEEDER_REVERSE_SWITCH = 7;
 
 	//2-way Toggle Switches
 	const unsigned int CLIMBER_UP_SWITCH = 5;

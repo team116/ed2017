@@ -14,6 +14,10 @@ const float CLIMB_SPEED = 1.0;
 const float SHOOTER_SPEED = 1.0;
 const float INTAKE_SPEED = 1.0;
 const float OPPOSITE_INTAKE_SPEED = -1.0;
+const float BLENDER_SPEED = 1.0;
+const float BLENDER_REVERSE_SPEED = -1.0;
+const float FEEDER_SPEED = 1.0;
+const float FEEDER_REVERSE_SPEED = -1.0;
 
 OI::OI() {
 	// TODO Auto-generated constructor stub
@@ -74,7 +78,7 @@ void OI::process() {
 		shooter->setShooterRPM(0);
 	    //frc::DriverStation::ReportError("Shooter off");
 	}
-	if (button_box_1->GetRawButton(6) && (INTAKE_SPEED != intake->getSpeed())) {
+	/*if (button_box_1->GetRawButton(6) && (INTAKE_SPEED != intake->getSpeed())) {
 		intake->setSpeedIntake(INTAKE_SPEED);
 	    //frc::DriverStation::ReportError("Intaking");
 	}
@@ -85,7 +89,31 @@ void OI::process() {
 	else if (!button_box_1->GetRawButton(6) && (!button_box_1->GetRawButton(7))) {
 		intake->setSpeedIntake(0);
 	    //frc::DriverStation::ReportError("Intake and opposite-intake off");
-	}
+	}*/
+	/*if (button_box_1->GetRawButton(6) && (BLENDER_SPEED != feeder->getSpeed())) {
+			feeder->setBlenderSpeed(BLENDER_SPEED);
+		    frc::DriverStation::ReportError("Blending forward");
+		}
+		else if (button_box_1->GetRawButton(7) && (BLENDER_REVERSE_SPEED != feeder->getSpeed())) {
+			feeder->setBlenderSpeed(BLENDER_REVERSE_SPEED);
+		    frc::DriverStation::ReportError("Blender reverse");
+		}
+		else if (!button_box_1->GetRawButton(6) && (!button_box_1->GetRawButton(7))) {
+			feeder->setBlenderSpeed(0);
+		    frc::DriverStation::ReportError("Blender off");
+		}*/
+	if (button_box_1->GetRawButton(6) && (FEEDER_SPEED != feeder->getSpeed())) {
+			feeder->setBlenderSpeed(FEEDER_SPEED);
+		    frc::DriverStation::ReportError("Feeding forward");
+		}
+	    else if (button_box_1->GetRawButton(7) && (FEEDER_REVERSE_SPEED != feeder->getSpeed())) {
+			feeder->setBlenderSpeed(FEEDER_REVERSE_SPEED);
+		    frc::DriverStation::ReportError("Feeding reverse");
+	    }
+		else if (!button_box_1->GetRawButton(6) && (!button_box_1->GetRawButton(7))) {
+			feeder->setBlenderSpeed(0);
+			frc::DriverStation::ReportError("Feeder off");
+		}
 }
 
 OI* OI::getInstance()
