@@ -29,6 +29,13 @@ namespace RobotPorts
 	const unsigned int MOTOR_INTAKE = 2;
 	const unsigned int SERVO_CONVERTER = 9;
 
+	//Pistons
+	const unsigned int LEFT_PISTON_OPEN = 1;
+	const unsigned int LEFT_PISTON_CLOSE = 2;
+	const unsigned int RIGHT_PISTON_OPEN = 3;
+	const unsigned int RIGHT_PISTON_CLOSE = 4;	//pretty sure we'll need to change these port #s
+
+
 	//navX Motors
 	//Possible gear motor?
 	const unsigned int MOTOR_GEAR = 10;//N0
