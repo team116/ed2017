@@ -10,6 +10,7 @@
 #include <Joystick.h>
 #include <Mobility.h>
 #include <Gear.h>
+#include <Climber.h>
 class OI {
 public:
 	static OI* getInstance();
@@ -20,6 +21,7 @@ private:
 	static OI* INSTANCE;
 	Mobility* mobility;
 	Gear* gear;
+	Climber* climber;
 	frc::Joystick* joy_left;
 	frc::Joystick* joy_right;
 	frc::Joystick* button_box_1;

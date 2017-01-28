@@ -14,6 +14,7 @@ OI::OI() {
 	// TODO Auto-generated constructor stub
 	mobility = Mobility::getInstance();
 	gear = Gear::getInstance();
+	climber = Climber::getInstance();
 	joy_left = new frc::Joystick(OIPorts::JOYSTICK_LEFT);
 	joy_right = new frc::Joystick(OIPorts::JOYSTICK_RIGHT);
 	button_box_1 = new frc::Joystick(OIPorts::JOYSTICK_BUTTONS_1);
@@ -49,6 +50,14 @@ void OI::process() {
 	else if(!button_box_1->GetRawButton(OIPorts::OPEN_GEAR_BUTTON) && gear->isOpen()) {
 		gear->close();
 		frc::DriverStation::ReportError("Closing gear");
+	}
+	if(button_box_1->GetRawButton(OIPorts::CLIMBER_UP_SWITCH) && (1.0 != climber->getSpeed())) {
+		climber->moveClimber(1.0);
+		frc::DriverStation::ReportError("Moving up");
+	}
+	else if(!button_box_1->GetRawButton(OIPorts::CLIMBER_UP_SWITCH) || (0.0 != climber->getSpeed())) {
+		climber->moveClimber(0);
+		frc::DriverStation::ReportError("Stopped moving");
 	}
 }
 

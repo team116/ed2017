@@ -27,18 +27,18 @@ void Diagnostics::process() {
 	mobility->getLeftEncoderRates();
 	mobility->getRightEncoderRates();
 
-	frc::DriverStation::ReportError("Accel: " + std::to_string(accel->GetX()) + " Rate: "
+	/*frc::DriverStation::ReportError("Accel: " + std::to_string(accel->GetX()) + " Rate: "
 			+ std::to_string(fabs(mobility->getLeftEncoderRates())) + " Set: "
 			+ std::to_string(fabs(mobility->getLeftSetValue()))
-			+ " Timer: " + std::to_string(left_enc_timer->Get()));
+			+ " Timer: " + std::to_string(left_enc_timer->Get()));*/
 
 	if ((fabs(accel->GetX()) > ACCEL_THRESHOLD) && (fabs(mobility->getLeftSetValue()) > LEFT_SPEED_THRESHOLD)
 			&& (fabs(mobility->getLeftEncoderRates()) < ENCODER_THRESHOLD)) {
-		frc::DriverStation::ReportError("Starting timer");
+		//frc::DriverStation::ReportError("Starting timer");
 		left_enc_timer->Start();
 	}
 	else {
-		frc::DriverStation::ReportError("Stopping timer");
+		//frc::DriverStation::ReportError("Stopping timer");
 		left_enc_timer->Stop();
 		left_enc_timer->Reset();
 	}

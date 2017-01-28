@@ -15,7 +15,7 @@ public:
 
 	void process();
 	void moveClimber (float speed);
-
+	float getSpeed();
 private:
 	Climber();
 	static Climber* INSTANCE;
