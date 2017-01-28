@@ -56,13 +56,13 @@ Mobility::Mobility() {
 }
 
 void Mobility::process() {
-	// DriverStation::ReportError("Gyro: " + std::to_string(gyro->PIDGet()));
+	//DriverStation::ReportError("Gyro: " + std::to_string(gyro->PIDGet()));
 	if (turning_degrees) {
 		processTurningDegrees();
 	}
 
-	frc::DriverStation::ReportError("Left Encoder: " + std::to_string(encoders->getLeftEncoderRates()));
-	frc::DriverStation::ReportError("Right Encoder: " + std::to_string(encoders->getRightEncoderRates()));
+	//frc::DriverStation::ReportError("Left Encoder: " + std::to_string(encoders->getLeftEncoderRates()));
+	//frc::DriverStation::ReportError("Right Encoder: " + std::to_string(encoders->getRightEncoderRates()));
 }
 
 void Mobility::processTurningDegrees() {
@@ -98,7 +98,7 @@ void Mobility::DriveDistance(float distance)
 void Mobility::startDriveStraight() {
 	driving_straight = true;
 	frc::DriverStation::ReportError("Starting drive straight");
-	rotation_PID->SetSetpoint(gyro->GetAngle());
+	rotation_PID->SetSetpoint(gyro->GetYaw());
 	enableRotationPID();
 }
 bool Mobility::isDrivingStraight() {

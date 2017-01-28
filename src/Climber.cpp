@@ -21,17 +21,9 @@ void Climber::process() {
 void Climber::moveClimber(float speed) {
 	climber->Set(speed);
 }
-/*void Climber::climbUp(float speed) {
-	climber->Set(1.0);
+float Climber::getSpeed() {
+	return climber->Get();
 }
-
-void Climber::climbDown(float speed) {
-	climber->Set(-1.0);
-}
-
-void Climber::climbStop(float speed) {
-	climber->Set(0.0);
-} */
 
 Climber* Climber::getInstance()
 {

@@ -9,7 +9,8 @@
 #define SRC_OI_H_
 #include <Joystick.h>
 #include <Mobility.h>
-
+#include <Gear.h>
+#include <Climber.h>
 class OI {
 public:
 	static OI* getInstance();
@@ -19,8 +20,12 @@ private:
 	OI();
 	static OI* INSTANCE;
 	Mobility* mobility;
+	Gear* gear;
+	Climber* climber;
 	frc::Joystick* joy_left;
 	frc::Joystick* joy_right;
+	frc::Joystick* button_box_1;
+	frc::Joystick* button_box_2;
 };
 
 #endif /* SRC_OI_H_ */
