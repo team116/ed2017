@@ -10,6 +10,7 @@
 #include "Mobility.h"
 #include <BuiltInAccelerometer.h>
 #include <Timer.h>
+#include "Queue.h"
 
 class Diagnostics {
 public:
@@ -24,7 +25,7 @@ private:
 	frc::BuiltInAccelerometer* accel;
 	frc::Timer* left_enc_timer;
 	frc::Timer* right_enc_timer;
-
+	Queue* accel_values;
 
 };
 

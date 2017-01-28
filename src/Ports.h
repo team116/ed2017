@@ -39,8 +39,8 @@ namespace RobotPorts
 	const unsigned int MOTOR_SHOOTER_WHEEL = 1;
 
 	//Sensors
-	const unsigned int LS_GEAR_OPEN = 1;
-	const unsigned int LS_GEAR_CLOSED = 2;
+	const unsigned int LS_GEAR_OPEN = 0;
+	const unsigned int LS_GEAR_CLOSED = 9;
 
 
 	//Encoders
