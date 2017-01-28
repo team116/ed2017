@@ -70,10 +70,15 @@ namespace OIPorts
 	//Buttons
 	const unsigned int BUTTON_DRIVE_STRAIGHT = 1;
 	const unsigned int OPEN_GEAR_BUTTON = 2;
+	const unsigned int INTAKE_ROLLER_SWITCH = 6;
+	const unsigned int OPPOSITE_INTAKE_SWITCH = 7;
 
-	//Toggle Switches
+	//2-way Toggle Switches
 	const unsigned int CLIMBER_UP_SWITCH = 5;
 	const unsigned int SHOOTER_ON_SWITCH = 8;
+
+	//3-way Toggle Switches
+	//To be added
 
 	//Axes
 	const unsigned int AXIS_Y = 1;
