@@ -9,30 +9,54 @@
 
 Diagnostics* Diagnostics::INSTANCE = nullptr;
 
+const int   ACCEL_VALUES_CUTOFF = 5;
 const float ACCEL_THRESHOLD = 0.075;
 const float LEFT_SPEED_THRESHOLD = 0.25;
 const float RIGHT_SPEED_THRESHOLD = 0.25;
 const float ENCODER_THRESHOLD = 0.01;
 const float ENCODER_TIMEOUT = 0.1;
+
+
+
 Diagnostics::Diagnostics() {
 	// TODO Auto-generated constructor stub
 	mobility = Mobility::getInstance();
 	accel = new frc::BuiltInAccelerometer();
 	left_enc_timer = new frc::Timer();
 	right_enc_timer = new frc::Timer();
-
+	accel_values = new Queue();
 }
 
 void Diagnostics::process() {
 	mobility->getLeftEncoderRates();
 	mobility->getRightEncoderRates();
+	if ((fabs(accel->GetX())) > ACCEL_THRESHOLD) {
+		accel_values->Push(1);
+	}
+	else {
+		accel_values->Push(0);
+	}
+
+	for (int i = ACCEL_VALUES_CUTOFF; i < accel_values->Size(); i++) {
+		if (accel_values->Get(i) == 1) {
+			if ((fabs(mobility->getLeftSetValue()) > LEFT_SPEED_THRESHOLD)
+				&& (fabs(mobility->getLeftEncoderRates()) < ENCODER_THRESHOLD)) {
+					frc::DriverStation::ReportError("Left flagrant system error.");
+			}
+
+			if ((fabs(mobility->getRightSetValue()) > RIGHT_SPEED_THRESHOLD)
+				&& (fabs(mobility->getRightEncoderRates()) < ENCODER_THRESHOLD)) {
+					frc::DriverStation::ReportError("Right flagrant system error.");
+				}
+		}
+	}
 
 	/*frc::DriverStation::ReportError("Accel: " + std::to_string(accel->GetX()) + " Rate: "
 			+ std::to_string(fabs(mobility->getLeftEncoderRates())) + " Set: "
 			+ std::to_string(fabs(mobility->getLeftSetValue()))
 			+ " Timer: " + std::to_string(left_enc_timer->Get()));*/
 
-	if ((fabs(accel->GetX()) > ACCEL_THRESHOLD) && (fabs(mobility->getLeftSetValue()) > LEFT_SPEED_THRESHOLD)
+	/*if ((fabs(accel->GetX()) > ACCEL_THRESHOLD) && (fabs(mobility->getLeftSetValue()) > LEFT_SPEED_THRESHOLD)
 			&& (fabs(mobility->getLeftEncoderRates()) < ENCODER_THRESHOLD)) {
 		//frc::DriverStation::ReportError("Starting timer");
 		left_enc_timer->Start();
@@ -61,7 +85,7 @@ void Diagnostics::process() {
 		frc::DriverStation::ReportError("Right Encoder Malfunctioning: "
 				+ std::to_string(accel->GetX()) + " + "
 				+ std::to_string(mobility->getRightEncoderRates()));
-	}
+	} */
 }
 
 Diagnostics* Diagnostics::getInstance() {
