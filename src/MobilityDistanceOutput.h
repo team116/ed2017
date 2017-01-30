@@ -6,15 +6,15 @@
  *      Author: amanzeb
  */
 
-#ifndef SRC_MOBILITYSTRAIGHTOUTPUT_H_
-#define SRC_MOBILITYSTRAIGHTOUTPUT_H_
+#ifndef SRC_MOBILITYDISTANCEOUTPUT_H_
+#define SRC_MOBILITYDISTANCEOUTPUT_H_
 
 #include <PIDOutput.h>
 #include <SpeedController.h>
 
-class MobilityStraightOutput: public frc::PIDOutput {
+class MobilityDistanceOutput: public frc::PIDOutput {
 public:
-	MobilityStraightOutput(frc::SpeedController* fl, frc::SpeedController* fr, frc::SpeedController* br, frc::SpeedController* bl);
+	MobilityDistanceOutput(frc::SpeedController* fl, frc::SpeedController* fr, frc::SpeedController* br, frc::SpeedController* bl);
 
 	void PIDWrite(double output);
 	void Enable();
@@ -30,4 +30,4 @@ private:
 	bool enabled;
 };
 
-#endif /* SRC_MOBILITYSTRAIGHTOUTPUT_H_ */
+#endif /* SRC_MOBILITYDISTANCEOUTPUT_H_ */

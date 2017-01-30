@@ -24,7 +24,7 @@ Mobility::Mobility() {
 
 	//Sensors
 	gyro = new AHRS(SPI::Port::kMXP);
-	encoders = new MobilityEncoders();
+	encoders = new MobilityEncoder();
 
 
 	//Initialize class variables to default value
@@ -44,14 +44,14 @@ Mobility::Mobility() {
 	rotation_PID->SetPIDSourceType(PIDSourceType::kDisplacement);
 	rotation_PID->SetAbsoluteTolerance(0.5);
 
-	straight_output = new MobilityStraightOutput(front_left, front_right, back_left, back_right);
-	straight_PID = new frc::PIDController(0.1, 0, 0.0001, encoders, straight_output);
-	straight_PID->Disable();
-	straight_PID->SetContinuous(false);
-	straight_PID->SetInputRange(0, 650);
-	straight_PID->SetOutputRange(-1.0, 1.0);
-	straight_PID->SetPIDSourceType(PIDSourceType::kDisplacement);
-	straight_PID->SetAbsoluteTolerance(0.5);
+	distance_output = new MobilityDistanceOutput(front_left, front_right, back_left, back_right);
+	distance_PID = new frc::PIDController(0.1, 0, 0.0001, encoders, distance_output);
+	distance_PID->Disable();
+	distance_PID->SetContinuous(false);
+	distance_PID->SetInputRange(0, 650);
+	distance_PID->SetOutputRange(-1.0, 1.0);
+	distance_PID->SetPIDSourceType(PIDSourceType::kDisplacement);
+	distance_PID->SetAbsoluteTolerance(0.5);
 
 }
 
@@ -60,9 +60,19 @@ void Mobility::process() {
 	if (turning_degrees) {
 		processTurningDegrees();
 	}
+	if(is_drive_distance_on) {
+		processDistance();
+	}
 
 	//frc::DriverStation::ReportError("Left Encoder: " + std::to_string(encoders->getLeftEncoderRates()));
 	//frc::DriverStation::ReportError("Right Encoder: " + std::to_string(encoders->getRightEncoderRates()));
+}
+
+void Mobility::processDistance() {
+	if(distance_PID->OnTarget()) {
+		disableDistancePID();
+		is_drive_distance_on = false;
+	}
 }
 
 void Mobility::processTurningDegrees() {
@@ -88,10 +98,18 @@ float Mobility::getRightSetValue() {
 	return front_right->Get();
 }
 
-void Mobility::DriveDistance(float distance)
-{
-	straight_PID->SetSetpoint(distance);
+//Drive Distance
+void Mobility::StartDriveDistance(float distance) {
+	is_drive_distance_on = true;
+	encoders->DriveEncoderReset();
+	distance_PID->SetSetpoint(distance);
+	enableDistancePID();
+}
 
+bool Mobility::isDriveDistanceDone() {
+	if(!is_drive_distance_on) {
+	disableDistancePID();
+	}
 }
 
 //Drive Straight
@@ -143,6 +161,16 @@ void Mobility::disableRotationPID() {
 void Mobility::enableRotationPID() {
 	rotation_output->Enable();
 	rotation_PID->Enable();
+}
+
+void Mobility::disableDistancePID() {
+	distance_PID->Disable();
+	distance_output->Disable();
+}
+
+void Mobility::enableDistancePID() {
+	distance_PID->Enable();
+	distance_output->Enable();
 }
 
 Mobility* Mobility::getInstance()

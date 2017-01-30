@@ -29,20 +29,25 @@ private:
 
 public:
 	void RobotInit() {
-		autonomous = Autonomous::getInstance();
-		climber = Climber::getInstance();
-		gear = Gear::getInstance();
-		intake = Intake::getInstance();
-		mobility = Mobility::getInstance();
-		oi = OI::getInstance();
-		shooter = Shooter::getInstance();
-		vision = Vision::getInstance();
-		diagnostics = Diagnostics::getInstance();
-		log = Log::getInstance();
+		try {
+			autonomous = Autonomous::getInstance();
+			climber = Climber::getInstance();
+			gear = Gear::getInstance();
+			intake = Intake::getInstance();
+			mobility = Mobility::getInstance();
+			oi = OI::getInstance();
+			shooter = Shooter::getInstance();
+			vision = Vision::getInstance();
+			diagnostics = Diagnostics::getInstance();
+			log = Log::getInstance();
+		} catch(std::exception e) {
+			frc::DriverStation::ReportError("Flagrant System Error (RobotInit): ");
+			frc::DriverStation::ReportError(e.what());
+		}
 	}
 
 	void AutonomousInit() override {
-
+		mobility->StartDriveDistance(24);
 	}
 
 	void AutonomousPeriodic() {
@@ -60,14 +65,18 @@ public:
 	}
 
 	void TeleopPeriodic() {
-		oi->process();
-		mobility->process();
-		climber->process();
-		gear->process();
-		intake->process();
-		shooter->process();
-		diagnostics->process();
-
+		try {
+			oi->process();
+			mobility->process();
+			climber->process();
+			gear->process();
+			intake->process();
+			shooter->process();
+			diagnostics->process();
+		} catch(std::exception e) {
+			frc::DriverStation::ReportError("Flagrant System Error (TeleopPeriodic):");
+			frc::DriverStation::ReportError(e.what());
+		}
 	}
 
 	void TestInit() {

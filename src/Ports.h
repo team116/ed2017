@@ -46,8 +46,8 @@ namespace RobotPorts
 	const unsigned int MOTOR_SHOOTER_WHEEL = 1;
 
 	//Sensors
-	const unsigned int LS_GEAR_OPEN = 1;
-	const unsigned int LS_GEAR_CLOSED = 2;
+	const unsigned int LS_GEAR_OPEN = 0;
+	const unsigned int LS_GEAR_CLOSED = 9;
 
 
 	//Encoders
@@ -77,10 +77,19 @@ namespace OIPorts
 	//Buttons
 	const unsigned int BUTTON_DRIVE_STRAIGHT = 1;
 	const unsigned int OPEN_GEAR_BUTTON = 2;
+	//const unsigned int INTAKE_ROLLER_SWITCH = 3;
+	//const unsigned int OPPOSITE_INTAKE_SWITCH = 4;
+	//const unsigned int BLENDER_FORWARD_SWITCH = 6;
+	//const unsigned int BLENDER_REVERSE_SWITCH = 7;
+	const unsigned int FEEDER_FORWARD_SWITCH = 6;
+	const unsigned int FEEDER_REVERSE_SWITCH = 7;
 
-	//Toggle Switches
+	//2-way Toggle Switches
 	const unsigned int CLIMBER_UP_SWITCH = 5;
 	const unsigned int SHOOTER_ON_SWITCH = 8;
+
+	//3-way Toggle Switches
+	//To be added
 
 	//Axes
 	const unsigned int AXIS_Y = 1;
