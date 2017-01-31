@@ -105,7 +105,7 @@ void OI::process() {
 		}*/
 	if (button_box_1->GetRawButton(6) && (FEEDER_SPEED != feeder->getSpeed())) {
 		feeder->setBlenderSpeed(FEEDER_SPEED);
-		frc::DriverStation::ReportError("Feeding forward");
+		//frc::DriverStation::ReportError("Feeding forward");
 	}
 	else if (button_box_1->GetRawButton(7) && (FEEDER_REVERSE_SPEED != feeder->getSpeed())) {
 		feeder->setBlenderSpeed(FEEDER_REVERSE_SPEED);
