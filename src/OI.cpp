@@ -22,8 +22,6 @@ const float FEEDER_REVERSE_SPEED = -1.0;
 OI::OI() {
 	// TODO Auto-generated constructor stub
 
-	log = Log::getInstance();
-
 	mobility = Mobility::getInstance();
 	gear = Gear::getInstance();
 	climber = Climber::getInstance();
