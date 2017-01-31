@@ -10,6 +10,7 @@
 
 #include <SpeedController.h>
 #include <DigitalInput.h>
+#include <DoubleSolenoid.h>
 
 class Gear {
 public:
@@ -24,6 +25,8 @@ private:
 	frc::SpeedController* gear_motor;
 	frc::DigitalInput* LS_open;
 	frc::DigitalInput* LS_close;
+	frc::DoubleSolenoid* left_piston;
+	frc::DoubleSolenoid* right_piston;
 
 	bool is_open;
 };

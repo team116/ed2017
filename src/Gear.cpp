@@ -14,29 +14,24 @@ Gear* Gear::INSTANCE = nullptr;
 Gear::Gear() {
 	// TODO Auto-generated constructor stub
 	gear_motor = Utils::constructMotor(RobotPorts::MOTOR_GEAR);
-	LS_open = new frc::DigitalInput(RobotPorts::LS_GEAR_OPEN);
-	LS_close = new frc::DigitalInput(RobotPorts::LS_GEAR_CLOSED);
+	//LS_open = new frc::DigitalInput(RobotPorts::LS_GEAR_OPEN);
+	//LS_close = new frc::DigitalInput(RobotPorts::LS_GEAR_CLOSED);
+	left_piston = new frc::DoubleSolenoid(RobotPorts::LEFT_PISTON_OPEN , RobotPorts::LEFT_PISTON_CLOSE);
+	right_piston = new frc::DoubleSolenoid(RobotPorts::RIGHT_PISTON_OPEN , RobotPorts::RIGHT_PISTON_CLOSE);
 
 	is_open = false;
 }
 void Gear::open() {
-	gear_motor->Set(1.0);
-	is_open = true;
+	left_piston->Set(frc::DoubleSolenoid::Value::kForward);	//kForward is an assumption, we need to test it
+	right_piston->Set(frc::DoubleSolenoid::Value::kForward);
 }
 void Gear::close() {
-	gear_motor->Set(-1.0);
-	is_open = false;
+	right_piston->Set(frc::DoubleSolenoid::Value::kReverse);	//also an assumption
+	left_piston->Set(frc::DoubleSolenoid::Value::kReverse);
 }
 //numbers are subject to change
 void Gear::process() {
-	if (LS_open->Get()) {
-		if (gear_motor->Get() > 0.0)
-				gear_motor->Set(0.0);
-	}
-	if (LS_close->Get()) {
-		if (gear_motor->Get() < 0.0)
-			gear_motor->Set(0.0);
-	}
+
 }
 bool Gear::isOpen() {
 	return is_open;
