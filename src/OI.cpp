@@ -109,11 +109,11 @@ void OI::process() {
 	}
 	else if (button_box_1->GetRawButton(7) && (FEEDER_REVERSE_SPEED != feeder->getSpeed())) {
 		feeder->setBlenderSpeed(FEEDER_REVERSE_SPEED);
-		frc::DriverStation::ReportError("Feeding reverse");
+		//frc::DriverStation::ReportError("Feeding reverse");
 	}
 	else if (!button_box_1->GetRawButton(6) && (!button_box_1->GetRawButton(7))) {
 		feeder->setBlenderSpeed(0);
-		frc::DriverStation::ReportError("Feeder off");
+		//frc::DriverStation::ReportError("Feeder off");
 	}
 }
 
