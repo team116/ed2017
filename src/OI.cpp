@@ -21,11 +21,15 @@ const float FEEDER_REVERSE_SPEED = -1.0;
 
 OI::OI() {
 	// TODO Auto-generated constructor stub
+
+	log = Log::getInstance();
+
 	mobility = Mobility::getInstance();
 	gear = Gear::getInstance();
 	climber = Climber::getInstance();
 	shooter = Shooter::getInstance();
 	intake = Intake::getInstance();
+	feeder = Feeder::getInstance();
 	joy_left = new frc::Joystick(OIPorts::JOYSTICK_LEFT);
 	joy_right = new frc::Joystick(OIPorts::JOYSTICK_RIGHT);
 	button_box_1 = new frc::Joystick(OIPorts::JOYSTICK_BUTTONS_1);
@@ -38,7 +42,6 @@ void OI::process() {
 			mobility->startDriveStraight();
 		}
 		mobility->setStraightSpeed(joy_left->GetRawAxis(OIPorts::AXIS_Y) * -1);
-
 	}
 	else if (joy_right->GetRawButton(OIPorts::BUTTON_DRIVE_STRAIGHT)) {
 		if (!mobility->isDrivingStraight()) {
@@ -103,17 +106,17 @@ void OI::process() {
 		    frc::DriverStation::ReportError("Blender off");
 		}*/
 	if (button_box_1->GetRawButton(6) && (FEEDER_SPEED != feeder->getSpeed())) {
-			feeder->setBlenderSpeed(FEEDER_SPEED);
-		    frc::DriverStation::ReportError("Feeding forward");
-		}
-	    else if (button_box_1->GetRawButton(7) && (FEEDER_REVERSE_SPEED != feeder->getSpeed())) {
-			feeder->setBlenderSpeed(FEEDER_REVERSE_SPEED);
-		    frc::DriverStation::ReportError("Feeding reverse");
-	    }
-		else if (!button_box_1->GetRawButton(6) && (!button_box_1->GetRawButton(7))) {
-			feeder->setBlenderSpeed(0);
-			frc::DriverStation::ReportError("Feeder off");
-		}
+		feeder->setBlenderSpeed(FEEDER_SPEED);
+		frc::DriverStation::ReportError("Feeding forward");
+	}
+	else if (button_box_1->GetRawButton(7) && (FEEDER_REVERSE_SPEED != feeder->getSpeed())) {
+		feeder->setBlenderSpeed(FEEDER_REVERSE_SPEED);
+		frc::DriverStation::ReportError("Feeding reverse");
+	}
+	else if (!button_box_1->GetRawButton(6) && (!button_box_1->GetRawButton(7))) {
+		feeder->setBlenderSpeed(0);
+		frc::DriverStation::ReportError("Feeder off");
+	}
 }
 
 OI* OI::getInstance()

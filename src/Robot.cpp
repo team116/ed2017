@@ -36,11 +36,15 @@ public:
 			frc::DriverStation::ReportError(e->what());
 		}
 
+		log->write(Log::DEBUG_LEVEL, "Log Initialized");
+
 		try {
 			autonomous = Autonomous::getInstance();
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error initializing Autonomous\n%s", e->what());
 		}
+
+		log->write(Log::DEBUG_LEVEL, "Autonomous Initialized");
 
 		try {
 			climber = Climber::getInstance();
@@ -48,11 +52,15 @@ public:
 			log->write(Log::ERROR_LEVEL, "Error initializing Climber\n%s", e->what());
 		}
 
+		log->write(Log::DEBUG_LEVEL, "Climber Initialized");
+
 		try {
 			gear = Gear::getInstance();
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error initializing Gear\n%s", e->what());
 		}
+
+		log->write(Log::DEBUG_LEVEL, "Gear Initialized");
 
 		try {
 			intake = Intake::getInstance();
@@ -60,11 +68,15 @@ public:
 			log->write(Log::ERROR_LEVEL, "Error initializing Intake\n%s", e->what());
 		}
 
+		log->write(Log::DEBUG_LEVEL, "Intake Initialized");
+
 		try {
 			mobility = Mobility::getInstance();
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error initializing Mobility\n%s", e->what());
 		}
+
+		log->write(Log::DEBUG_LEVEL, "Mobility Initialized");
 
 		try {
 			oi = OI::getInstance();
@@ -72,11 +84,15 @@ public:
 			log->write(Log::ERROR_LEVEL, "Error initializing OI\n%s", e->what());
 		}
 
+		log->write(Log::DEBUG_LEVEL, "OI Initialized");
+
 		try {
 			shooter = Shooter::getInstance();
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error initializing Shooter\n%s", e->what());
 		}
+
+		log->write(Log::DEBUG_LEVEL, "Shooter Initialized");
 
 		try {
 			vision = Vision::getInstance();
@@ -84,11 +100,15 @@ public:
 			log->write(Log::ERROR_LEVEL, "Error initializing Vision\n%s", e->what());
 		}
 
+		log->write(Log::DEBUG_LEVEL, "Vision Initialized");
+
 		try {
 			diagnostics = Diagnostics::getInstance();
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error initializing Diagnostics\n%s", e->what());
 		}
+
+		log->write(Log::DEBUG_LEVEL, "Diagnostics Initialized");
 	}
 
 	void AutonomousInit() override {
