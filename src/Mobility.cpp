@@ -31,7 +31,7 @@ Mobility::Mobility() {
 	straight_speed = 0.0;
 	turning_degrees = false;
 	driving_straight = false;
-
+	is_drive_distance_on = false;
 
 	//PID controllers
 	rotation_output = new MobilityRotationPID(front_left, front_right, back_left, back_right);
@@ -75,7 +75,7 @@ void Mobility::processDistance() {
 	}
 }
 
-void Mobility::processTurningDegrees() {
+void Mobility::processTurningDegrees() { //Here!
 	if (rotation_PID->OnTarget()) {
 		disableRotationPID();
 		turning_degrees = false;
@@ -97,6 +97,10 @@ float Mobility::getLeftSetValue() {
 float Mobility::getRightSetValue() {
 	return front_right->Get();
 }
+bool Mobility::isTurnDegreesDone() {
+	return rotation_PID->OnTarget();
+}
+
 
 //Drive Distance
 void Mobility::StartDriveDistance(float distance) {
