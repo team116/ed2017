@@ -116,6 +116,7 @@ bool Mobility::isDriveDistanceDone() {
 void Mobility::startDriveStraight() {
 	driving_straight = true;
 	frc::DriverStation::ReportError("Starting drive straight");
+	frc::DriverStation::ReportError("Current gyro: " + std::to_string(gyro->GetYaw()));
 	rotation_PID->SetSetpoint(gyro->GetYaw());
 	enableRotationPID();
 }

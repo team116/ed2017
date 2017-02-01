@@ -111,6 +111,14 @@ public:
 		log->write(Log::DEBUG_LEVEL, "Diagnostics Initialized");
 	}
 
+	void DisabledInit() {
+		mobility->stopDriveStraight();
+		mobility->disableDistancePID();
+		mobility->disableRotationPID();
+		shooter->disableAzimuthPID();
+		shooter->disableShooterPID();
+	}
+
 	void AutonomousInit() override {
 		try {
 			mobility->StartDriveDistance(24);
