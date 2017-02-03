@@ -53,6 +53,7 @@ Mobility::Mobility() {
 	distance_PID->SetPIDSourceType(PIDSourceType::kDisplacement);
 	distance_PID->SetAbsoluteTolerance(0.5);
 
+	//LiveWindow::GetInstance()->AddActuator("Mobility", "Rotation PID", rotation_PID);
 }
 
 void Mobility::process() {
@@ -79,6 +80,8 @@ void Mobility::processTurningDegrees() { //Here!
 	if (rotation_PID->OnTarget()) {
 		disableRotationPID();
 		turning_degrees = false;
+		setLeft(0);
+		setRight(0);
 	}
 }
 
@@ -111,9 +114,7 @@ void Mobility::StartDriveDistance(float distance) {
 }
 
 bool Mobility::isDriveDistanceDone() {
-	if(!is_drive_distance_on) {
-	disableDistancePID();
-	}
+	return distance_PID->OnTarget();
 }
 
 //Drive Straight
@@ -156,6 +157,8 @@ void Mobility::turnDegrees(float degrees) {
 	gyro->Reset();
 	rotation_PID->SetSetpoint(degrees);
 	enableRotationPID();
+
+	rotation_output->setForwardSpeed(0);
 }
 
 void Mobility::disableRotationPID() {

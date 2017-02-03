@@ -121,7 +121,7 @@ public:
 
 	void AutonomousInit() override {
 		try {
-			mobility->StartDriveDistance(24);
+			mobility->turnDegrees(90);
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in AutonomousInit\n%s", e->what());
 		}
