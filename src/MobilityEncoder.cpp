@@ -7,6 +7,7 @@
 
 #include <MobilityEncoder.h>
 #include <Ports.h>
+#include <DriverStation.h>
 
 const float PULSE_PER_REV = 250;
 const float WHEEL_DIAMETER = 7.5;
@@ -34,6 +35,7 @@ float MobilityEncoder::getRightEncoderRates() {
 }
 
 double MobilityEncoder::PIDGet() {
+	frc::DriverStation::ReportError(std::to_string(((left_drive_encoder->GetDistance() + right_drive_encoder->GetDistance()) / 2)));
 	return ((left_drive_encoder->GetDistance() + right_drive_encoder->GetDistance()) / 2);
 }
 
