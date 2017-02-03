@@ -91,6 +91,14 @@ public:
 	float getLeftSetValue();
 	float getRightSetValue();
 
+	// Manual Drive Straight
+	bool areDriveEncodersEnabled;
+	bool isGyroEnabled;
+
+
+	//Manual Drive Distance
+	Timer* drive_distance_start;
+	const float ROBOT_SPEED =  155;
 
 private:
 	Mobility();

@@ -51,8 +51,8 @@ namespace RobotPorts
 
 
 	//Encoders
-	const unsigned int LEFT_DRIVE_ENCODER_1 = 1;
-	const unsigned int LEFT_DRIVE_ENCODER_2 = 2;
+	const unsigned int LEFT_DRIVE_ENCODER_1 = 2;
+	const unsigned int LEFT_DRIVE_ENCODER_2 = 1;
 
 	const unsigned int RIGHT_DRIVE_ENCODER_1 = 3;
 	const unsigned int RIGHT_DRIVE_ENCODER_2 = 4;
