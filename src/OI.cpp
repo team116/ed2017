@@ -47,6 +47,14 @@ void OI::process() {
 		}
 		mobility->setStraightSpeed(joy_right->GetRawAxis(OIPorts::AXIS_Y) * -1);
 	}
+	else if(joy_right->GetRawButton(OIPorts::ROTATE_BUTTON)) {
+		mobility->setLeft(joy_right->GetRawAxis(OIPorts::AXIS_Z));
+		mobility->setRight(joy_right->GetRawAxis(OIPorts::AXIS_Z) * -1);
+	}
+	else if(joy_left->GetRawButton(OIPorts::ROTATE_BUTTON)) {
+			mobility->setLeft(joy_left->GetRawAxis(OIPorts::AXIS_Z));
+			mobility->setRight(joy_left->GetRawAxis(OIPorts::AXIS_Z) * -1);
+		}
 	else {
 		if(mobility->isDrivingStraight()) {
 			mobility->stopDriveStraight();
