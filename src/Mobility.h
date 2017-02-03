@@ -69,7 +69,7 @@ public:
 	 * Degrees ranges from -180 to 180
 	 */
 	void turnDegrees(float degrees);
-
+	bool isTurnDegreesDone();
 
 	void setLeftDriveEncoder();
 	void setRightDriveEncoder();

@@ -103,7 +103,7 @@ void Mobility::processDistance() {
 
 }
 
-void Mobility::processTurningDegrees() {
+void Mobility::processTurningDegrees() { //Here!
 	if (rotation_PID->OnTarget()) {
 		disableRotationPID();
 		turning_degrees = false;
@@ -125,6 +125,10 @@ float Mobility::getLeftSetValue() {
 float Mobility::getRightSetValue() {
 	return front_right->Get();
 }
+bool Mobility::isTurnDegreesDone() {
+	return rotation_PID->OnTarget();
+}
+
 
 //Drive Distance
 void Mobility::StartDriveDistance(float distance) {
@@ -140,16 +144,12 @@ void Mobility::StartDriveDistance(float distance) {
 }
 
 bool Mobility::isDriveDistanceDone() {
-	if(!is_drive_distance_on) {
-		disableDistancePID();
-	}
-	else {
-
-	}
+	return is_drive_distance_on;
 }
 
 //Drive Straight
 void Mobility::startDriveStraight() {
+
 	if(isGyroEnabled) {
 		driving_straight = true;
 		frc::DriverStation::ReportError("Starting drive straight");
@@ -160,6 +160,13 @@ void Mobility::startDriveStraight() {
 		Mobility::setLeft(getStraightSpeed());
 		Mobility::setRight(getStraightSpeed());
 	}
+
+	driving_straight = true;
+	frc::DriverStation::ReportError("Starting drive straight");
+	frc::DriverStation::ReportError("Current gyro: " + std::to_string(gyro->GetYaw()));
+	rotation_PID->SetSetpoint(gyro->GetYaw());
+	enableRotationPID();
+
 }
 bool Mobility::isDrivingStraight() {
 		return driving_straight;

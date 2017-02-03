@@ -29,6 +29,13 @@ namespace RobotPorts
 	const unsigned int MOTOR_INTAKE = 2;
 	const unsigned int SERVO_CONVERTER = 9;
 
+	//Pistons
+	const unsigned int LEFT_PISTON_OPEN = 1;
+	const unsigned int LEFT_PISTON_CLOSE = 2;
+	const unsigned int RIGHT_PISTON_OPEN = 3;
+	const unsigned int RIGHT_PISTON_CLOSE = 4;	//pretty sure we'll need to change these port #s
+
+
 	//navX Motors
 	//Possible gear motor?
 	const unsigned int MOTOR_GEAR = 10;//N0
@@ -70,8 +77,8 @@ namespace OIPorts
 	//Buttons
 	const unsigned int BUTTON_DRIVE_STRAIGHT = 1;
 	const unsigned int OPEN_GEAR_BUTTON = 2;
-	//const unsigned int INTAKE_ROLLER_SWITCH = 3;
-	//const unsigned int OPPOSITE_INTAKE_SWITCH = 4;
+	//const unsigned int INTAKE_ROLLER_SWITCH = 3;    these are commented out because there is only one three-way
+	//const unsigned int OPPOSITE_INTAKE_SWITCH = 4;  toggle switch on the driver station.
 	//const unsigned int BLENDER_FORWARD_SWITCH = 6;
 	//const unsigned int BLENDER_REVERSE_SWITCH = 7;
 	const unsigned int FEEDER_FORWARD_SWITCH = 6;
