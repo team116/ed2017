@@ -11,7 +11,8 @@
 Climber* Climber::INSTANCE = nullptr;
 
 Climber::Climber() {
-	climber = Utils::constructMotor(RobotPorts::MOTOR_CLIMBER);
+	climber_left = Utils::constructMotor(RobotPorts::MOTOR_CLIMBER_LEFT);
+	climber_right = Utils::constructMotor(RobotPorts::MOTOR_CLIMBER_RIGHT);
 }
 
 void Climber::process() {
@@ -19,10 +20,11 @@ void Climber::process() {
 }
 
 void Climber::moveClimber(float speed) {
-	climber->Set(speed);
+	climber_left->Set(speed);
+	climber_right->Set(-speed);
 }
 float Climber::getSpeed() {
-	return climber->Get();
+	return climber_left->Get();
 }
 
 Climber* Climber::getInstance()

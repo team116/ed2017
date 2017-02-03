@@ -19,7 +19,8 @@ public:
 private:
 	Climber();
 	static Climber* INSTANCE;
-	frc::SpeedController* climber;
+	frc::SpeedController* climber_left;
+	frc::SpeedController* climber_right;
 };
 
 #endif /* SRC_CLIMBER_H_ */

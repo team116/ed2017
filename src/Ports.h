@@ -40,7 +40,8 @@ namespace RobotPorts
 	//Possible gear motor?
 	const unsigned int MOTOR_GEAR = 10;//N0
 	const unsigned int MOTOR_BLENDER = 11;//N1
-	const unsigned int MOTOR_CLIMBER = 12;//N2
+	const unsigned int MOTOR_CLIMBER_LEFT = 12;//N2
+	const unsigned int MOTOR_CLIMBER_RIGHT = 13;
 
 	//CAN Motors
 	const unsigned int MOTOR_SHOOTER_WHEEL = 1;
