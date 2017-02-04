@@ -44,7 +44,7 @@ namespace RobotPorts
 	const unsigned int MOTOR_CLIMBER_RIGHT = 13;
 
 	//CAN Motors
-	const unsigned int MOTOR_SHOOTER_WHEEL = 1;
+	const unsigned int MOTOR_SHOOTER_WHEEL = 4;
 
 	//Sensors
 	const unsigned int LS_GEAR_OPEN = 0;
