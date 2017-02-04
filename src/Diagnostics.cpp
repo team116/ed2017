@@ -19,6 +19,7 @@ const float AZIMUTH_SHOOTER_RATE_THRESHOLD = 0;
 const float AZIMUTH_SHOOTER_POWER_THRESHOLD = 0.25;
 const float SHOOTER_RATE_THRESHOLD = 0;
 const float SHOOTER_POWER_THRESHOLD = 0.1;
+const float TEMPERATURE_THRESHOLD = 0;
 
 Diagnostics::Diagnostics() {
 	// TODO Auto-generated constructor stub
@@ -104,6 +105,10 @@ void Diagnostics::process() {
 		frc::DriverStation::ReportError("Shooter encoder broken");
 	}
 
+	//Temperature
+	if (mobility->getNavXTemperature() > TEMPERATURE_THRESHOLD) {
+		frc::DriverStation::ReportError("Warning! Box is getting hot. Current temperature: " + std::to_string(mobility->getNavXTemperature()));
+	}
 
 }
 

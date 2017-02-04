@@ -129,6 +129,9 @@ bool Mobility::isTurnDegreesDone() {
 	return rotation_PID->OnTarget();
 }
 
+float Mobility::getNavXTemperature() {
+	return gyro->GetTempC();
+}
 
 //Drive Distance
 void Mobility::StartDriveDistance(float distance) {

@@ -91,6 +91,8 @@ public:
 	float getLeftSetValue();
 	float getRightSetValue();
 
+	float getNavXTemperature();
+
 	// Manual Drive Straight
 	bool areDriveEncodersEnabled;
 	bool isGyroEnabled;
