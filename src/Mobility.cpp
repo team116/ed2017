@@ -57,7 +57,7 @@ Mobility::Mobility() {
 	//LiveWindow::GetInstance()->AddActuator("Mobility", "Rotation PID", rotation_PID);
 
 	areDriveEncodersEnabled = false;
-	isGyroEnabled = false;
+	isGyroEnabled = true;
 	drive_distance_start = new Timer();
 
 }
@@ -149,10 +149,8 @@ bool Mobility::isDriveDistanceDone() {
 
 //Drive Straight
 void Mobility::startDriveStraight() {
-
+	frc::DriverStation::ReportError("Starting drive straight");
 	if(isGyroEnabled) {
-		driving_straight = true;
-		frc::DriverStation::ReportError("Starting drive straight");
 		rotation_PID->SetSetpoint(gyro->GetYaw());
 		enableRotationPID();
 	}
@@ -160,25 +158,16 @@ void Mobility::startDriveStraight() {
 		Mobility::setLeft(getStraightSpeed());
 		Mobility::setRight(getStraightSpeed());
 	}
-
 	driving_straight = true;
-	frc::DriverStation::ReportError("Starting drive straight");
-	frc::DriverStation::ReportError("Current gyro: " + std::to_string(gyro->GetYaw()));
-	rotation_PID->SetSetpoint(gyro->GetYaw());
-	enableRotationPID();
-
 }
 bool Mobility::isDrivingStraight() {
-		return driving_straight;
+	return driving_straight;
 }
 
 void Mobility::stopDriveStraight() {
-	if(isGyroEnabled) {
-	disableRotationPID();
 	driving_straight = false;
-	}
-	else {
-
+	if(isGyroEnabled) {
+		disableRotationPID();
 	}
 }
 

@@ -11,6 +11,7 @@
 #include <PIDController.h>
 #include <Encoder.h>
 #include <PIDController.h>
+#include <Mobility.h>
 
 
 class Shooter {
@@ -28,6 +29,10 @@ public:
 	void enableAzimuthPID();
 	void disableAzimuthPID();
 	float getSpeed();
+	float getAzimuthEncoderRate();
+
+	float getAzimuthSetValue();
+	float getShooterSetValue();
 
 private:
 	Shooter();

@@ -11,6 +11,7 @@
 #include <BuiltInAccelerometer.h>
 #include <Timer.h>
 #include "Queue.h"
+#include <Shooter.h>
 
 class Diagnostics {
 public:
@@ -26,6 +27,7 @@ private:
 	frc::Timer* left_enc_timer;
 	frc::Timer* right_enc_timer;
 	Queue* accel_values;
+	Shooter* shooter;
 
 	int left_enc_error_count;
 	int right_enc_error_count;

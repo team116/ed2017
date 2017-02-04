@@ -59,6 +59,15 @@ void Shooter::process() {
 float Shooter::getShooterAzimuth() {
 	return azimuth_encoder->GetDistance();
 }
+
+float Shooter::getAzimuthSetValue() {
+	return azimuth->Get();
+}
+
+float Shooter::getShooterSetValue() {
+	return shooter->Get();
+}
+
 float Shooter::getSpeed() {
 	return shooter->Get();
 }
@@ -68,6 +77,10 @@ void Shooter::enableAzimuthPID() {
 
 void Shooter::disableAzimuthPID() {
 	azimuth_PID->Disable();
+}
+
+float Shooter::getAzimuthEncoderRate() {
+	return azimuth_encoder->GetRate();
 }
 
 void Shooter::setAzimuthAngle(float angle) {
