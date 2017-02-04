@@ -29,7 +29,8 @@ namespace RobotPorts
 	const unsigned int MOTOR_INTAKE = 2;
 	const unsigned int SERVO_CONVERTER = 9;
 
-	//Pistons
+	//Pnuematics
+	const unsigned int PCM = 0;
 	const unsigned int LEFT_PISTON_OPEN = 1;
 	const unsigned int LEFT_PISTON_CLOSE = 2;
 	const unsigned int RIGHT_PISTON_OPEN = 3;
@@ -44,7 +45,7 @@ namespace RobotPorts
 	const unsigned int MOTOR_CLIMBER_RIGHT = 13;
 
 	//CAN Motors
-	const unsigned int MOTOR_SHOOTER_WHEEL = 1;
+	const unsigned int MOTOR_SHOOTER_WHEEL = 4;
 
 	//Sensors
 	const unsigned int LS_SHOOTER_AZIMUTH = 3;
