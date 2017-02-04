@@ -11,6 +11,8 @@
 Shooter* Shooter::INSTANCE = nullptr;
 const float AZIMUTH_ANGLE_TOLERANCE = 1.0;
 const float AUTO_AZIMUTH_SPEED = 0.5;
+const float AZIMUTH_ENCODER_PULSES = 360;
+const float ENCODER_PER_AZIMUTH_REV = 5;
 
 Shooter::Shooter() {
 	shooter = Utils::constructMotor(RobotPorts::MOTOR_SHOOTER_WHEEL);
@@ -19,6 +21,9 @@ Shooter::Shooter() {
 
 	shooter_encoder = new frc::Encoder(RobotPorts::SHOOTER_ENCODER_1, RobotPorts::SHOOTER_ENCODER_2);
 	azimuth_encoder = new frc::Encoder(RobotPorts::AZIMUTH_ENCODER_1, RobotPorts::AZIMUTH_ENCODER_2);
+	azimuth_encoder->SetDistancePerPulse(360 / (AZIMUTH_ENCODER_PULSES * ENCODER_PER_AZIMUTH_REV));
+
+	azimuth_limit_switch = new frc::DigitalInput(RobotPorts::LS_SHOOTER_AZIMUTH);
 
 	//PID STUFF
 	shooter_PID = new frc::PIDController(0.01, 0.0, 0.0, shooter_encoder, shooter);
@@ -55,6 +60,8 @@ void Shooter::process() {
 	}
 
 
+
+
 }
 float Shooter::getShooterAzimuth() {
 	return azimuth_encoder->GetDistance();
@@ -62,6 +69,10 @@ float Shooter::getShooterAzimuth() {
 
 float Shooter::getShooterEncoderRate() {
 	return shooter_encoder->GetRate();
+}
+
+float Shooter::getAzimuthPosition() {
+	return azimuth_encoder->GetDistance();
 }
 
 float Shooter::getAzimuthSetValue() {

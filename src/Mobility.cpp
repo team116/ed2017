@@ -71,10 +71,10 @@ void Mobility::process() {
 		processDistance();
 	}
 
-	frc::DriverStation::ReportError("Left Rate: " + std::to_string(encoders->getLeftEncoderRates()));
+	//frc::DriverStation::ReportError("Left Rate: " + std::to_string(encoders->getLeftEncoderRates()));
 
 	//frc::DriverStation::ReportError("Left Encoder: " + std::to_string(encoders->getLeftEncoderRates()));
-	//frc::DriverStation::00ReportError("Right Encoder: " + std::to_string(encoders->getRightEncoderRates()));
+	//frc::DriverStation::ReportError("Right Encoder: " + std::to_string(encoders->getRightEncoderRates()));
 }
 
 void Mobility::processDistance() {

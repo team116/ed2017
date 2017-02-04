@@ -31,7 +31,7 @@ public:
 	float getSpeed();
 	float getAzimuthEncoderRate();
 	float getShooterEncoderRate();
-
+	float getAzimuthPosition();
 	float getAzimuthSetValue();
 	float getShooterSetValue();
 
@@ -43,6 +43,7 @@ private:
 	frc::Encoder* shooter_encoder;
 	frc::Encoder* azimuth_encoder;
 	float target_azimuth_angle;
+	frc::DigitalInput* azimuth_limit_switch;
 
 	//PID stuff
 	frc::PIDController* shooter_PID;

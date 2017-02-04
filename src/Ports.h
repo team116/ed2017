@@ -47,23 +47,22 @@ namespace RobotPorts
 	const unsigned int MOTOR_SHOOTER_WHEEL = 1;
 
 	//Sensors
-	const unsigned int LS_GEAR_OPEN = 0;
-	const unsigned int LS_GEAR_CLOSED = 9;
+	const unsigned int LS_SHOOTER_AZIMUTH = 3;
 
 
 	//Encoders
-	const unsigned int LEFT_DRIVE_ENCODER_1 = 2;
-	const unsigned int LEFT_DRIVE_ENCODER_2 = 1;
+	const unsigned int LEFT_DRIVE_ENCODER_1 = 8;
+	const unsigned int LEFT_DRIVE_ENCODER_2 = 9;
 
-	const unsigned int RIGHT_DRIVE_ENCODER_1 = 3;
-	const unsigned int RIGHT_DRIVE_ENCODER_2 = 4;
+	const unsigned int RIGHT_DRIVE_ENCODER_1 = 6;
+	const unsigned int RIGHT_DRIVE_ENCODER_2 = 7;
 
 
-	const unsigned int SHOOTER_ENCODER_1 = 5;
-	const unsigned int SHOOTER_ENCODER_2 = 6;
+	const unsigned int SHOOTER_ENCODER_1 = 1;
+	const unsigned int SHOOTER_ENCODER_2 = 2;
 
-	const unsigned int AZIMUTH_ENCODER_1 = 7;
-	const unsigned int AZIMUTH_ENCODER_2 = 8;
+	const unsigned int AZIMUTH_ENCODER_1 = 4;
+	const unsigned int AZIMUTH_ENCODER_2 = 5;
 
 }
 

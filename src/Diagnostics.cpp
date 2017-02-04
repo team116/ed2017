@@ -82,7 +82,7 @@ void Diagnostics::process() {
 				&& (fabs(mobility->getRightEncoderRates()) < ENCODER_THRESHOLD)) {
 				right_enc_error_count++;
 				if (right_enc_error_count > 2) {
-					frc::DriverStation::ReportError("Right mobility encoder error.");
+					frc::DriverStation::ReportError("Right mobility encoder error. Current rate: " + std::to_string(mobility->getRightEncoderRates()));
 				}
 				break;
 			}
