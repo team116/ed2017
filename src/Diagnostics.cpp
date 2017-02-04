@@ -17,8 +17,8 @@ const float ENCODER_THRESHOLD = 0.01;
 const float ENCODER_TIMEOUT = 0.1;
 const float AZIMUTH_SHOOTER_RATE_THRESHOLD = 0;
 const float AZIMUTH_SHOOTER_POWER_THRESHOLD = 0.25;
-
-
+const float SHOOTER_RATE_THRESHOLD = 0;
+const float SHOOTER_POWER_THRESHOLD = 0.1;
 
 Diagnostics::Diagnostics() {
 	// TODO Auto-generated constructor stub
@@ -96,6 +96,11 @@ void Diagnostics::process() {
 	if ((fabs(shooter->getAzimuthSetValue())) > AZIMUTH_SHOOTER_POWER_THRESHOLD
 			&& fabs(shooter->getAzimuthEncoderRate()) <= AZIMUTH_SHOOTER_RATE_THRESHOLD) {
 		frc::DriverStation::ReportError("Azimuth encoder broken");
+	}
+
+	if ((fabs(shooter->getShooterSetValue())) > SHOOTER_POWER_THRESHOLD
+		&& fabs(shooter->getShooterEncoderRate()) <= SHOOTER_RATE_THRESHOLD) {
+		frc::DriverStation::ReportError("Shooter encoder broken");
 	}
 }
 

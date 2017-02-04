@@ -30,6 +30,7 @@ public:
 	void disableAzimuthPID();
 	float getSpeed();
 	float getAzimuthEncoderRate();
+	float getShooterEncoderRate();
 
 	float getAzimuthSetValue();
 	float getShooterSetValue();

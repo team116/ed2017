@@ -60,6 +60,10 @@ float Shooter::getShooterAzimuth() {
 	return azimuth_encoder->GetDistance();
 }
 
+float Shooter::getShooterEncoderRate() {
+	return shooter_encoder->GetRate();
+}
+
 float Shooter::getAzimuthSetValue() {
 	return azimuth->Get();
 }
