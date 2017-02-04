@@ -99,9 +99,12 @@ void Diagnostics::process() {
 	}
 
 	if ((fabs(shooter->getShooterSetValue())) > SHOOTER_POWER_THRESHOLD
-		&& fabs(shooter->getShooterEncoderRate()) <= SHOOTER_RATE_THRESHOLD) {
+		&& fabs(shooter->getShooterEncoderRate()) <= SHOOTER_RATE_THRESHOLD
+		) {
 		frc::DriverStation::ReportError("Shooter encoder broken");
 	}
+
+
 }
 
 Diagnostics* Diagnostics::getInstance() {
