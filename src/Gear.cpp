@@ -13,9 +13,6 @@ Gear* Gear::INSTANCE = nullptr;
 
 Gear::Gear() {
 	// TODO Auto-generated constructor stub
-	gear_motor = Utils::constructMotor(RobotPorts::MOTOR_GEAR);
-	//LS_open = new frc::DigitalInput(RobotPorts::LS_GEAR_OPEN);
-	//LS_close = new frc::DigitalInput(RobotPorts::LS_GEAR_CLOSED);
 	left_piston = new frc::DoubleSolenoid(RobotPorts::LEFT_PISTON_OPEN , RobotPorts::LEFT_PISTON_CLOSE);
 	right_piston = new frc::DoubleSolenoid(RobotPorts::RIGHT_PISTON_OPEN , RobotPorts::RIGHT_PISTON_CLOSE);
 

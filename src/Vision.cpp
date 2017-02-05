@@ -28,22 +28,26 @@ Vision::Vision() {
 
 	//Set camera settings
 	std::vector<cs::VideoProperty> props = gear_cam.EnumerateProperties();
-	props[1].Set(0);//brightness
-	props[3].Set(100);//contrast
-	props[5].Set(100);//saturation
-	props[6].Set(0);//auto white balance
-	props[8].Set(10000);//white balance
-	props[12].Set(1);//auto exposure
-	props[14].Set(10);//exposure
+	if(props.size() >= 14) {
+		props[1].Set(0);//brightness
+		props[3].Set(100);//contrast
+		props[5].Set(100);//saturation
+		props[6].Set(0);//auto white balance
+		props[8].Set(10000);//white balance
+		props[12].Set(1);//auto exposure
+		props[14].Set(10);//exposure
+	}
 
 	props = shooter_cam.EnumerateProperties();
-	props[1].Set(0);//brightness
-	props[3].Set(100);//contrast
-	props[5].Set(100);//saturation
-	props[6].Set(0);//auto white balance
-	props[8].Set(10000);//white balance
-	props[12].Set(1);//auto exposure
-	props[14].Set(10);//exposure
+	if(props.size() >= 14) {
+		props[1].Set(0);//brightness
+		props[3].Set(100);//contrast
+		props[5].Set(100);//saturation
+		props[6].Set(0);//auto white balance
+		props[8].Set(10000);//white balance
+		props[12].Set(1);//auto exposure
+		props[14].Set(10);//exposure*/
+	}
 }
 
 void Vision::process() {

@@ -22,9 +22,6 @@ public:
 private:
 	Gear();
 	static Gear* INSTANCE;
-	frc::SpeedController* gear_motor;
-	frc::DigitalInput* LS_open;
-	frc::DigitalInput* LS_close;
 	frc::DoubleSolenoid* left_piston;
 	frc::DoubleSolenoid* right_piston;
 
