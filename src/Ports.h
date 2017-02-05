@@ -13,12 +13,21 @@
 namespace RobotPorts
 {
 	//PWM Motors
-/*  VICTORSP PORTS
-	const unsigned int MOTOR_LEFT_FRONT = 0;
+	//REAL ROBOT PORTS
+	/*const unsigned int MOTOR_LEFT_FRONT = 0;
 	const unsigned int MOTOR_RIGHT_FRONT = 1;
 	const unsigned int MOTOR_LEFT_BACK = 2;
-	const unsigned int MOTOR_RIGHT_BACK = 3; */
-/*  CANTALON PORTS */
+	const unsigned int MOTOR_RIGHT_BACK = 3;
+
+	const unsigned int MOTOR_SHOOTER_FEEDER = 4;
+	const unsigned int MOTOR_CLIMBER_LEFT = 5;
+	const unsigned int MOTOR_CLIMBER_RIGHT = 6;
+	const unsigned int MOTOR_SHOOTER_AZIMUTH = 7;
+	const unsigned int MOTOR_INTAKE = 8;
+	const unsigned int SERVO_CONVERTER = 9;
+	const unsigned int MOTOR_BLENDER = 10;//N0*/
+
+	//ANDERSON BOT PORTS
 	const unsigned int MOTOR_LEFT_FRONT = 4;
 	const unsigned int MOTOR_RIGHT_FRONT = 6;
 	const unsigned int MOTOR_LEFT_BACK = 5;
@@ -31,18 +40,13 @@ namespace RobotPorts
 
 	//Pnuematics
 	const unsigned int PCM = 0;
-	const unsigned int LEFT_PISTON_OPEN = 1;
-	const unsigned int LEFT_PISTON_CLOSE = 2;
-	const unsigned int RIGHT_PISTON_OPEN = 3;
-	const unsigned int RIGHT_PISTON_CLOSE = 4;	//pretty sure we'll need to change these port #s
+	const unsigned int LEFT_PISTON_OPEN = 0;
+	const unsigned int LEFT_PISTON_CLOSE = 1;
+	const unsigned int RIGHT_PISTON_OPEN = 2;
+	const unsigned int RIGHT_PISTON_CLOSE = 3;	//pretty sure we'll need to change these port #s
 
 
 	//navX Motors
-	//Possible gear motor?
-	const unsigned int MOTOR_GEAR = 10;//N0
-	const unsigned int MOTOR_BLENDER = 11;//N1
-	const unsigned int MOTOR_CLIMBER_LEFT = 12;//N2
-	const unsigned int MOTOR_CLIMBER_RIGHT = 13;
 
 	//CAN Motors
 	const unsigned int MOTOR_SHOOTER_WHEEL = 4;
@@ -105,7 +109,7 @@ namespace Utils
 		CANTalonSRX
 	};
 
-	const MotorType motor_type = MotorType::CANTalonSRX;
+	const MotorType motor_type = MotorType::VictorSP;
 
 	frc::SpeedController* constructMotor(unsigned int port);;
 }
