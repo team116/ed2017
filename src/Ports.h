@@ -33,10 +33,13 @@ namespace RobotPorts
 	const unsigned int MOTOR_LEFT_BACK = 5;
 	const unsigned int MOTOR_RIGHT_BACK = 7;
 
-	const unsigned int MOTOR_SHOOTER_AZIMUTH = 0;
-	const unsigned int MOTOR_SHOOTER_FEEDER = 1;
-	const unsigned int MOTOR_INTAKE = 2;
+	const unsigned int MOTOR_SHOOTER_FEEDER = 0;
+	const unsigned int MOTOR_CLIMBER_LEFT = 1;
+	const unsigned int MOTOR_CLIMBER_RIGHT = 2;
+	const unsigned int MOTOR_SHOOTER_AZIMUTH = 3;
+	const unsigned int MOTOR_INTAKE = 8;
 	const unsigned int SERVO_CONVERTER = 9;
+	const unsigned int MOTOR_BLENDER = 10;//N0*/
 
 	//Pnuematics
 	const unsigned int PCM = 0;
