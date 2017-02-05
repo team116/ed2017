@@ -15,7 +15,7 @@ const float AZIMUTH_ENCODER_PULSES = 360;
 const float ENCODER_PER_AZIMUTH_REV = 5;
 
 Shooter::Shooter() {
-	shooter = Utils::constructMotor(RobotPorts::MOTOR_SHOOTER_WHEEL);
+	shooter = new CANTalon(RobotPorts::MOTOR_SHOOTER_WHEEL);
 	azimuth = Utils::constructMotor(RobotPorts::MOTOR_SHOOTER_AZIMUTH);
 	target_azimuth_angle = 0;
 
@@ -45,7 +45,7 @@ Shooter::Shooter() {
 
 void Shooter::process() {
 
-	float current_azimuth_angle = 0;
+	/*float current_azimuth_angle = 0;
 
 	float azimuth_angle_offset = target_azimuth_angle - current_azimuth_angle;
 
@@ -57,14 +57,7 @@ void Shooter::process() {
 	}
 	else {
 		azimuth->Set(0);
-	}
-
-
-
-
-}
-float Shooter::getShooterAzimuth() {
-	return azimuth_encoder->GetDistance();
+	}*/
 }
 
 float Shooter::getShooterEncoderRate() {

@@ -12,7 +12,7 @@
 #include <Encoder.h>
 #include <PIDController.h>
 #include <Mobility.h>
-
+#include <CANTalon.h>
 
 class Shooter {
 public:
@@ -21,7 +21,6 @@ public:
 
 	void setAzimuthSpeed(float speed);
 	void setAzimuthAngle(float angle);
-    float getShooterAzimuth();
 	void setShooterSpeed(float speed);
 	void setShooterRPM(float speed);
 	void enableShooterPID();
@@ -38,7 +37,7 @@ public:
 private:
 	Shooter();
 	static Shooter* INSTANCE;
-	frc::SpeedController* shooter;
+	CANTalon* shooter;
 	frc::SpeedController* azimuth;
 	frc::Encoder* shooter_encoder;
 	frc::Encoder* azimuth_encoder;
