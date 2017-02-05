@@ -12,6 +12,9 @@
 #include <Timer.h>
 #include "Queue.h"
 #include <Shooter.h>
+#include <PowerDistributionPanel.h>
+#include "Log.h"
+
 
 class Diagnostics {
 public:
@@ -28,6 +31,8 @@ private:
 	frc::Timer* right_enc_timer;
 	Queue* accel_values;
 	Shooter* shooter;
+	frc::PowerDistributionPanel* pdp;
+	Log* log;
 
 	int left_enc_error_count;
 	int right_enc_error_count;

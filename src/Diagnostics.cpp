@@ -6,6 +6,8 @@
  */
 
 #include "Diagnostics.h"
+#include "Ports.h"
+
 
 Diagnostics* Diagnostics::INSTANCE = nullptr;
 
@@ -20,6 +22,11 @@ const float AZIMUTH_SHOOTER_POWER_THRESHOLD = 0.25;
 const float SHOOTER_RATE_THRESHOLD = 0;
 const float SHOOTER_POWER_THRESHOLD = 0.1;
 const float TEMPERATURE_THRESHOLD = 50;
+const float LEFT_AZIMUTH_LIMIT = -170;
+const float RIGHT_AZIMUTH_LIMIT = 170;
+const float PDP_AZIMUTH_THRESHOLD = 7;
+
+
 
 Diagnostics::Diagnostics() {
 	// TODO Auto-generated constructor stub
@@ -29,9 +36,11 @@ Diagnostics::Diagnostics() {
 	right_enc_timer = new frc::Timer();
 	accel_values = new Queue();
 	shooter = Shooter::getInstance();
+	log = Log::getInstance();
 
 	left_enc_error_count = 0;
 	right_enc_error_count = 0;
+	pdp = new frc::PowerDistributionPanel();
 }
 
 void Diagnostics::process() {
@@ -70,7 +79,7 @@ void Diagnostics::process() {
 				&& (fabs(mobility->getLeftEncoderRates()) < ENCODER_THRESHOLD)) {
 				left_enc_error_count++;
 				if (left_enc_error_count > 2) {
-					frc::DriverStation::ReportError("Left mobility encoder error.");
+					log->write(Log::WARNING_LEVEL, "Left mobility encoder error.");
 				}
 				break;
 			}
@@ -82,7 +91,7 @@ void Diagnostics::process() {
 				&& (fabs(mobility->getRightEncoderRates()) < ENCODER_THRESHOLD)) {
 				right_enc_error_count++;
 				if (right_enc_error_count > 2) {
-					frc::DriverStation::ReportError("Right mobility encoder error. Current rate: " + std::to_string(mobility->getRightEncoderRates()));
+					log->write(Log::WARNING_LEVEL, "Right mobility encoder error. Current rate: %f", mobility->getRightEncoderRates());
 				}
 				break;
 			}
@@ -96,20 +105,27 @@ void Diagnostics::process() {
 	//Start of shooter azimuth diagnostics
 	if ((fabs(shooter->getAzimuthSetValue())) > AZIMUTH_SHOOTER_POWER_THRESHOLD
 			&& fabs(shooter->getAzimuthEncoderRate()) <= AZIMUTH_SHOOTER_RATE_THRESHOLD) {
-		frc::DriverStation::ReportError("Azimuth encoder broken");
+		log->write(Log::WARNING_LEVEL, "Azimuth encoder broken");
 	}
 
 	if ((fabs(shooter->getShooterSetValue())) > SHOOTER_POWER_THRESHOLD
-		&& fabs(shooter->getShooterEncoderRate()) <= SHOOTER_RATE_THRESHOLD
-		) {
-		frc::DriverStation::ReportError("Shooter encoder broken");
+		&& fabs(shooter->getShooterEncoderRate()) <= SHOOTER_RATE_THRESHOLD) {
+		log->write(Log::WARNING_LEVEL, "Shooter encoder broken");
+	}
+
+	if (shooter->getAzimuthPosition() < LEFT_AZIMUTH_LIMIT || shooter->getAzimuthPosition() > RIGHT_AZIMUTH_LIMIT) {
+		log->write(Log::WARNING_LEVEL, "Shooter azimuth out of bounds");
 	}
 
 	//Temperature
 	if (mobility->getNavXTemperature() > TEMPERATURE_THRESHOLD) {
-		frc::DriverStation::ReportError("Warning! Box is getting hot. Current temperature: " + std::to_string(mobility->getNavXTemperature()));
+		log->write(Log::WARNING_LEVEL, "Warning! Box is getting hot. Current temperature: %f", mobility->getNavXTemperature());
 	}
 
+
+	if (pdp->GetCurrent(RobotPorts::AZIMUTH_MOTOR_PDP) > PDP_AZIMUTH_THRESHOLD) {
+		log->write(Log::WARNING_LEVEL, "PDP azimuth current is too high. PDP azimuth current: %f", pdp->GetCurrent(RobotPorts::AZIMUTH_MOTOR_PDP));
+	}
 }
 
 Diagnostics* Diagnostics::getInstance() {

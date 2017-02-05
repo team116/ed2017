@@ -65,6 +65,7 @@ namespace RobotPorts
 	const unsigned int AZIMUTH_ENCODER_1 = 4;
 	const unsigned int AZIMUTH_ENCODER_2 = 5;
 
+	const unsigned int AZIMUTH_MOTOR_PDP = 11;
 }
 
 namespace OIPorts
