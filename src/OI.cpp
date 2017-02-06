@@ -87,41 +87,65 @@ void OI::process() {
 		shooter->setShooterRPM(0);
 	    //frc::DriverStation::ReportError("Shooter off");
 	}
-	/*if (button_box_1->GetRawButton(6) && (INTAKE_SPEED != intake->getSpeed())) {
+	/*if (button_box_1->GetRawButton(OIPorts::INTAKE_ROLLER_SWITCH) && (INTAKE_SPEED != intake->getSpeed())) {
 		intake->setSpeedIntake(INTAKE_SPEED);
 	    //frc::DriverStation::ReportError("Intaking");
 	}
-	else if (button_box_1->GetRawButton(7) && (OPPOSITE_INTAKE_SPEED != intake->getSpeed())) {
+	else if (button_box_1->GetRawButton(OIPorts::OPPOSITE_INTAKE_SWITCH) && (OPPOSITE_INTAKE_SPEED != intake->getSpeed())) {
 		intake->setSpeedIntake(OPPOSITE_INTAKE_SPEED);
 	    //frc::DriverStation::ReportError("Opposite-intaking");
 	}
-	else if (!button_box_1->GetRawButton(6) && (!button_box_1->GetRawButton(7))) {
+	else if (!button_box_1->GetRawButton(OIPorts::INTAKE_ROLLER_SWITCH) && (!button_box_1->GetRawButton(OIPorts::OPPOSITE_INTAKE_SWITCH))) {
 		intake->setSpeedIntake(0);
 	    //frc::DriverStation::ReportError("Intake and opposite-intake off");
 	}*/
-	/*if (button_box_1->GetRawButton(6) && (BLENDER_SPEED != feeder->getSpeed())) {
+	/*if (button_box_1->GetRawButton(OIPorts::BLENDER_FORWARD_SWITCH) && (BLENDER_SPEED != feeder->getSpeed())) {
 			feeder->setBlenderSpeed(BLENDER_SPEED);
 		    frc::DriverStation::ReportError("Blending forward");
 		}
-		else if (button_box_1->GetRawButton(7) && (BLENDER_REVERSE_SPEED != feeder->getSpeed())) {
+		else if (button_box_1->GetRawButton(OIPorts::BLENDER_REVERSE_SWITCH) && (BLENDER_REVERSE_SPEED != feeder->getSpeed())) {
 			feeder->setBlenderSpeed(BLENDER_REVERSE_SPEED);
 		    frc::DriverStation::ReportError("Blender reverse");
 		}
-		else if (!button_box_1->GetRawButton(6) && (!button_box_1->GetRawButton(7))) {
+		else if (!button_box_1->GetRawButton(OIPorts::BLENDER_FORWARD_SWITCH) && (!button_box_1->GetRawButton(OIPorts::BLENDER_REVERSE_SWITCH))) {
 			feeder->setBlenderSpeed(0);
 		    frc::DriverStation::ReportError("Blender off");
 		}*/
-	if (button_box_1->GetRawButton(6) && (FEEDER_SPEED != feeder->getSpeed())) {
+	if (button_box_1->GetRawButton(OIPorts::FEEDER_FORWARD_SWITCH) && (FEEDER_SPEED != feeder->getSpeed())) {
 		feeder->setBlenderSpeed(FEEDER_SPEED);
 		//frc::DriverStation::ReportError("Feeding forward");
 	}
-	else if (button_box_1->GetRawButton(7) && (FEEDER_REVERSE_SPEED != feeder->getSpeed())) {
+	else if (button_box_1->GetRawButton(OIPorts::FEEDER_REVERSE_SWITCH) && (FEEDER_REVERSE_SPEED != feeder->getSpeed())) {
 		feeder->setBlenderSpeed(FEEDER_REVERSE_SPEED);
 		//frc::DriverStation::ReportError("Feeding reverse");
 	}
-	else if (!button_box_1->GetRawButton(6) && (!button_box_1->GetRawButton(7))) {
+	else if (!button_box_1->GetRawButton(OIPorts::FEEDER_FORWARD_SWITCH) && (!button_box_1->GetRawButton(OIPorts::FEEDER_REVERSE_SWITCH))) {
 		feeder->setBlenderSpeed(0);
 		//frc::DriverStation::ReportError("Feeder off");
+	}
+	if (button_box_1->GetRawButton(OIPorts::MOBILITY_ROTATION_PID_SWITCH) && (!mobility->isRotationPIDEnabled())) {
+		mobility->enableRotationPID();
+	}
+	else if(!button_box_1->GetRawButton(OIPorts::MOBILITY_ROTATION_PID_SWITCH) && (mobility->isRotationPIDEnabled())) {
+		mobility->disableRotationPID();
+	}
+	if (button_box_1->GetRawButton(OIPorts::MOBILITY_DISTANCE_PID_SWITCH) && (!mobility->isDistancePIDEnabled())) {
+		mobility->enableDistancePID();
+	}
+	else if (!button_box_1->GetRawButton(OIPorts::MOBILITY_DISTANCE_PID_SWITCH) && (mobility->isDistancePIDEnabled())) {
+		mobility->disableDistancePID();
+	}
+	if (button_box_1->GetRawButton(OIPorts::SHOOTER_SPEED_PID_SWITCH) && (!shooter->isShooterPIDEnabled())) {
+		shooter->enableShooterPID();
+	}
+	else if (!button_box_1->GetRawButton(OIPorts::SHOOTER_SPEED_PID_SWITCH) && (shooter->isShooterPIDEnabled())) {
+		shooter->disableShooterPID();
+	}
+	if (button_box_1->GetRawButton(OIPorts::SHOOTER_AZIMUTH_ANGLE_PID_SWITCH) && (!shooter->isAzimuthPIDEnabled())) {
+		shooter->enableAzimuthPID();
+	}
+	else if (!button_box_1->GetRawButton(OIPorts::SHOOTER_AZIMUTH_ANGLE_PID_SWITCH) && (shooter->isAzimuthPIDEnabled())) {
+		shooter->disableAzimuthPID();
 	}
 }
 

@@ -26,8 +26,10 @@ public:
 	void setShooterRPM(float speed);
 	void enableShooterPID();
 	void disableShooterPID();
+	bool isShooterPIDEnabled();
 	void enableAzimuthPID();
 	void disableAzimuthPID();
+	bool isAzimuthPIDEnabled();
 	float getSpeed();
 	float getAzimuthEncoderRate();
 	float getShooterEncoderRate();

@@ -133,6 +133,7 @@ float Mobility::getNavXTemperature() {
 	return gyro->GetTempC();
 }
 
+
 //Drive Distance
 void Mobility::StartDriveDistance(float distance) {
 	is_drive_distance_on = true;
@@ -219,6 +220,10 @@ void Mobility::enableRotationPID() {
 	rotation_PID->Enable();
 }
 
+bool Mobility::isRotationPIDEnabled() {
+	return rotation_PID->IsEnabled();
+}
+
 void Mobility::disableDistancePID() {
 	distance_PID->Disable();
 	distance_output->Disable();
@@ -253,6 +258,9 @@ void Mobility::disableGyro() {
 
 }
 
+bool Mobility::isDistancePIDEnabled() {
+	return distance_PID->IsEnabled();
+}
 
 Mobility* Mobility::getInstance()
 {
