@@ -78,11 +78,13 @@ public:
 	bool isDriveDistanceDone();
 	void disableDistancePID();
 	void enableDistancePID();
+	bool isDistancePIDEnabled();
 
 
 	//Use these instead of directly enabling/disabling the PID controller and PID output
 	void disableRotationPID();
 	void enableRotationPID();
+	bool isRotationPIDEnabled();
 
 	float getGyroAngle();
 	float getLeftEncoderRates();

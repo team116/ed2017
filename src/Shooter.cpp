@@ -87,6 +87,10 @@ void Shooter::disableAzimuthPID() {
 	azimuth_PID->Disable();
 }
 
+bool Shooter::isAzimuthPIDEnabled() {
+	return azimuth_PID->IsEnabled();
+}
+
 float Shooter::getAzimuthEncoderRate() {
 	return azimuth_encoder->GetRate();
 }
@@ -111,6 +115,10 @@ void Shooter::enableShooterPID() {
 }
 void Shooter::disableShooterPID() {
 	shooter_PID->Disable();
+}
+
+bool Shooter::isShooterPIDEnabled() {
+	return shooter_PID->IsEnabled();
 }
 
 Shooter* Shooter::getInstance()

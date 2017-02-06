@@ -219,6 +219,10 @@ void Mobility::enableRotationPID() {
 	rotation_PID->Enable();
 }
 
+bool Mobility::isRotationPIDEnabled() {
+	return rotation_PID->IsEnabled();
+}
+
 void Mobility::disableDistancePID() {
 	distance_PID->Disable();
 	distance_output->Disable();
@@ -227,6 +231,10 @@ void Mobility::disableDistancePID() {
 void Mobility::enableDistancePID() {
 	distance_PID->Enable();
 	distance_output->Enable();
+}
+
+bool Mobility::isDistancePIDEnabled() {
+	return distance_PID->IsEnabled();
 }
 
 Mobility* Mobility::getInstance()
