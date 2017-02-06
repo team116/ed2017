@@ -13,6 +13,7 @@
 #include <PIDController.h>
 #include <Mobility.h>
 #include <CANTalon.h>
+#include <Servo.h>
 
 class Shooter {
 public:

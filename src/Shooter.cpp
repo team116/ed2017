@@ -112,6 +112,7 @@ void Shooter::enableShooterPID() {
 void Shooter::disableShooterPID() {
 	shooter_PID->Disable();
 }
+
 Shooter* Shooter::getInstance()
 {
 	if(INSTANCE == nullptr) {
