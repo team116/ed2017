@@ -123,28 +123,28 @@ void OI::process() {
 		feeder->setBlenderSpeed(0);
 		//frc::DriverStation::ReportError("Feeder off");
 	}
-	if (button_box_1->GetRawButton(OIPorts::MOBILITY_ROTATION_PID_SWITCH)) {
+	if (button_box_1->GetRawButton(OIPorts::MOBILITY_ROTATION_PID_SWITCH) && (!mobility->isRotationPIDEnabled())) {
 		mobility->enableRotationPID();
 	}
-	else if(!button_box_1->GetRawButton(OIPorts::MOBILITY_ROTATION_PID_SWITCH)) {
+	else if(!button_box_1->GetRawButton(OIPorts::MOBILITY_ROTATION_PID_SWITCH) && (mobility->isRotationPIDEnabled())) {
 		mobility->disableRotationPID();
 	}
-	if (button_box_1->GetRawButton(OIPorts::MOBILITY_DISTANCE_PID_SWITCH)) {
+	if (button_box_1->GetRawButton(OIPorts::MOBILITY_DISTANCE_PID_SWITCH) && (!mobility->isDistancePIDEnabled())) {
 		mobility->enableDistancePID();
 	}
-	else if (!button_box_1->GetRawButton(OIPorts::MOBILITY_DISTANCE_PID_SWITCH)) {
+	else if (!button_box_1->GetRawButton(OIPorts::MOBILITY_DISTANCE_PID_SWITCH) && (mobility->isDistancePIDEnabled())) {
 		mobility->disableDistancePID();
 	}
-	if (button_box_1->GetRawButton(OIPorts::SHOOTER_SPEED_PID_SWITCH)) {
+	if (button_box_1->GetRawButton(OIPorts::SHOOTER_SPEED_PID_SWITCH) && (!shooter->isShooterPIDEnabled())) {
 		shooter->enableShooterPID();
 	}
-	else if (!button_box_1->GetRawButton(OIPorts::SHOOTER_SPEED_PID_SWITCH)) {
+	else if (!button_box_1->GetRawButton(OIPorts::SHOOTER_SPEED_PID_SWITCH) && (shooter->isShooterPIDEnabled())) {
 		shooter->disableShooterPID();
 	}
-	if (button_box_1->GetRawButton(OIPorts::SHOOTER_AZIMUTH_ANGLE_PID_SWITCH)) {
+	if (button_box_1->GetRawButton(OIPorts::SHOOTER_AZIMUTH_ANGLE_PID_SWITCH) && (!shooter->isAzimuthPIDEnabled())) {
 		shooter->enableAzimuthPID();
 	}
-	else if (!button_box_1->GetRawButton(OIPorts::SHOOTER_AZIMUTH_ANGLE_PID_SWITCH)) {
+	else if (!button_box_1->GetRawButton(OIPorts::SHOOTER_AZIMUTH_ANGLE_PID_SWITCH) && (shooter->isAzimuthPIDEnabled())) {
 		shooter->disableAzimuthPID();
 	}
 }
