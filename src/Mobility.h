@@ -102,6 +102,13 @@ public:
 	Timer* drive_distance_start;
 	const float ROBOT_SPEED =  155;
 
+	void enableLeftEncoder();
+	void disableLeftEncoder();
+	void enableRightEncoder();
+	void disableRightEncoder();
+	void enableGyro();
+	void disableGyro();
+
 private:
 	Mobility();
 	static Mobility* INSTANCE;

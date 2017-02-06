@@ -48,6 +48,14 @@ private:
 	//PID stuff
 	frc::PIDController* shooter_PID;
 	frc::PIDController* azimuth_PID;
+
+	void enableShooterAzimuthEncoder();
+	void disableShooterAzimuthEncoder();
+	void enableShooterAzimuthLimitSwitch();
+	void disableShooterAzimuthLimitSwitch();
+	void enableShooterSpeedEncoder();
+	void disableShooterSpeedEncoder();
+
 };
 
 #endif /* SRC_SHOOTER_H_ */

@@ -229,6 +229,31 @@ void Mobility::enableDistancePID() {
 	distance_output->Enable();
 }
 
+void Mobility::enableLeftEncoder() {
+
+}
+
+void Mobility::disableLeftEncoder() {
+
+}
+
+void Mobility::enableRightEncoder() {
+
+}
+
+void Mobility::disableRightEncoder() {
+
+}
+
+void Mobility::enableGyro() {
+
+}
+
+void Mobility::disableGyro() {
+
+}
+
+
 Mobility* Mobility::getInstance()
 {
 	if(INSTANCE == nullptr) {

@@ -113,6 +113,30 @@ void Shooter::disableShooterPID() {
 	shooter_PID->Disable();
 }
 
+void Shooter::enableShooterAzimuthEncoder() {
+
+}
+
+void Shooter::disableShooterAzimuthEncoder() {
+
+}
+
+void Shooter::enableShooterAzimuthLimitSwitch() {
+
+}
+
+void Shooter::disableShooterAzimuthLimitSwitch() {
+
+}
+
+void Shooter::enableShooterSpeedEncoder() {
+
+}
+
+void Shooter::disableShooterSpeedEncoder() {
+
+}
+
 Shooter* Shooter::getInstance()
 {
 	if(INSTANCE == nullptr) {
