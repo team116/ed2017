@@ -97,9 +97,11 @@ namespace OIPorts
 	//2-way Toggle Switches
 	const unsigned int CLIMBER_UP_SWITCH = 5;
 	const unsigned int SHOOTER_ON_SWITCH = 8;
+	const unsigned int MOBILITY_ROTATION_PID_SWITCH = 9; //These buttons are inaccurate and do not correspond with the button box because
+	const unsigned int MOBILITY_DISTANCE_PID_SWITCH = 10;//the button box was not working when these buttons were created
+	const unsigned int SHOOTER_SPEED_PID_SWITCH = 11;
+	const unsigned int SHOOTER_AZIMUTH_ANGLE_PID_SWITCH = 12;
 
-	//3-way Toggle Switches
-	//To be added
 
 	//Axes
 	const unsigned int AXIS_Y = 1;
