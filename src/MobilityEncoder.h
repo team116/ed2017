@@ -10,10 +10,13 @@
 
 #include <PIDSource.h>
 #include <Encoder.h>
+#include "Log.h"
 
 class MobilityEncoder: public frc::PIDSource {
 public:
 	MobilityEncoder();
+
+	Log* log;
 
 	void SetPIDSourceType(frc::PIDSourceType source);
 	frc::PIDSourceType GetPIDSourceType();
@@ -25,12 +28,22 @@ public:
 	float getLeftEncoderRates();
 	float getRightEncoderRates();
 
+	void enableLeftEncoder();
+	void disableLeftEncoder();
+	bool isLeftEncoderEnabled();
+	void enableRightEncoder();
+	void disableRightEncoder();
+	bool isRightEncoderEnabled();
 
 	void DriveEncoderReset();
 
+	virtual ~MobilityEncoder() {};
 
 private:
 	frc::PIDSourceType pid_source;
+
+	bool use_left_enc;
+	bool use_right_enc;
 };
 
 #endif /* SRC_MOBILITYENCODER_H_ */

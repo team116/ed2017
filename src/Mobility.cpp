@@ -13,6 +13,13 @@ Mobility* Mobility::INSTANCE = nullptr;
 int Mobility::counter = 0;
 
 Mobility::Mobility() {
+
+	//Sensor Toggles
+	use_left_drive_encoder = true;
+	use_right_drive_encoder = true;
+	use_gyro = true;
+
+
 	//Motor Controllers
 	front_left = Utils::constructMotor(RobotPorts::MOTOR_LEFT_FRONT);
 	front_right = Utils::constructMotor(RobotPorts::MOTOR_RIGHT_FRONT);
@@ -56,8 +63,6 @@ Mobility::Mobility() {
 
 	//LiveWindow::GetInstance()->AddActuator("Mobility", "Rotation PID", rotation_PID);
 
-	areDriveEncodersEnabled = false;
-	isGyroEnabled = true;
 	drive_distance_start = new Timer();
 
 }
@@ -78,7 +83,7 @@ void Mobility::process() {
 }
 
 void Mobility::processDistance() {
-	if(areDriveEncodersEnabled) {
+	if(use_left_drive_encoder) {
 		if(distance_PID->OnTarget()) {
 			frc::DriverStation::ReportError("On Target, disaling");
 			disableDistancePID();
@@ -137,7 +142,7 @@ float Mobility::getNavXTemperature() {
 //Drive Distance
 void Mobility::StartDriveDistance(float distance) {
 	is_drive_distance_on = true;
-	if(areDriveEncodersEnabled) {
+	if(use_left_drive_encoder) {
 		encoders->DriveEncoderReset();
 		distance_PID->SetSetpoint(distance);
 		enableDistancePID();
@@ -154,7 +159,7 @@ bool Mobility::isDriveDistanceDone() {
 //Drive Straight
 void Mobility::startDriveStraight() {
 	frc::DriverStation::ReportError("Starting drive straight");
-	if(isGyroEnabled) {
+	if(use_gyro) {
 		rotation_PID->SetSetpoint(gyro->GetYaw());
 		enableRotationPID();
 	}
@@ -170,7 +175,7 @@ bool Mobility::isDrivingStraight() {
 
 void Mobility::stopDriveStraight() {
 	driving_straight = false;
-	if(isGyroEnabled) {
+	if(use_gyro) {
 		disableRotationPID();
 	}
 }
@@ -180,7 +185,7 @@ float Mobility::getStraightSpeed() {
 }
 void Mobility::setStraightSpeed(float speed) {
 	straight_speed = speed;
-	if(isGyroEnabled) {
+	if(use_gyro) {
 		rotation_output->setForwardSpeed(speed);
 	}
 	else {
@@ -234,32 +239,44 @@ void Mobility::enableDistancePID() {
 	distance_output->Enable();
 }
 
-void Mobility::enableLeftEncoder() {
+bool Mobility::isDistancePIDEnabled() {
+	return distance_PID->IsEnabled();
+}
 
+void Mobility::enableLeftEncoder() {
+	use_left_drive_encoder = true;
 }
 
 void Mobility::disableLeftEncoder() {
+	use_left_drive_encoder = false;
+}
 
+bool Mobility::isLeftEncoderEnabled() {
+	return use_left_drive_encoder;
 }
 
 void Mobility::enableRightEncoder() {
-
+	use_right_drive_encoder = true;
 }
 
 void Mobility::disableRightEncoder() {
+	use_right_drive_encoder = false;
+}
 
+bool Mobility::isRightEncoderEnabled() {
+	return use_right_drive_encoder;
 }
 
 void Mobility::enableGyro() {
-
+	use_gyro = true;
 }
 
 void Mobility::disableGyro() {
-
+	use_gyro = false;
 }
 
-bool Mobility::isDistancePIDEnabled() {
-	return distance_PID->IsEnabled();
+bool Mobility::isGyroEnabled() {
+	return use_gyro;
 }
 
 Mobility* Mobility::getInstance()

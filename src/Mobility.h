@@ -71,20 +71,19 @@ public:
 	void turnDegrees(float degrees);
 	bool isTurnDegreesDone();
 
-	void setLeftDriveEncoder();
-	void setRightDriveEncoder();
-
 	void StartDriveDistance(float_t);
 	bool isDriveDistanceDone();
+
+
+	//Use these instead of directly enabling/disabling the PID controller and PID output
 	void disableDistancePID();
 	void enableDistancePID();
 	bool isDistancePIDEnabled();
 
-
-	//Use these instead of directly enabling/disabling the PID controller and PID output
 	void disableRotationPID();
 	void enableRotationPID();
 	bool isRotationPIDEnabled();
+
 
 	float getGyroAngle();
 	float getLeftEncoderRates();
@@ -95,21 +94,16 @@ public:
 
 	float getNavXTemperature();
 
-	// Manual Drive Straight
-	bool areDriveEncodersEnabled;
-	bool isGyroEnabled;
-
-
-	//Manual Drive Distance
-	Timer* drive_distance_start;
-	const float ROBOT_SPEED =  155;
-
+	//Sensor Toggles
 	void enableLeftEncoder();
 	void disableLeftEncoder();
+	bool isLeftEncoderEnabled();
 	void enableRightEncoder();
 	void disableRightEncoder();
+	bool isRightEncoderEnabled();
 	void enableGyro();
 	void disableGyro();
+	bool isGyroEnabled();
 
 private:
 	Mobility();
@@ -148,6 +142,16 @@ private:
 	bool is_drive_distance_on;
 
 	void processDistance();
+
+	//Sensor toggles
+	bool use_left_drive_encoder;
+	bool use_right_drive_encoder;
+	bool use_gyro;
+
+
+	//Manual Drive Distance
+	Timer* drive_distance_start;
+	const float ROBOT_SPEED =  155;
 
 	static int counter;
 };
