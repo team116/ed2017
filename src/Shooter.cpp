@@ -15,6 +15,10 @@ const float AZIMUTH_ENCODER_PULSES = 360;
 const float ENCODER_PER_AZIMUTH_REV = 5;
 
 Shooter::Shooter() {
+	use_shooter_azimuth_encoder = true;
+	use_shooter_azimuth_limit_switch_encoder = true;
+	use_shooter_speed_encoder = true;
+
 	shooter = new CANTalon(RobotPorts::MOTOR_SHOOTER_WHEEL);
 	azimuth = Utils::constructMotor(RobotPorts::MOTOR_SHOOTER_AZIMUTH);
 	target_azimuth_angle = 0;
@@ -118,27 +122,39 @@ void Shooter::disableShooterPID() {
 }
 
 void Shooter::enableShooterAzimuthEncoder() {
+	use_shooter_azimuth_encoder = true;
+}
 
+bool Shooter::isShooterAzimuthEncoderEnabled() {
+	return use_shooter_azimuth_encoder;
 }
 
 void Shooter::disableShooterAzimuthEncoder() {
-
+	use_shooter_azimuth_encoder = false;
 }
 
 void Shooter::enableShooterAzimuthLimitSwitch() {
+	use_shooter_azimuth_limit_switch_encoder = true;
+}
 
+bool Shooter::isShooterAzimuthLimitSwitchEnabled() {
+	return use_shooter_azimuth_limit_switch_encoder;
 }
 
 void Shooter::disableShooterAzimuthLimitSwitch() {
-
+	use_shooter_azimuth_limit_switch_encoder = false;
 }
 
 void Shooter::enableShooterSpeedEncoder() {
+	use_shooter_speed_encoder = true;
+}
 
+bool Shooter::isShooterSpeedEncoderEnabled() {
+	return use_shooter_speed_encoder;
 }
 
 void Shooter::disableShooterSpeedEncoder() {
-
+	use_shooter_speed_encoder = false;
 }
 
 bool Shooter::isShooterPIDEnabled() {

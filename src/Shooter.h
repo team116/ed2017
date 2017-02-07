@@ -37,6 +37,16 @@ public:
 	float getAzimuthSetValue();
 	float getShooterSetValue();
 
+	void enableShooterAzimuthEncoder();
+	void disableShooterAzimuthEncoder();
+	void enableShooterAzimuthLimitSwitch();
+	void disableShooterAzimuthLimitSwitch();
+	void enableShooterSpeedEncoder();
+	void disableShooterSpeedEncoder();
+	bool isShooterAzimuthEncoderEnabled();
+	bool isShooterAzimuthLimitSwitchEnabled();
+	bool isShooterSpeedEncoderEnabled();
+
 private:
 	Shooter();
 	static Shooter* INSTANCE;
@@ -51,13 +61,9 @@ private:
 	frc::PIDController* shooter_PID;
 	frc::PIDController* azimuth_PID;
 
-	void enableShooterAzimuthEncoder();
-	void disableShooterAzimuthEncoder();
-	void enableShooterAzimuthLimitSwitch();
-	void disableShooterAzimuthLimitSwitch();
-	void enableShooterSpeedEncoder();
-	void disableShooterSpeedEncoder();
-
+	bool use_shooter_azimuth_encoder;
+	bool use_shooter_azimuth_limit_switch_encoder;
+	bool use_shooter_speed_encoder;
 };
 
 #endif /* SRC_SHOOTER_H_ */
