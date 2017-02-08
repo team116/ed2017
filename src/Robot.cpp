@@ -121,7 +121,7 @@ public:
 
 	void AutonomousInit() override {
 		try {
-			mobility->turnDegrees(90);
+			gear->enableCompressor();
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in AutonomousInit\n%s", e->what());
 		}
