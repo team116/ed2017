@@ -15,6 +15,7 @@
 #include <PIDController.h>
 #include <MobilityRotationPID.h>
 #include "../navx/AHRS.h"
+#include "Log.h"
 
 class Mobility {
 public:
@@ -94,6 +95,12 @@ public:
 
 	float getNavXTemperature();
 
+	//Calibration
+	//Logs the linear acceleration of the robot. Runs at full speed for the specified time
+	void startLinearAccelTest(float);
+	//Logs the rotational velocity of the robot. Runs at full rotation for the specified time
+	void startRotationalVelTest(float);
+
 	//Sensor Toggles
 	void enableLeftEncoder();
 	void disableLeftEncoder();
@@ -109,9 +116,11 @@ private:
 	Mobility();
 	static Mobility* INSTANCE;
 
+	Log* log;
+
 	//Functions
 	void processTurningDegrees();
-
+	float calculateTimeForDistance(float);
 
 	MobilityEncoder* encoders;
 
@@ -137,9 +146,11 @@ private:
 
 	//Other variables
 	float straight_speed;
-	bool turning_degrees;
+	bool is_turn_degrees_on;
 	bool driving_straight;
 	bool is_drive_distance_on;
+	bool is_linear_accel_test;
+	bool is_rotational_vel_test;
 
 	void processDistance();
 
@@ -149,11 +160,11 @@ private:
 	bool use_gyro;
 
 
-	//Manual Drive Distance
-	Timer* drive_distance_start;
-	const float ROBOT_SPEED =  155;
-
-	static int counter;
+	//Manual stuff
+	Timer* drive_distance_timer;
+	float drive_dist_time;
+	Timer* turn_degrees_timer;
+	float turn_deg_time;
 };
 
 #endif /* SRC_MOBILITY_H_ */
