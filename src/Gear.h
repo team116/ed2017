@@ -11,6 +11,7 @@
 #include <SpeedController.h>
 #include <DigitalInput.h>
 #include <DoubleSolenoid.h>
+#include <Compressor.h>
 
 class Gear {
 public:
@@ -19,11 +20,17 @@ public:
 	void open();
 	void close();
 	bool isOpen();
+	bool enabled();
+	void enableCompressor();
+	void disableCompressor();
+
 private:
 	Gear();
 	static Gear* INSTANCE;
+
 	frc::DoubleSolenoid* left_piston;
 	frc::DoubleSolenoid* right_piston;
+	frc::Compressor* compressor;
 
 	bool is_open;
 };
