@@ -101,6 +101,11 @@ namespace OIPorts
 	const unsigned int MOBILITY_DISTANCE_PID_SWITCH = 10;//the button box was not working when these buttons were created
 	const unsigned int SHOOTER_SPEED_PID_SWITCH = 11;
 	const unsigned int SHOOTER_AZIMUTH_ANGLE_PID_SWITCH = 12;
+	const unsigned int MOBILITY_LEFT_ENCODER_SWITCH = 13;
+	const unsigned int MOBILITY_RIGHT_ENCODER_SWITCH = 14;
+	const unsigned int SHOOTER_AZIMUTH_ENCODER_SWITCH = 15;
+	const unsigned int SHOOTER_AZIMUTH_LIMIT_SWITCH = 16;
+	const unsigned int SHOOTER_SPEED_ENCODER_SWITCH = 17;
 
 
 	//Axes

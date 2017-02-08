@@ -147,6 +147,36 @@ void OI::process() {
 	else if (!button_box_1->GetRawButton(OIPorts::SHOOTER_AZIMUTH_ANGLE_PID_SWITCH) && (shooter->isAzimuthPIDEnabled())) {
 		shooter->disableAzimuthPID();
 	}
+	if(button_box_1->GetRawButton(OIPorts::MOBILITY_LEFT_ENCODER_SWITCH) && (!mobility->isLeftEncoderEnabled())) {
+		mobility->enableLeftEncoder();
+	}
+	else if (!button_box_1->GetRawButton(OIPorts::MOBILITY_LEFT_ENCODER_SWITCH)&&(mobility->isLeftEncoderEnabled)) {
+		mobility->disableLeftEncoder();
+	}
+	if (button_box_1->GetRawButton(OIPorts::MOBILITY_RIGHT_ENCODER_SWITCH)&&(!mobility->isRightEncoderEnabled())) {
+		mobility->enableRightEncoder();
+	}
+	else if (!button_box_1->GetRawButton(OIPorts::MOBILITY_RIGHT_ENCODER_SWITCH)&&(mobility->isRightEncoderEnabled())) {
+		mobility->disableRightEncoder();
+	}
+	if (button_box_1->GetRawButton(OIPorts::SHOOTER_AZIMUTH_ENCODER_SWITCH)&&(!shooter->isShooterAzimuthEncoderEnabled())) {
+		shooter->enableShooterAzimuthEncoder();
+	}
+	else if (!button_box_1->GetRawButton(OIPorts::SHOOTER_AZIMUTH_ENCODER_SWITCH)&&(shooter->isShooterAzimuthEncoderEnabled())) {
+		shooter->disableShooterAzimuthEncoder();
+	}
+	if (button_box_1->GetRawButton(OIPorts::SHOOTER_AZIMUTH_LIMIT_SWITCH)&&(!shooter->isShooterAzimuthLimitSwitchEnabled())) {
+		shooter->enableShooterAzimuthLimitSwitch();
+	}
+	else if (!button_box_1->GetRawButton(OIPorts::SHOOTER_AZIMUTH_LIMIT_SWITCH)&&(shooter->isShooterAzimuthLimitSwitchEnabled())) {
+		shooter->disableShooterAzimuthLimitSwitch();
+	}
+	if (button_box_1->GetRawButton(OIPorts::SHOOTER_SPEED_ENCODER_SWITCH)&&(!shooter->isShooterSpeedEncoderEnabled())) {
+		shooter->enableShooterAzimuthLimitSwitch();
+	}
+	else if(!button_box_1->GetRawButton(OIPorts::SHOOTER_SPEED_ENCODER_SWITCH)&&(shooter->isShooterSpeedEncoderEnabled())) {
+		shooter->disableShooterAzimuthLimitSwitch();
+	}
 }
 
 OI* OI::getInstance()
