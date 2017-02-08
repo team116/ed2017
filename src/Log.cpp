@@ -82,7 +82,6 @@ void Log::write(Log::debugLevelType debug_level, const char* str, ...)
 		fputs(timestamp, log_file);
 		fputs("\t", log_file);
 		fputs(buffer, log_file);
-		frc::DriverStation::ReportError(std::to_string(sizeof(system_info)));
 		if(is_error) {
 			fputs("\n SYSTEM DUMP: ", log_file);
 			fputs(system_info, log_file);
