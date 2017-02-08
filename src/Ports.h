@@ -115,7 +115,7 @@ namespace Utils
 		CANTalonSRX
 	};
 
-	const MotorType motor_type = MotorType::VictorSP;
+	const MotorType motor_type = MotorType::CANTalonSRX;
 
 	frc::SpeedController* constructMotor(unsigned int port);;
 }
