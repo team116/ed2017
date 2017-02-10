@@ -64,6 +64,10 @@ private:
 	bool use_shooter_azimuth_encoder;
 	bool use_shooter_azimuth_limit_switch_encoder;
 	bool use_shooter_speed_encoder;
+
+	//Manual stuff
+	float azimuth_current_angle;//This is an approximation of the current azimuth angle
+
 };
 
 #endif /* SRC_SHOOTER_H_ */

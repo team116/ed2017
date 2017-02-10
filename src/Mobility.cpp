@@ -11,7 +11,8 @@
 Mobility* Mobility::INSTANCE = nullptr;
 
 const float MAX_SPEED =  155;// in/s
-const float AVG_ACCELERATION = 115;// in/s^2
+const float AVG_ACCELERATION = 96.5;// in/s^2
+const float AVG_DECELERATION = -119.7;// in/s^2
 const float POSITION_CONSTANT = 104.46;
 const float DISTANCE_TO_FULL_SPEED = 104.8;// inches
 
@@ -89,14 +90,17 @@ void Mobility::process() {
 
 void Mobility::processDistance() {
 	if(is_linear_accel_test) {
-		if(drive_distance_timer->HasPeriodPassed(drive_dist_time + 1.0)) {
+		frc::DriverStation::ReportError("Time: " + std::to_string(drive_distance_timer->Get()));
+		if(drive_distance_timer->HasPeriodPassed(drive_dist_time + 2.0)) {
 			frc::DriverStation::ReportError("Linear Acceleration Test Complete. Extract data from log file");
 			is_linear_accel_test = false;
 			drive_distance_timer->Stop();
 			drive_distance_timer->Reset();
 			is_drive_distance_on = false;
 		}
-		else if(drive_distance_timer->HasPeriodPassed(drive_dist_time)) {
+		else if(drive_distance_timer->Get() >= drive_dist_time) {
+			stopDriveStraight();
+			setStraightSpeed(0.0);
 			setLeft(0.0);
 			setRight(0.0);
 			log->write(Log::INFO_LEVEL, "Linear Accel-end: %f", gyro->GetRawAccelY());
@@ -113,6 +117,9 @@ void Mobility::processDistance() {
 	}
 	else {
 		if(drive_distance_timer->HasPeriodPassed(drive_dist_time) ) {
+			frc::DriverStation::ReportError("Stopping drive dist");
+			stopDriveStraight();
+			setStraightSpeed(0.0);
 			setLeft(0.0);
 			setRight(0.0);
 			is_drive_distance_on = false;
@@ -133,8 +140,8 @@ void Mobility::processTurningDegrees() {
 			is_turn_degrees_on = false;
 		}
 		else if(turn_degrees_timer->HasPeriodPassed(turn_deg_time)) {
-			setLeft(0.0);
-			setRight(0.0);
+			setLeft(0);
+			setRight(0);
 			log->write(Log::INFO_LEVEL, "Rotational Velocity-end: %f", gyro->GetRate());
 		}
 		else {
@@ -193,11 +200,11 @@ void Mobility::StartDriveDistance(float distance) {
 		enableDistancePID();
 	}
 	else {
-		DriverStation::ReportError("Starting drive straight without encoders");
 		drive_dist_time = calculateTimeForDistance(distance);
+		DriverStation::ReportError("Starting drive distance without encoders: " + std::to_string(drive_dist_time));
 		drive_distance_timer->Start();
-		setLeft(1.0);
-		setRight(1.0);
+		startDriveStraight();
+		setStraightSpeed(1.0);
 	}
 }
 
@@ -207,8 +214,8 @@ void Mobility::startLinearAccelTest(float time) {
 	drive_dist_time = time;
 	drive_distance_timer->Reset();
 	drive_distance_timer->Start();
-	setLeft(1.0);
-	setRight(1.0);
+	startDriveStraight();
+	setStraightSpeed(1.0);
 }
 
 void Mobility::startRotationalVelTest(float time) {
@@ -222,11 +229,22 @@ void Mobility::startRotationalVelTest(float time) {
 }
 
 float Mobility::calculateTimeForDistance(float distance) {
-	if(distance < DISTANCE_TO_FULL_SPEED) {
-		return sqrt(distance / (AVG_ACCELERATION / 2));
-	}
+	if(distance == 0)
+		return 0.0;
+	if(distance < 0.0)
+		return -calculateTimeForDistance(-1 * distance);
 	else {
-		return (distance - POSITION_CONSTANT) / MAX_SPEED;
+		float limit = (AVG_DECELERATION * MAX_SPEED * MAX_SPEED - AVG_ACCELERATION * MAX_SPEED * MAX_SPEED) / (2 * AVG_ACCELERATION * AVG_DECELERATION);
+		frc::DriverStation::ReportError("Limit: " + std::to_string(limit));
+		if(distance < limit) {
+			frc::DriverStation::ReportError("Case 1");
+			return sqrt((-2 * distance * (AVG_ACCELERATION - AVG_DECELERATION)) / (AVG_ACCELERATION * AVG_DECELERATION));
+		}
+		else {
+			frc::DriverStation::ReportError("Case 2");
+			return (distance / MAX_SPEED ) - (MAX_SPEED / (2 * AVG_ACCELERATION)) - (MAX_SPEED / AVG_DECELERATION)
+					+ (MAX_SPEED / AVG_ACCELERATION) + (MAX_SPEED / (2 * AVG_DECELERATION));
+		}
 	}
 }
 

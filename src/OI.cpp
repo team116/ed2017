@@ -123,7 +123,7 @@ void OI::process() {
 		feeder->setBlenderSpeed(0);
 		//frc::DriverStation::ReportError("Feeder off");
 	}
-	if (button_box_1->GetRawButton(OIPorts::MOBILITY_ROTATION_PID_SWITCH) && (!mobility->isRotationPIDEnabled())) {
+	/*if (button_box_1->GetRawButton(OIPorts::MOBILITY_ROTATION_PID_SWITCH) && (!mobility->isRotationPIDEnabled())) {
 		mobility->enableRotationPID();
 	}
 	else if(!button_box_1->GetRawButton(OIPorts::MOBILITY_ROTATION_PID_SWITCH) && (mobility->isRotationPIDEnabled())) {
@@ -176,7 +176,7 @@ void OI::process() {
 	}
 	else if(!button_box_1->GetRawButton(OIPorts::SHOOTER_SPEED_ENCODER_SWITCH)&&(shooter->isShooterSpeedEncoderEnabled())) {
 		shooter->disableShooterAzimuthLimitSwitch();
-	}
+	}*/
 }
 
 OI* OI::getInstance()

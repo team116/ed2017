@@ -21,9 +21,6 @@ public:
 
 	//Returns whether or not the routine is finished
 	virtual bool isFinished() = 0;
-
-private:
-
 };
 
 

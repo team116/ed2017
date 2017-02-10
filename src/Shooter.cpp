@@ -19,6 +19,8 @@ Shooter::Shooter() {
 	use_shooter_azimuth_limit_switch_encoder = true;
 	use_shooter_speed_encoder = true;
 
+	azimuth_current_angle = 0.0;
+
 	shooter = new CANTalon(RobotPorts::MOTOR_SHOOTER_WHEEL);
 	azimuth = Utils::constructMotor(RobotPorts::MOTOR_SHOOTER_AZIMUTH);
 	target_azimuth_angle = 0;
@@ -49,19 +51,6 @@ Shooter::Shooter() {
 
 void Shooter::process() {
 
-	/*float current_azimuth_angle = 0;
-
-	float azimuth_angle_offset = target_azimuth_angle - current_azimuth_angle;
-
-	if (azimuth_angle_offset > AZIMUTH_ANGLE_TOLERANCE) {
-		azimuth->Set(AUTO_AZIMUTH_SPEED);
-	}
-	else if (azimuth_angle_offset > - AZIMUTH_ANGLE_TOLERANCE) {
-		azimuth->Set(AUTO_AZIMUTH_SPEED);
-	}
-	else {
-		azimuth->Set(0);
-	}*/
 }
 
 float Shooter::getShooterEncoderRate() {
@@ -69,7 +58,10 @@ float Shooter::getShooterEncoderRate() {
 }
 
 float Shooter::getAzimuthPosition() {
-	return azimuth_encoder->GetDistance();
+	if(use_shooter_azimuth_encoder)
+		return azimuth_encoder->GetDistance();
+	else
+		return azimuth_current_angle;
 }
 
 float Shooter::getAzimuthSetValue() {
@@ -100,7 +92,11 @@ float Shooter::getAzimuthEncoderRate() {
 }
 
 void Shooter::setAzimuthAngle(float angle) {
-	azimuth_PID->SetSetpoint(angle);
+	if(use_shooter_azimuth_encoder)
+		azimuth_PID->SetSetpoint(angle);
+	else {
+
+	}
 }
 
 void Shooter::setAzimuthSpeed(float speed) {
@@ -119,6 +115,10 @@ void Shooter::enableShooterPID() {
 }
 void Shooter::disableShooterPID() {
 	shooter_PID->Disable();
+}
+
+bool Shooter::isShooterPIDEnabled() {
+	return shooter_PID->IsEnabled();
 }
 
 void Shooter::enableShooterAzimuthEncoder() {
@@ -155,10 +155,6 @@ bool Shooter::isShooterSpeedEncoderEnabled() {
 
 void Shooter::disableShooterSpeedEncoder() {
 	use_shooter_speed_encoder = false;
-}
-
-bool Shooter::isShooterPIDEnabled() {
-	return shooter_PID->IsEnabled();
 }
 
 Shooter* Shooter::getInstance()
