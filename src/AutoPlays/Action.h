@@ -5,8 +5,8 @@
  *      Author: Will
  */
 
-#ifndef SRC_AUTO_PLAYS_ACTION_H_
-#define SRC_AUTO_PLAYS_ACTION_H_
+#ifndef SRC_AUTOPLAYS_ACTION_H_
+#define SRC_AUTOPLAYS_ACTION_H_
 
 class Action {
 public:
@@ -24,4 +24,4 @@ public:
 };
 
 
-#endif /* SRC_AUTO_PLAYS_ACTION_H_ */
+#endif /* SRC_AUTOPLAYS_ACTION_H_ */

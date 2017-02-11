@@ -5,7 +5,7 @@
  *      Author: Will
  */
 
-#include "Routine.h"
+#include <AutoPlays/Routine.h>
 
 void Routine::addAction(Action* action) {
 	actions.push(action);
@@ -40,6 +40,8 @@ void Routine::process() {
 		}
 	}
 }
+
+
 
 bool Routine::isFinished() {
 	return (actions.empty() && (current_action == nullptr));

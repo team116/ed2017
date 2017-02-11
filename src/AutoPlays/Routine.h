@@ -5,21 +5,26 @@
  *      Author: Will
  */
 
-#ifndef SRC_AUTO_PLAYS_ROUTINE_H_
-#define SRC_AUTO_PLAYS_ROUTINE_H_
+#ifndef SRC_AUTOPLAYS_ROUTINE_H_
+#define SRC_AUTOPLAYS_ROUTINE_H_
 
-#include "Action.h"
+#include <AutoPlays/Action.h>
+#include <queue>
 
 class Routine {
 public:
 	//Constructor. Make sure to push the actions into the action queue
-	virtual Routine() = 0;
+	Routine() {};
 
 	//Called once when the routine starts
 	void start();
 
 	//Called repeatedly while the routine runs
 	void process();
+
+
+	//Called once when the routine ends
+	void end();
 
 	//Returns whether or not the routine is finished
 	bool isFinished();
@@ -34,4 +39,4 @@ private:
 };
 
 
-#endif /* SRC_AUTO_PLAYS_ROUTINE_H_ */
+#endif /* SRC_AUTOPLAYS_ROUTINE_H_ */
