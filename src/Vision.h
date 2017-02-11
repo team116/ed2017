@@ -41,8 +41,8 @@ private:
 	Vision();
 	static Vision* INSTANCE;
 
-	const int CAMERA_WIDTH = 640;
-	const int CAMERA_HEIGHT = 480;
+	const int CAMERA_WIDTH = 320;
+	const int CAMERA_HEIGHT = 240;
 
 	Mobility* mobility;
 	Shooter* shooter;
