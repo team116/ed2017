@@ -95,12 +95,6 @@ public:
 
 	float getNavXTemperature();
 
-	//Calibration
-	//Logs the linear acceleration of the robot. Runs at full speed for the specified time
-	void startLinearAccelTest(float);
-	//Logs the rotational velocity of the robot. Runs at full rotation for the specified time
-	void startRotationalVelTest(float);
-
 	//Sensor Toggles
 	void enableLeftEncoder();
 	void disableLeftEncoder();
@@ -149,8 +143,6 @@ private:
 	bool is_turn_degrees_on;
 	bool driving_straight;
 	bool is_drive_distance_on;
-	bool is_linear_accel_test;
-	bool is_rotational_vel_test;
 
 	void processDistance();
 
