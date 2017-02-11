@@ -12,6 +12,10 @@
 #include "Diagnostics.h"
 #include "Log.h"
 
+//Auto Stuff
+#include "AutoPlays/Routine.h"
+#include "AutoPlays/DoNothing.h"
+
 #include <IterativeRobot.h>
 
 class Robot: public frc::IterativeRobot {
@@ -26,6 +30,8 @@ private:
 	Vision* vision;
 	Diagnostics* diagnostics;
 	Log* log;
+
+	Routine* auto_routine;
 
 public:
 	void RobotInit() {
@@ -117,11 +123,18 @@ public:
 		mobility->disableRotationPID();
 		shooter->disableAzimuthPID();
 		shooter->disableShooterPID();
+
+		if(auto_routine != nullptr) {
+			//auto_routine->end();
+		}
 	}
 
 	void AutonomousInit() override {
 		try {
-			gear->enableCompressor();
+			//Set the play here
+			auto_routine = new DoNothing();
+
+			auto_routine->start();
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in AutonomousInit\n%s", e->what());
 		}
@@ -129,13 +142,14 @@ public:
 
 	void AutonomousPeriodic() {
 		try {
-			autonomous->process();
 			mobility->process();
 			climber->process();
 			gear->process();
 			intake->process();
 			shooter->process();
 			diagnostics->process();
+
+			auto_routine->process();
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in AutonomousPeriodic\n%s", e->what());
 		}
