@@ -20,8 +20,8 @@ void Climber::process() {
 }
 
 void Climber::moveClimber(float speed) {
-	climber_left->Set(speed);
-	climber_right->Set(-speed);
+	climber_left->Set(-speed);
+	climber_right->Set(speed);
 }
 float Climber::getSpeed() {
 	return climber_left->Get();
