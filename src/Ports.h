@@ -14,7 +14,7 @@ namespace RobotPorts
 {
 	//PWM Motors
 	//REAL ROBOT PORTS
-	/*const unsigned int MOTOR_LEFT_FRONT = 0;
+	const unsigned int MOTOR_LEFT_FRONT = 0;
 	const unsigned int MOTOR_RIGHT_FRONT = 1;
 	const unsigned int MOTOR_LEFT_BACK = 2;
 	const unsigned int MOTOR_RIGHT_BACK = 3;
@@ -28,7 +28,7 @@ namespace RobotPorts
 	const unsigned int MOTOR_BLENDER = 10;//N0*/
 
 	//ANDERSON BOT PORTS
-	const unsigned int MOTOR_LEFT_FRONT = 4;
+	/*const unsigned int MOTOR_LEFT_FRONT = 4;
 	const unsigned int MOTOR_RIGHT_FRONT = 6;
 	const unsigned int MOTOR_LEFT_BACK = 5;
 	const unsigned int MOTOR_RIGHT_BACK = 7;
@@ -120,7 +120,7 @@ namespace Utils
 		CANTalonSRX
 	};
 
-	const MotorType motor_type = MotorType::CANTalonSRX;
+	const MotorType motor_type = MotorType::VictorSP;
 
 	frc::SpeedController* constructMotor(unsigned int port);;
 }
