@@ -72,7 +72,9 @@ void OI::process() {
 		//frc::DriverStation::ReportError("Closing gear");
 	}
 	if(button_box_1->GetRawButton(OIPorts::CLIMBER_UP_SWITCH) && (CLIMB_SPEED != climber->getSpeed())) {
-		climber->moveClimber(CLIMB_SPEED);
+		//Percent from 0.2 to 1.0
+		float percent = (button_box_1->GetRawAxis(OIPorts::AXIS_Z) * 0.4) + 0.6;
+		climber->moveClimber(percent * CLIMB_SPEED);
 		//frc::DriverStation::ReportError("Moving up");
 	}
 	else if(!button_box_1->GetRawButton(OIPorts::CLIMBER_UP_SWITCH) || (0.0 != climber->getSpeed())) {

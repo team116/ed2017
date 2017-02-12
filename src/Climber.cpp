@@ -24,7 +24,7 @@ void Climber::moveClimber(float speed) {
 	climber_right->Set(speed);
 }
 float Climber::getSpeed() {
-	return climber_left->Get();
+	return climber_right->Get();
 }
 
 Climber* Climber::getInstance()
