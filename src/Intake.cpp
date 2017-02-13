@@ -22,7 +22,7 @@ float Intake::getSpeed() {
 	return intake_motor->Get();
 }
 void Intake::setSpeedIntake(float speed) {
-	intake_motor->Set(speed);
+	intake_motor->Set(-speed);
 }
 
 Intake* Intake::getInstance()
