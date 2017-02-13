@@ -8,6 +8,8 @@
 #include <Mobility.h>
 #include "Ports.h"
 
+#define ARRAY_SIZE(array) (sizeof((array))/sizeof((array[0])))
+
 Mobility* Mobility::INSTANCE = nullptr;
 
 const float MAX_SPEED =  155;// in/s
@@ -17,8 +19,10 @@ const float POSITION_CONSTANT = 104.46;
 const float DISTANCE_TO_FULL_SPEED = 104.8;// inches
 
 //First num in point is distance in inches, second num in point is time in seconds
-const std::vector<std::vector<float>> DISTANCES_TO_TIMES = {{0, 0}, {4.5, 0.1}, {10.75, 0.2}, {17.75, 0.3}, {25, 0.4}, {37.25, 0.5},
+const float DISTANCES_TO_TIMES[][2] = {{0, 0}, {4.5, 0.1}, {10.75, 0.2}, {17.75, 0.3}, {25, 0.4}, {37.25, 0.5},
 		{54.5, 0.6}, {74.5, 0.7}, {92.5, 0.8}, {107.75, 0.9}, {121.625, 1.0}};
+//First num in point is degrees, second num is time in seconds
+const float DEGREES_TO_TIMES[][2] = {{0, 0}};
 
 Mobility::Mobility() {
 	log = Log::getInstance();
@@ -78,7 +82,7 @@ Mobility::Mobility() {
 }
 
 void Mobility::process() {
-	//DriverStation::ReportError("Gyro: " + std::to_string(gyro->PIDGet()));
+	DriverStation::ReportError("Gyro: " + std::to_string(gyro->PIDGet()));
 	//frc::DriverStation::ReportError("Left Encoder: " + std::to_string(encoders->getLeftEncoderRates()));
 	//frc::DriverStation::ReportError("Right Encoder: " + std::to_string(encoders->getRightEncoderRates()));
 	if (is_turn_degrees_on) {
@@ -168,7 +172,7 @@ void Mobility::StartDriveDistance(float distance) {
 		enableDistancePID();
 	}
 	else {
-		drive_dist_time = calculateTimeForDistance(distance);
+		drive_dist_time = estimateTimeFromPoints(DISTANCES_TO_TIMES, distance);
 		DriverStation::ReportError("Starting drive distance without encoders: " + std::to_string(drive_dist_time));
 		drive_distance_timer->Start();
 		startDriveStraight();
@@ -176,37 +180,34 @@ void Mobility::StartDriveDistance(float distance) {
 	}
 }
 
-float Mobility::calculateTimeForDistance(float distance) {
-	for(unsigned int i = 0; i < DISTANCES_TO_TIMES.size(); i++) {
-		if(DISTANCES_TO_TIMES[i][0] == distance) {
-			return DISTANCES_TO_TIMES[i][1];
+float Mobility::estimateTimeFromPoints(const float points[][2], float distance) {
+	for(unsigned int i = 0; i < ARRAY_SIZE(points); i++) {
+		if(points[i][0] == distance) {
+			return points[i][1];
 		}
-		else if(DISTANCES_TO_TIMES[i][0] > distance) {
+		else if(points[i][0] > distance) {
 			//Point with distance below target
 			float lower_dist;
 			float lower_time;
 			//Point with distance above target
-			float upper_dist = DISTANCES_TO_TIMES[i][0];
-			float upper_time = DISTANCES_TO_TIMES[i][1];
+			float upper_dist = points[i][0];
+			float upper_time = points[i][1];
 
 			//If we're at the first point in the list, then the point before is just (0,0);
 			if(i > 0) {
-				lower_dist = DISTANCES_TO_TIMES[i - 1][0];
-				lower_time = DISTANCES_TO_TIMES[i - 1][1];
+				lower_dist = points[i - 1][0];
+				lower_time = points[i - 1][1];
 			}
 			else {
 				lower_dist = 0.0;
 				lower_time = 0.0;
 			}
 
-			frc::DriverStation::ReportError("Lower: " + std::to_string(lower_dist) + "," + std::to_string(lower_time)
-				+ " Upper: " + std::to_string(upper_dist) + "," + std::to_string(upper_time));
-
 			//Rise over run
 			float slope = (upper_time - lower_time) / (upper_dist - lower_dist);
 			float y_intercept = upper_time - slope * upper_dist;
 			//mx+b
-			frc::DriverStation::ReportError(std::to_string(slope * distance + y_intercept));
+			frc::DriverStation::ReportError("Drive Distance Time: " + std::to_string(slope * distance + y_intercept));
 			return slope * distance + y_intercept;
 		}
 	}
@@ -214,12 +215,12 @@ float Mobility::calculateTimeForDistance(float distance) {
 	int lower_dist;
 	int lower_time;
 	//Point with distance above target
-	int upper_dist = DISTANCES_TO_TIMES[DISTANCES_TO_TIMES.size()][0];
-	int upper_time = DISTANCES_TO_TIMES[DISTANCES_TO_TIMES.size()][1];
+	int upper_dist = points[ARRAY_SIZE(points)][0];
+	int upper_time = points[ARRAY_SIZE(points)][1];
 
-	if(DISTANCES_TO_TIMES.size() > 0) {
-		lower_dist = DISTANCES_TO_TIMES[DISTANCES_TO_TIMES.size() - 1][0];
-		lower_time = DISTANCES_TO_TIMES[DISTANCES_TO_TIMES.size() - 1][1];
+	if(ARRAY_SIZE(points) > 0) {
+		lower_dist = points[ARRAY_SIZE(points) - 1][0];
+		lower_time = points[ARRAY_SIZE(points) - 1][1];
 	}
 	else {
 		lower_dist = 0;
@@ -292,12 +293,30 @@ void Mobility::setRight(float speed) {
 
 void Mobility::turnDegrees(float degrees) {
 	is_turn_degrees_on = true;
+	if(degrees == 0)
+		return;
 
-	gyro->Reset();
-	rotation_PID->SetSetpoint(degrees);
-	enableRotationPID();
+	if(use_gyro) {
+		gyro->Reset();
+		rotation_PID->SetSetpoint(degrees);
+		enableRotationPID();
 
-	rotation_output->setForwardSpeed(0);
+		rotation_output->setForwardSpeed(0);
+	}
+	else {
+		turn_deg_time = estimateTimeFromPoints(DEGREES_TO_TIMES, degrees);
+		if(degrees < 0) {
+			setLeft(-1.0);
+			setRight(1.0);
+		}
+		else {
+			setLeft(1.0);
+			setRight(-1.0);
+		}
+
+		turn_degrees_timer->Reset();
+		turn_degrees_timer->Start();
+	}
 }
 
 void Mobility::disableRotationPID() {

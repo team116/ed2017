@@ -114,7 +114,7 @@ private:
 
 	//Functions
 	void processTurningDegrees();
-	float calculateTimeForDistance(float);
+	float estimateTimeFromPoints(const float[][2], float);
 
 	MobilityEncoder* encoders;
 
