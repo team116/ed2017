@@ -71,13 +71,13 @@ void OI::process() {
 		gear->close();
 		//frc::DriverStation::ReportError("Closing gear");
 	}
-	if(button_box_1->GetRawButton(OIPorts::CLIMBER_UP_SWITCH) && (CLIMB_SPEED != climber->getSpeed())) {
+	if(button_box_1->GetRawButton(OIPorts::CLIMBER_ON_SWITCH) && (CLIMB_SPEED != climber->getSpeed())) {
 		//Percent from 0.2 to 1.0
 		float percent = (button_box_1->GetRawAxis(OIPorts::AXIS_Z) * 0.4) + 0.6;
 		climber->moveClimber(percent * CLIMB_SPEED);
 		//frc::DriverStation::ReportError("Moving up");
 	}
-	else if(!button_box_1->GetRawButton(OIPorts::CLIMBER_UP_SWITCH) || (0.0 != climber->getSpeed())) {
+	else if(!button_box_1->GetRawButton(OIPorts::CLIMBER_ON_SWITCH) || (0.0 != climber->getSpeed())) {
 		climber->moveClimber(0);
 		//frc::DriverStation::ReportError("Stopped moving");
 	}
@@ -89,30 +89,30 @@ void OI::process() {
 		shooter->setShooterRPM(0);
 	    //frc::DriverStation::ReportError("Shooter off");
 	}
-	/*if (button_box_1->GetRawButton(OIPorts::INTAKE_ROLLER_SWITCH) && (INTAKE_SPEED != intake->getSpeed())) {
+	if (button_box_1->GetRawButton(OIPorts::INTAKE_ROLLER_IN) && (INTAKE_SPEED != intake->getSpeed())) {
 		intake->setSpeedIntake(INTAKE_SPEED);
 	    //frc::DriverStation::ReportError("Intaking");
 	}
-	else if (button_box_1->GetRawButton(OIPorts::OPPOSITE_INTAKE_SWITCH) && (OPPOSITE_INTAKE_SPEED != intake->getSpeed())) {
+	else if (button_box_1->GetRawButton(OIPorts::INTAKE_ROLLER_OUT) && (OPPOSITE_INTAKE_SPEED != intake->getSpeed())) {
 		intake->setSpeedIntake(OPPOSITE_INTAKE_SPEED);
 	    //frc::DriverStation::ReportError("Opposite-intaking");
 	}
-	else if (!button_box_1->GetRawButton(OIPorts::INTAKE_ROLLER_SWITCH) && (!button_box_1->GetRawButton(OIPorts::OPPOSITE_INTAKE_SWITCH))) {
+	else if (!button_box_1->GetRawButton(OIPorts::INTAKE_ROLLER_IN) && (!button_box_1->GetRawButton(OIPorts::INTAKE_ROLLER_OUT))) {
 		intake->setSpeedIntake(0);
 	    //frc::DriverStation::ReportError("Intake and opposite-intake off");
-	}*/
-	/*if (button_box_1->GetRawButton(OIPorts::BLENDER_FORWARD_SWITCH) && (BLENDER_SPEED != feeder->getSpeed())) {
-			feeder->setBlenderSpeed(BLENDER_SPEED);
-		    frc::DriverStation::ReportError("Blending forward");
-		}
-		else if (button_box_1->GetRawButton(OIPorts::BLENDER_REVERSE_SWITCH) && (BLENDER_REVERSE_SPEED != feeder->getSpeed())) {
-			feeder->setBlenderSpeed(BLENDER_REVERSE_SPEED);
-		    frc::DriverStation::ReportError("Blender reverse");
-		}
-		else if (!button_box_1->GetRawButton(OIPorts::BLENDER_FORWARD_SWITCH) && (!button_box_1->GetRawButton(OIPorts::BLENDER_REVERSE_SWITCH))) {
-			feeder->setBlenderSpeed(0);
-		    frc::DriverStation::ReportError("Blender off");
-		}*/
+	}
+	if (button_box_1->GetRawButton(OIPorts::BLENDER_FORWARD_SWITCH) && (BLENDER_SPEED != feeder->getSpeed())) {
+		feeder->setBlenderSpeed(BLENDER_SPEED);
+		frc::DriverStation::ReportError("Blending forward");
+	}
+	else if (button_box_1->GetRawButton(OIPorts::BLENDER_REVERSE_SWITCH) && (BLENDER_REVERSE_SPEED != feeder->getSpeed())) {
+		feeder->setBlenderSpeed(BLENDER_REVERSE_SPEED);
+		frc::DriverStation::ReportError("Blender reverse");
+	}
+	else if (!button_box_1->GetRawButton(OIPorts::BLENDER_FORWARD_SWITCH) && (!button_box_1->GetRawButton(OIPorts::BLENDER_REVERSE_SWITCH))) {
+		feeder->setBlenderSpeed(0);
+		frc::DriverStation::ReportError("Blender off");
+	}
 	if (button_box_1->GetRawButton(OIPorts::FEEDER_FORWARD_SWITCH) && (FEEDER_SPEED != feeder->getSpeed())) {
 		feeder->setBlenderSpeed(FEEDER_SPEED);
 		//frc::DriverStation::ReportError("Feeding forward");

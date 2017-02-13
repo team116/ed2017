@@ -85,27 +85,29 @@ namespace OIPorts
 
 	//Buttons
 	const unsigned int BUTTON_DRIVE_STRAIGHT = 1;
-	const unsigned int OPEN_GEAR_BUTTON = 2;
-	//const unsigned int INTAKE_ROLLER_SWITCH = 3;    These are commented out because there is only one three-way
-	//const unsigned int OPPOSITE_INTAKE_SWITCH = 4;  toggle switch on the driver station and these require 3-way
-	//const unsigned int BLENDER_FORWARD_SWITCH = 6;  toggle switches.
-	//const unsigned int BLENDER_REVERSE_SWITCH = 7;
-	const unsigned int FEEDER_FORWARD_SWITCH = 6;
-	const unsigned int FEEDER_REVERSE_SWITCH = 7;
 	const unsigned int ROTATE_BUTTON = 2;
+	const unsigned int OPEN_GEAR_BUTTON = 8;
+
+	//3 position switches
+	const unsigned int INTAKE_ROLLER_IN = 6;    //These are commented out because there is only one three-way
+	const unsigned int INTAKE_ROLLER_OUT = 7;  //toggle switch on the driver station and these require 3-way
+	const unsigned int BLENDER_FORWARD_SWITCH = 1;  //toggle switches.
+	const unsigned int BLENDER_REVERSE_SWITCH = 2;
+	const unsigned int FEEDER_FORWARD_SWITCH = 3;
+	const unsigned int FEEDER_REVERSE_SWITCH = 4;
 
 	//2-way Toggle Switches
-	const unsigned int CLIMBER_UP_SWITCH = 5;
+	const unsigned int CLIMBER_ON_SWITCH = 5;
 	const unsigned int SHOOTER_ON_SWITCH = 8;
-	const unsigned int MOBILITY_ROTATION_PID_SWITCH = 9; //These buttons are inaccurate and do not correspond with the button box because
-	const unsigned int MOBILITY_DISTANCE_PID_SWITCH = 10;//the button box was not working when these buttons were created
+	/*const unsigned int MOBILITY_ROTATION_PID_SWITCH = 9;
+	const unsigned int MOBILITY_DISTANCE_PID_SWITCH = 10;
 	const unsigned int SHOOTER_SPEED_PID_SWITCH = 11;
 	const unsigned int SHOOTER_AZIMUTH_ANGLE_PID_SWITCH = 12;
 	const unsigned int MOBILITY_LEFT_ENCODER_SWITCH = 13;
 	const unsigned int MOBILITY_RIGHT_ENCODER_SWITCH = 14;
 	const unsigned int SHOOTER_AZIMUTH_ENCODER_SWITCH = 15;
 	const unsigned int SHOOTER_AZIMUTH_LIMIT_SWITCH = 16;
-	const unsigned int SHOOTER_SPEED_ENCODER_SWITCH = 17;
+	const unsigned int SHOOTER_SPEED_ENCODER_SWITCH = 17;*/
 
 
 	//Axes
