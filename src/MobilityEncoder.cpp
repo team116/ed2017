@@ -9,8 +9,8 @@
 #include <Ports.h>
 #include <DriverStation.h>
 
-const float PULSE_PER_REV = 250;
-const float WHEEL_DIAMETER = 7.5;
+const float PULSE_PER_REV = 360;
+const float WHEEL_DIAMETER = 4.0;
 
 MobilityEncoder::MobilityEncoder() {
 	log = Log::getInstance();
