@@ -148,6 +148,10 @@ float Mobility::getRightEncoderRates() {
 	return encoders->getRightEncoderRates();
 }
 
+float Mobility::getGyroAngle() {
+	return gyro->PIDGet();
+}
+
 float Mobility::getLeftSetValue() {
 	return front_left->Get();
 }

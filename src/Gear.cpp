@@ -26,10 +26,12 @@ Gear::Gear() {
 void Gear::open() {
 	left_piston->Set(frc::DoubleSolenoid::Value::kForward);	//kForward is an assumption, we need to test it
 	right_piston->Set(frc::DoubleSolenoid::Value::kForward);
+	is_open = true;
 }
 void Gear::close() {
 	right_piston->Set(frc::DoubleSolenoid::Value::kReverse);	//also an assumption
 	left_piston->Set(frc::DoubleSolenoid::Value::kReverse);
+	is_open = false;
 }
 //numbers are subject to change
 void Gear::process() {

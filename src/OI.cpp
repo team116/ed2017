@@ -64,12 +64,12 @@ void OI::process() {
 	}
 	if (button_box_1->GetRawButton(OIPorts::OPEN_GEAR_BUTTON) && !gear->isOpen()) {
 		gear->open();
-		//frc::DriverStation::ReportError("Opening gear");
+		frc::DriverStation::ReportError("Opening gear");
 
 	}
 	else if(!button_box_1->GetRawButton(OIPorts::OPEN_GEAR_BUTTON) && gear->isOpen()) {
 		gear->close();
-		//frc::DriverStation::ReportError("Closing gear");
+		frc::DriverStation::ReportError("Closing gear");
 	}
 	if(button_box_1->GetRawButton(OIPorts::CLIMBER_ON_SWITCH) && (CLIMB_SPEED != climber->getSpeed())) {
 		//Percent from 0.2 to 1.0
@@ -101,7 +101,8 @@ void OI::process() {
 		intake->setSpeedIntake(0);
 	    //frc::DriverStation::ReportError("Intake and opposite-intake off");
 	}
-	if (button_box_1->GetRawButton(OIPorts::BLENDER_FORWARD_SWITCH) && (BLENDER_SPEED != feeder->getSpeed())) {
+
+	/*if (button_box_1->GetRawButton(OIPorts::BLENDER_FORWARD_SWITCH) && (BLENDER_SPEED != feeder->getSpeed())) {
 		feeder->setBlenderSpeed(BLENDER_SPEED);
 		frc::DriverStation::ReportError("Blending forward");
 	}
@@ -112,7 +113,8 @@ void OI::process() {
 	else if (!button_box_1->GetRawButton(OIPorts::BLENDER_FORWARD_SWITCH) && (!button_box_1->GetRawButton(OIPorts::BLENDER_REVERSE_SWITCH))) {
 		feeder->setBlenderSpeed(0);
 		frc::DriverStation::ReportError("Blender off");
-	}
+	}*/
+
 	if (button_box_1->GetRawButton(OIPorts::FEEDER_FORWARD_SWITCH) && (FEEDER_SPEED != feeder->getSpeed())) {
 		feeder->setBlenderSpeed(FEEDER_SPEED);
 		//frc::DriverStation::ReportError("Feeding forward");
