@@ -44,8 +44,8 @@ namespace RobotPorts
 	//Pnuematics
 	const unsigned int PCM = 0;
 	const unsigned int LEFT_PISTON_OPEN = 0;
-	const unsigned int LEFT_PISTON_CLOSE = 1;
-	const unsigned int RIGHT_PISTON_OPEN = 2;
+	const unsigned int LEFT_PISTON_CLOSE = 2;
+	const unsigned int RIGHT_PISTON_OPEN = 1;
 	const unsigned int RIGHT_PISTON_CLOSE = 3;	//pretty sure we'll need to change these port #s
 
 
@@ -59,8 +59,8 @@ namespace RobotPorts
 
 
 	//Encoders
-	const unsigned int LEFT_DRIVE_ENCODER_1 = 8;
-	const unsigned int LEFT_DRIVE_ENCODER_2 = 9;
+	const unsigned int LEFT_DRIVE_ENCODER_1 = 9;
+	const unsigned int LEFT_DRIVE_ENCODER_2 = 8;
 
 	const unsigned int RIGHT_DRIVE_ENCODER_1 = 6;
 	const unsigned int RIGHT_DRIVE_ENCODER_2 = 7;
