@@ -73,7 +73,7 @@ void OI::process() {
 	}
 	if(button_box_1->GetRawButton(OIPorts::CLIMBER_ON_SWITCH) && (CLIMB_SPEED != climber->getSpeed())) {
 		//Percent from 0.2 to 1.0
-		float percent = (button_box_1->GetRawAxis(OIPorts::AXIS_Z) * 0.4) + 0.6;
+		float percent = (-1 * button_box_1->GetRawAxis(OIPorts::AXIS_Z) * 0.4) + 0.6;
 		climber->moveClimber(percent * CLIMB_SPEED);
 		//frc::DriverStation::ReportError("Moving up");
 	}
