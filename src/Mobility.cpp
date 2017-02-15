@@ -58,13 +58,13 @@ Mobility::Mobility() {
 	//PID controllers
 	rotation_output = new MobilityRotationPID(front_left, front_right, back_left, back_right);
 	rotation_output->Disable();
-	rotation_PID = new frc::PIDController(0.03, 0.0001, 0.1, gyro, rotation_output);
+	rotation_PID = new frc::PIDController(0.07, 0.0, 0.1, gyro, rotation_output);
 	rotation_PID->Disable();
 	rotation_PID->SetContinuous(true);
 	rotation_PID->SetInputRange(-180, 180);
 	rotation_PID->SetOutputRange(-1, 1);
 	rotation_PID->SetPIDSourceType(PIDSourceType::kDisplacement);
-	rotation_PID->SetAbsoluteTolerance(0.5);
+	rotation_PID->SetAbsoluteTolerance(1.0);
 
 	distance_output = new MobilityDistanceOutput(front_left, front_right, back_left, back_right);
 	distance_PID = new frc::PIDController(0.1, 0, 0.0001, encoders, distance_output);
@@ -75,7 +75,7 @@ Mobility::Mobility() {
 	distance_PID->SetPIDSourceType(PIDSourceType::kDisplacement);
 	distance_PID->SetAbsoluteTolerance(0.5);
 
-	//LiveWindow::GetInstance()->AddActuator("Mobility", "Rotation PID", rotation_PID);
+	LiveWindow::GetInstance()->AddActuator("Mobility", "Rotation PID", rotation_PID);
 
 	drive_distance_timer = new Timer();
 	turn_degrees_timer = new Timer();
@@ -301,13 +301,16 @@ void Mobility::turnDegrees(float degrees) {
 		return;
 
 	if(use_gyro) {
+		frc::DriverStation::ReportError("Use gyro start");
 		gyro->Reset();
 		rotation_PID->SetSetpoint(degrees);
 		enableRotationPID();
 
-		rotation_output->setForwardSpeed(0);
+		rotation_output->setForwardSpeed(0);\
+		frc::DriverStation::ReportError("Use gyro done");
 	}
 	else {
+		frc::DriverStation::ReportError("manual start");
 		turn_deg_time = estimateTimeFromPoints(DEGREES_TO_TIMES, degrees);
 		if(degrees < 0) {
 			setLeft(-1.0);
@@ -320,7 +323,9 @@ void Mobility::turnDegrees(float degrees) {
 
 		turn_degrees_timer->Reset();
 		turn_degrees_timer->Start();
+		frc::DriverStation::ReportError("Manual done");
 	}
+	frc::DriverStation::ReportError("Finish turn deg start");
 }
 
 void Mobility::disableRotationPID() {
