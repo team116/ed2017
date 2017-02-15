@@ -44,8 +44,8 @@ namespace RobotPorts
 	//Pnuematics
 	const unsigned int PCM = 0;
 	const unsigned int LEFT_PISTON_OPEN = 0;
-	const unsigned int LEFT_PISTON_CLOSE = 2;
-	const unsigned int RIGHT_PISTON_OPEN = 1;
+	const unsigned int LEFT_PISTON_CLOSE = 1;
+	const unsigned int RIGHT_PISTON_OPEN = 2;
 	const unsigned int RIGHT_PISTON_CLOSE = 3;	//pretty sure we'll need to change these port #s
 
 
