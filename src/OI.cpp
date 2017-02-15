@@ -102,7 +102,7 @@ void OI::process() {
 	    //frc::DriverStation::ReportError("Intake and opposite-intake off");
 	}
 
-	/*if (button_box_1->GetRawButton(OIPorts::BLENDER_FORWARD_SWITCH) && (BLENDER_SPEED != feeder->getSpeed())) {
+	if (button_box_1->GetRawButton(OIPorts::BLENDER_FORWARD_SWITCH) && (BLENDER_SPEED != feeder->getSpeed())) {
 		feeder->setBlenderSpeed(BLENDER_SPEED);
 		frc::DriverStation::ReportError("Blending forward");
 	}
@@ -113,18 +113,18 @@ void OI::process() {
 	else if (!button_box_1->GetRawButton(OIPorts::BLENDER_FORWARD_SWITCH) && (!button_box_1->GetRawButton(OIPorts::BLENDER_REVERSE_SWITCH))) {
 		feeder->setBlenderSpeed(0);
 		frc::DriverStation::ReportError("Blender off");
-	}*/
+	}
 
 	if (button_box_1->GetRawButton(OIPorts::FEEDER_FORWARD_SWITCH) && (FEEDER_SPEED != feeder->getSpeed())) {
-		feeder->setBlenderSpeed(FEEDER_SPEED);
+		feeder->setFeederSpeed(FEEDER_SPEED);
 		//frc::DriverStation::ReportError("Feeding forward");
 	}
 	else if (button_box_1->GetRawButton(OIPorts::FEEDER_REVERSE_SWITCH) && (FEEDER_REVERSE_SPEED != feeder->getSpeed())) {
-		feeder->setBlenderSpeed(FEEDER_REVERSE_SPEED);
+		feeder->setFeederSpeed(FEEDER_REVERSE_SPEED);
 		//frc::DriverStation::ReportError("Feeding reverse");
 	}
 	else if (!button_box_1->GetRawButton(OIPorts::FEEDER_FORWARD_SWITCH) && (!button_box_1->GetRawButton(OIPorts::FEEDER_REVERSE_SWITCH))) {
-		feeder->setBlenderSpeed(0);
+		feeder->setFeederSpeed(0);
 		//frc::DriverStation::ReportError("Feeder off");
 	}
 	/*if (button_box_1->GetRawButton(OIPorts::MOBILITY_ROTATION_PID_SWITCH) && (!mobility->isRotationPIDEnabled())) {
