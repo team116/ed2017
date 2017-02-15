@@ -31,7 +31,6 @@ public:
 	void disableAzimuthPID();
 	bool isAzimuthPIDEnabled();
 	float getSpeed();
-	float getAzimuthEncoderRate();
 	float getShooterEncoderRate();
 	float getAzimuthPosition();
 	float getAzimuthSetValue();
@@ -53,7 +52,7 @@ private:
 	CANTalon* shooter;
 	frc::SpeedController* azimuth;
 	frc::Encoder* shooter_encoder;
-	frc::Encoder* azimuth_encoder;
+	frc::AnalogPotentiometer* azimuth_encoder;
 	float target_azimuth_angle;
 	frc::DigitalInput* azimuth_limit_switch;
 
