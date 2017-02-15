@@ -33,6 +33,9 @@ private:
 
 	Routine* auto_routine;
 
+	float drive_time;
+	Timer* timer;
+
 public:
 	void RobotInit() {
 		try {
@@ -124,6 +127,8 @@ public:
 		shooter->disableAzimuthPID();
 		shooter->disableShooterPID();
 
+		gear->disableCompressor();
+
 		if(auto_routine != nullptr) {
 			//auto_routine->end();
 		}
@@ -132,9 +137,20 @@ public:
 	void AutonomousInit() override {
 		try {
 			//Set the play here
-			auto_routine = new DoNothing();
+			//auto_routine = new DoNothing();
 
-			auto_routine->start();
+			//auto_routine->start();
+
+			//timer = new Timer();
+
+			drive_time = std::stof(SmartDashboard::GetString("DB/String 0", "0.0"));
+			/*timer->Reset();
+			timer->Start();
+			mobility->startDriveStraight();
+			mobility->setStraightSpeed(1.0);*/
+			mobility->disableLeftEncoder();
+			mobility->disableRightEncoder();
+			mobility->StartDriveDistance(drive_time);
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in AutonomousInit\n%s", e->what());
 		}
@@ -149,7 +165,13 @@ public:
 			shooter->process();
 			diagnostics->process();
 
-			auto_routine->process();
+			mobility->turnDegrees(90);
+
+			//auto_routine->process();
+
+			/*if(timer->HasPeriodPassed(drive_time)) {
+				mobility->setStraightSpeed(0.0);
+			}*/
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in AutonomousPeriodic\n%s", e->what());
 		}
@@ -188,6 +210,7 @@ public:
 	void TestPeriodic() {
 		try {
 			TeleopPeriodic();
+			gear->enableCompressor();
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in TestPeriodic\n%s", e->what());
 		}
