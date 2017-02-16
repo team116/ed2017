@@ -14,7 +14,7 @@
 
 //Auto Stuff
 #include "AutoPlays/Routine.h"
-#include "AutoPlays/DoNothing.h"
+#include "AutoPlays/Routines/DoNothing.h"
 
 #include <IterativeRobot.h>
 
