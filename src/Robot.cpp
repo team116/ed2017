@@ -143,14 +143,15 @@ public:
 
 			//timer = new Timer();
 
-			drive_time = std::stof(SmartDashboard::GetString("DB/String 0", "0.0"));
-			/*timer->Reset();
+			/*drive_time = std::stof(SmartDashboard::GetString("DB/String 0", "0.0"));
+			timer->Reset();
 			timer->Start();
 			mobility->startDriveStraight();
-			mobility->setStraightSpeed(1.0);*/
+			mobility->setStraightSpeed(1.0);
 			mobility->disableLeftEncoder();
 			mobility->disableRightEncoder();
-			mobility->StartDriveDistance(drive_time);
+			mobility->StartDriveDistance(drive_time);*/
+			mobility->turnDegrees(90);
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in AutonomousInit\n%s", e->what());
 		}
@@ -164,8 +165,6 @@ public:
 			intake->process();
 			shooter->process();
 			diagnostics->process();
-
-			mobility->turnDegrees(90);
 
 			//auto_routine->process();
 

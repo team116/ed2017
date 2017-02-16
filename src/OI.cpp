@@ -62,6 +62,9 @@ void OI::process() {
 		mobility->setLeft(joy_left->GetRawAxis(OIPorts::AXIS_Y) * -1);
 		mobility->setRight(joy_right->GetRawAxis(OIPorts::AXIS_Y) * -1);
 	}
+
+
+
 	if (button_box_1->GetRawButton(OIPorts::OPEN_GEAR_BUTTON) && !gear->isOpen()) {
 		gear->open();
 		frc::DriverStation::ReportError("Opening gear");
@@ -71,6 +74,9 @@ void OI::process() {
 		gear->close();
 		frc::DriverStation::ReportError("Closing gear");
 	}
+
+
+
 	if(button_box_1->GetRawButton(OIPorts::CLIMBER_ON_SWITCH) && (CLIMB_SPEED != climber->getSpeed())) {
 		//Percent from 0.2 to 1.0
 		float percent = (-1 * button_box_1->GetRawAxis(OIPorts::AXIS_Z) * 0.4) + 0.6;
@@ -81,14 +87,33 @@ void OI::process() {
 		climber->moveClimber(0);
 		//frc::DriverStation::ReportError("Stopped moving");
 	}
+
+
+
 	if(button_box_1->GetRawButton(OIPorts::SHOOTER_ON_SWITCH) && (SHOOTER_SPEED != shooter->getSpeed())) {
-		shooter->setShooterRPM(SHOOTER_SPEED);
+		float percent = (-1 * button_box_1->GetRawAxis(OIPorts::AXIS_Y) * 0.4) + 0.6;
+		shooter->setShooterSpeed(percent * SHOOTER_SPEED);
 		//frc::DriverStation::ReportError("Shooter on");
 	}
 	else if (!button_box_1->GetRawButton(OIPorts::SHOOTER_ON_SWITCH) || (0.0 != shooter->getSpeed())) {
-		shooter->setShooterRPM(0);
+		shooter->setShooterSpeed(0);
 	    //frc::DriverStation::ReportError("Shooter off");
 	}
+
+
+
+	if(joy_left->GetRawButton(3)) {
+		shooter->setAzimuthSpeed(-0.25);
+	}
+	else if(joy_left->GetRawButton(4)) {
+		shooter->setAzimuthSpeed(0.25);
+	}
+	else {
+		shooter->setAzimuthSpeed(0.0);
+	}
+
+
+
 	if (button_box_1->GetRawButton(OIPorts::INTAKE_ROLLER_IN) && (INTAKE_SPEED != intake->getSpeed())) {
 		intake->setSpeedIntake(INTAKE_SPEED);
 	    //frc::DriverStation::ReportError("Intaking");
@@ -102,6 +127,8 @@ void OI::process() {
 	    //frc::DriverStation::ReportError("Intake and opposite-intake off");
 	}
 
+
+
 	if (button_box_1->GetRawButton(OIPorts::BLENDER_FORWARD_SWITCH) && (BLENDER_SPEED != feeder->getSpeed())) {
 		feeder->setBlenderSpeed(BLENDER_SPEED);
 		frc::DriverStation::ReportError("Blending forward");
@@ -114,6 +141,8 @@ void OI::process() {
 		feeder->setBlenderSpeed(0);
 		frc::DriverStation::ReportError("Blender off");
 	}
+
+
 
 	if (button_box_1->GetRawButton(OIPorts::FEEDER_FORWARD_SWITCH) && (FEEDER_SPEED != feeder->getSpeed())) {
 		feeder->setFeederSpeed(FEEDER_SPEED);

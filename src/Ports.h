@@ -55,7 +55,8 @@ namespace RobotPorts
 	const unsigned int MOTOR_SHOOTER_WHEEL = 4;
 
 	//Sensors
-	const unsigned int LS_SHOOTER_AZIMUTH = 3;
+	const unsigned int LS_SHOOTER_AZIMUTH = 5;
+	const unsigned int LS_CLIMBER = 4;
 
 
 	//Encoders
@@ -69,8 +70,7 @@ namespace RobotPorts
 	const unsigned int SHOOTER_ENCODER_1 = 1;
 	const unsigned int SHOOTER_ENCODER_2 = 2;
 
-	const unsigned int AZIMUTH_ENCODER_1 = 4;
-	const unsigned int AZIMUTH_ENCODER_2 = 5;
+	const unsigned int AZIMUTH_ENCODER = 0;
 
 	const unsigned int AZIMUTH_MOTOR_PDP = 11;
 }
@@ -98,7 +98,7 @@ namespace OIPorts
 
 	//2-way Toggle Switches
 	const unsigned int CLIMBER_ON_SWITCH = 5;
-	const unsigned int SHOOTER_ON_SWITCH = 8;
+	const unsigned int SHOOTER_ON_SWITCH = 9;
 	/*const unsigned int MOBILITY_ROTATION_PID_SWITCH = 9;
 	const unsigned int MOBILITY_DISTANCE_PID_SWITCH = 10;
 	const unsigned int SHOOTER_SPEED_PID_SWITCH = 11;

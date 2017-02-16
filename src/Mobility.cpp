@@ -17,6 +17,7 @@ const float AVG_ACCELERATION = 96.5;// in/s^2
 const float AVG_DECELERATION = -119.7;// in/s^2
 const float POSITION_CONSTANT = 104.46;
 const float DISTANCE_TO_FULL_SPEED = 104.8;// inches
+const float ONTARGET_TIME = 0.1;
 
 //First num in point is distance in inches, second num in point is time in seconds
 const float DISTANCES_TO_TIMES[][2] = {{0, 0}, {4.5, 0.1}, {10.75, 0.2}, {17.75, 0.3}, {25, 0.4}, {37.25, 0.5},
@@ -122,10 +123,22 @@ void Mobility::processDistance() {
 void Mobility::processTurningDegrees() {
 	if(use_gyro) {
 		if (rotation_PID->OnTarget()) {
-			disableRotationPID();
-			is_turn_degrees_on = false;
-			setLeft(0);
-			setRight(0);
+			if(turn_degrees_timer->Get() == 0) {
+				turn_degrees_timer->Start();
+			}
+			else if(turn_degrees_timer->Get() >= ONTARGET_TIME) {
+				disableRotationPID();
+				is_turn_degrees_on = false;
+				setLeft(0);
+				setRight(0);
+				turn_degrees_timer->Stop();
+				turn_degrees_timer->Reset();
+				frc::DriverStation::ReportError("Turn Degrees done");
+			}
+		}
+		else if(turn_degrees_timer->Get() > 0) {
+			turn_degrees_timer->Stop();
+			turn_degrees_timer->Reset();
 		}
 	}
 	else {
@@ -301,16 +314,13 @@ void Mobility::turnDegrees(float degrees) {
 		return;
 
 	if(use_gyro) {
-		frc::DriverStation::ReportError("Use gyro start");
 		gyro->Reset();
 		rotation_PID->SetSetpoint(degrees);
 		enableRotationPID();
 
 		rotation_output->setForwardSpeed(0);\
-		frc::DriverStation::ReportError("Use gyro done");
 	}
 	else {
-		frc::DriverStation::ReportError("manual start");
 		turn_deg_time = estimateTimeFromPoints(DEGREES_TO_TIMES, degrees);
 		if(degrees < 0) {
 			setLeft(-1.0);
@@ -323,9 +333,7 @@ void Mobility::turnDegrees(float degrees) {
 
 		turn_degrees_timer->Reset();
 		turn_degrees_timer->Start();
-		frc::DriverStation::ReportError("Manual done");
 	}
-	frc::DriverStation::ReportError("Finish turn deg start");
 }
 
 void Mobility::disableRotationPID() {
