@@ -7,12 +7,13 @@
 
 #include <AutoPlays/Actions/DriveStraight.h>
 
-DriveStraight::DriveStraight() {
+DriveStraight::DriveStraight(float dis) {
 	mobility = Mobility::getInstance();
+	distance = dis;
 }
 
 void DriveStraight::start() {
-	mobility->StartDriveDistance(118.0);
+	mobility->StartDriveDistance(distance);
 }
 void DriveStraight::process() {
 
