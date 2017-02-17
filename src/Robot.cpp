@@ -14,7 +14,9 @@
 
 //Auto Stuff
 #include "AutoPlays/Routine.h"
-#include "AutoPlays/DoNothing.h"
+#include "AutoPlays/Routines/DoNothing.h"
+#include "AutoPLays/Routines/CrossBaseline.h"
+#include "AutoPlays/Routines/DeliverGear.h"
 
 #include <IterativeRobot.h>
 
