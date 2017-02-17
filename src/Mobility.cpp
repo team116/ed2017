@@ -20,8 +20,8 @@ const float DISTANCE_TO_FULL_SPEED = 104.8;// inches
 const float ONTARGET_TIME = 0.1;
 
 //First num in point is distance in inches, second num in point is time in seconds
-const float DISTANCES_TO_TIMES[][2] = {{0, 0}, {4.5, 0.1}, {10.75, 0.2}, {17.75, 0.3}, {25, 0.4}, {37.25, 0.5},
-		{54.5, 0.6}, {74.5, 0.7}, {92.5, 0.8}, {107.75, 0.9}, {121.625, 1.0}};
+const float DISTANCES_TO_TIMES[][2] = {{0, 0}, {4.8125, 0.1}, {11.6666, 0.2}, {18.6875, 0.3}, {35.75, 0.4}, {41.4583, 0.5},
+		{56.625, 0.6}, {65.5, 0.7}, {76.875, 0.8}, {95.0, 0.9}, {106.7083, 1.0}};
 //First num in point is degrees, second num is time in seconds
 const float DEGREES_TO_TIMES[][2] = {{0, 0}};
 
@@ -83,7 +83,7 @@ Mobility::Mobility() {
 }
 
 void Mobility::process() {
-	DriverStation::ReportError("Gyro: " + std::to_string(gyro->PIDGet()));
+	//DriverStation::ReportError("Gyro: " + std::to_string(gyro->PIDGet()));
 	//frc::DriverStation::ReportError("Left Encoder: " + std::to_string(encoders->getLeftEncoderRates()));
 	//frc::DriverStation::ReportError("Right Encoder: " + std::to_string(encoders->getRightEncoderRates()));
 	if (is_turn_degrees_on) {
