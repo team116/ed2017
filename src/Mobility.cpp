@@ -84,8 +84,7 @@ Mobility::Mobility() {
 
 void Mobility::process() {
 	//DriverStation::ReportError("Gyro: " + std::to_string(gyro->PIDGet()));
-	//frc::DriverStation::ReportError("Left Encoder: " + std::to_string(encoders->getLeftEncoderRates()));
-	//frc::DriverStation::ReportError("Right Encoder: " + std::to_string(encoders->getRightEncoderRates()));
+	frc::DriverStation::ReportError("Left Encoder: " + std::to_string(encoders->getLeftEncoderRates()) + " Right Encoder: " + std::to_string(encoders->getRightEncoderRates()));
 	if (is_turn_degrees_on) {
 		processTurningDegrees();
 	}
@@ -402,6 +401,10 @@ void Mobility::disableGyro() {
 
 bool Mobility::isGyroEnabled() {
 	return use_gyro;
+}
+
+void Mobility::resetGyro() {
+	gyro->Reset();
 }
 
 Mobility* Mobility::getInstance()

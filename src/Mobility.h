@@ -106,6 +106,8 @@ public:
 	void disableGyro();
 	bool isGyroEnabled();
 
+	void resetGyro();
+
 private:
 	Mobility();
 	static Mobility* INSTANCE;
