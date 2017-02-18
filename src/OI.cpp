@@ -139,7 +139,7 @@ void OI::process() {
 	}
 	else if (!button_box_1->GetRawButton(OIPorts::BLENDER_FORWARD_SWITCH) && (!button_box_1->GetRawButton(OIPorts::BLENDER_REVERSE_SWITCH))) {
 		feeder->setBlenderSpeed(0);
-		frc::DriverStation::ReportError("Blender off");
+		//frc::DriverStation::ReportError("Blender off");
 	}
 
 
