@@ -9,7 +9,6 @@
 #define SRC_MOBILITY_H_
 
 #include <AnalogGyro.h>
-#include <MobilityDistanceOutput.h>
 #include <MobilityEncoder.h>
 #include <SpeedController.h>
 #include <PIDController.h>
@@ -106,15 +105,32 @@ public:
 	void disableGyro();
 	bool isGyroEnabled();
 
+	void resetGyro();
+
 private:
 	Mobility();
+
+	class MobilityDistanceOutput: public frc::PIDOutput {
+	public:
+		MobilityDistanceOutput();
+
+		void PIDWrite(double output);
+		void Enable();
+		void Disable();
+
+
+	private:
+
+		bool enabled;
+	};
+
 	static Mobility* INSTANCE;
 
 	Log* log;
 
 	//Functions
 	void processTurningDegrees();
-	float estimateTimeFromPoints(const float[][2], float);
+	float estimateTimeFromPoints(const float[][2], int, float);
 
 	MobilityEncoder* encoders;
 

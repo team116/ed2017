@@ -28,6 +28,7 @@ Shooter::Shooter() {
 	shooter_encoder = new frc::Encoder(RobotPorts::SHOOTER_ENCODER_1, RobotPorts::SHOOTER_ENCODER_2);
 	azimuth_encoder = new frc::AnalogPotentiometer(RobotPorts::AZIMUTH_ENCODER);
 
+	//FALSE IS PRESSED, TRUE IS NOT PRESSED
 	azimuth_limit_switch = new frc::DigitalInput(RobotPorts::LS_SHOOTER_AZIMUTH);
 
 	//PID STUFF
@@ -49,7 +50,7 @@ Shooter::Shooter() {
 }
 
 void Shooter::process() {
-
+	frc::DriverStation::ReportError("Limit Switch: " + std::to_string(azimuth_limit_switch->Get()) + " Azimuth: " + std::to_string(azimuth_encoder->Get()));
 }
 
 float Shooter::getShooterEncoderRate() {
@@ -74,6 +75,12 @@ float Shooter::getShooterSetValue() {
 float Shooter::getSpeed() {
 	return shooter->Get();
 }
+
+//True is pressed, False is not pressed
+bool Shooter::getLimitSwitch() {
+	return !azimuth_limit_switch->Get();
+}
+
 void Shooter::enableAzimuthPID() {
 	azimuth_PID->Enable();
 }

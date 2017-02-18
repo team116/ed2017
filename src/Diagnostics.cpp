@@ -108,6 +108,8 @@ void Diagnostics::process() {
 		log->write(Log::WARNING_LEVEL, "Azimuth encoder broken");
 	}*/ //BROKEN becyase encoder is now analog and doesnt give rate
 
+
+
 	if ((fabs(shooter->getShooterSetValue())) > SHOOTER_POWER_THRESHOLD
 		&& fabs(shooter->getShooterEncoderRate()) <= SHOOTER_RATE_THRESHOLD) {
 		log->write(Log::WARNING_LEVEL, "Shooter encoder broken");

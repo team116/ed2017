@@ -33,7 +33,7 @@ private:
 	Socket* socket;
 	Routine* auto_routine;
 
-	float drive_time;
+	float input;
 	Timer* timer;
 
 public:
@@ -122,6 +122,8 @@ public:
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Diagnostics Initialized");
+
+		mobility->disableRightEncoder();
 	}
 
 	void DisabledInit() {
@@ -152,15 +154,25 @@ public:
 
 			//timer = new Timer();
 
-			/*drive_time = std::stof(SmartDashboard::GetString("DB/String 0", "0.0"));
-			timer->Reset();
+			input = std::stof(SmartDashboard::GetString("DB/String 0", "0.0"));
+			/*timer->Reset();
 			timer->Start();
 			mobility->startDriveStraight();
-			mobility->setStraightSpeed(1.0);
-			mobility->disableLeftEncoder();
+			mobility->setStraightSpeed(1.0);*/
+			//mobility->disableLeftEncoder();
 			mobility->disableRightEncoder();
-			mobility->StartDriveDistance(drive_time);*/
-			mobility->turnDegrees(90);
+			mobility->StartDriveDistance(24);
+
+			//Sensor turn degrees
+			//mobility->turnDegrees(input);
+
+			//No sensor turn degrees tuning
+			/*timer->Reset();
+			timer->Start();
+			mobility->resetGyro();
+			mobility->setLeft(1.0);
+			mobility->setRight(-1.0);*/
+
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in AutonomousInit\n%s", e->what());
 		}
@@ -177,8 +189,11 @@ public:
 
 			//auto_routine->process();
 
-			/*if(timer->HasPeriodPassed(drive_time)) {
+			/*if(timer->HasPeriodPassed(input)) {
 				mobility->setStraightSpeed(0.0);
+				mobility->setLeft(0.0);
+				mobility->setRight(0.0);
+				frc::DriverStation::ReportError("Angle: " + std::to_string(mobility->getGyroAngle()));
 			}*/
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in AutonomousPeriodic\n%s", e->what());
@@ -209,7 +224,6 @@ public:
 
 	void TestInit() {
 		try {
-
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in TestInit\n%s", e->what());
 		}

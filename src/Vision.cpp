@@ -15,7 +15,7 @@ Vision::Vision() {
 
 	processor = new grip::GripPipeline();
 
-	gear_cam = CameraServer::GetInstance()->StartAutomaticCapture("Gear Cam", 0);
+	/*gear_cam = CameraServer::GetInstance()->StartAutomaticCapture("Gear Cam", 0);
 	gear_cam.SetFPS(15);
 	gear_cam.SetResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
 
@@ -47,13 +47,13 @@ Vision::Vision() {
 		props[8].Set(10000);//white balance
 		props[12].Set(1);//auto exposure
 		props[14].Set(10);//exposure*/
-	}
+	//}
 }
 
 void Vision::process() {
-	cv::Mat img;
+	/*cv::Mat img;
 	gear_sink.GrabFrame(img);
-	processor->process(img);
+	processor->process(img);*/
 }
 
 bool Vision::canSeeGearHook() {

@@ -35,6 +35,7 @@ public:
 	float getAzimuthPosition();
 	float getAzimuthSetValue();
 	float getShooterSetValue();
+	bool getLimitSwitch();
 
 	void enableShooterAzimuthEncoder();
 	void disableShooterAzimuthEncoder();
