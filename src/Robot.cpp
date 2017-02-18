@@ -11,14 +11,12 @@
 #include <Vision.h>
 #include "Diagnostics.h"
 #include "Log.h"
-
-//Auto Stuff
 #include "AutoPlays/Routine.h"
 #include "AutoPlays/Routines/DoNothing.h"
 #include "AutoPLays/Routines/CrossBaseline.h"
 #include "AutoPlays/Routines/DeliverGear.h"
-
 #include <IterativeRobot.h>
+#include <Socket.h>
 
 class Robot: public frc::IterativeRobot {
 private:
@@ -32,7 +30,7 @@ private:
 	Vision* vision;
 	Diagnostics* diagnostics;
 	Log* log;
-
+	Socket* socket;
 	Routine* auto_routine;
 
 	float drive_time;
@@ -56,7 +54,11 @@ public:
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Autonomous Initialized");
-
+		try	{
+		   socket = new Socket();
+		} catch(std::exception* e) {
+					log->write(Log::ERROR_LEVEL, "Error initializing Socket\n%s", e->what());
+		}
 		try {
 			climber = Climber::getInstance();
 		} catch(std::exception* e) {
@@ -135,7 +137,12 @@ public:
 			//auto_routine->end();
 		}
 	}
-
+	void DisabledPeriodic(){
+		int AP = socket->process();
+		if(AP == -1){
+			return;
+		}
+	}
 	void AutonomousInit() override {
 		try {
 			//Set the play here
@@ -215,6 +222,9 @@ public:
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in TestPeriodic\n%s", e->what());
 		}
+	}
+	~Robot(){
+		delete socket;
 	}
 };
 
