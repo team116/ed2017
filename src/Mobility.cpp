@@ -8,7 +8,7 @@
 #include <Mobility.h>
 #include "Ports.h"
 
-#define ARRAY_SIZE(array) (sizeof((array))/sizeof((array[0])))
+#define ARRAY_SIZE(array) (sizeof(array)/sizeof(array[0]))
 
 Mobility* Mobility::INSTANCE = nullptr;
 
@@ -20,8 +20,8 @@ const float DISTANCE_TO_FULL_SPEED = 104.8;// inches
 const float ONTARGET_TIME = 0.1;
 
 //First num in point is distance in inches, second num in point is time in seconds
-const float DISTANCES_TO_TIMES[][2] = {{0, 0}, {4.5, 0.1}, {10.75, 0.2}, {17.75, 0.3}, {25, 0.4}, {37.25, 0.5},
-		{54.5, 0.6}, {74.5, 0.7}, {92.5, 0.8}, {107.75, 0.9}, {121.625, 1.0}};
+const float DISTANCES_TO_TIMES[][2] = {{0, 0}, {4.8125, 0.1}, {11.6666, 0.2}, {18.6875, 0.3}, {35.75, 0.4}, {41.4583, 0.5},
+		{56.625, 0.6}, {65.5, 0.7}, {76.875, 0.8}, {95.0, 0.9}, {106.7083, 1.0}};
 //First num in point is degrees, second num is time in seconds
 const float DEGREES_TO_TIMES[][2] = {{0, 0}};
 
@@ -67,25 +67,24 @@ Mobility::Mobility() {
 	rotation_PID->SetPIDSourceType(PIDSourceType::kDisplacement);
 	rotation_PID->SetAbsoluteTolerance(1.0);
 
-	distance_output = new MobilityDistanceOutput(front_left, front_right, back_left, back_right);
-	distance_PID = new frc::PIDController(0.1, 0, 0.0001, encoders, distance_output);
+	distance_output = new MobilityDistanceOutput();
+	distance_PID = new frc::PIDController(0.26, 0, 0.8, encoders, distance_output);
 	distance_PID->Disable();
 	distance_PID->SetContinuous(false);
 	distance_PID->SetInputRange(0, 650);
 	distance_PID->SetOutputRange(-1.0, 1.0);
 	distance_PID->SetPIDSourceType(PIDSourceType::kDisplacement);
-	distance_PID->SetAbsoluteTolerance(0.5);
+	distance_PID->SetAbsoluteTolerance(0.25);
 
-	LiveWindow::GetInstance()->AddActuator("Mobility", "Rotation PID", rotation_PID);
+	LiveWindow::GetInstance()->AddActuator("Mobility", "Distance PID", distance_PID);
 
 	drive_distance_timer = new Timer();
 	turn_degrees_timer = new Timer();
 }
 
 void Mobility::process() {
-	DriverStation::ReportError("Gyro: " + std::to_string(gyro->PIDGet()));
-	//frc::DriverStation::ReportError("Left Encoder: " + std::to_string(encoders->getLeftEncoderRates()));
-	//frc::DriverStation::ReportError("Right Encoder: " + std::to_string(encoders->getRightEncoderRates()));
+	//DriverStation::ReportError("Gyro: " + std::to_string(gyro->PIDGet()));
+	frc::DriverStation::ReportError("Left Encoder: " + std::to_string(encoders->getLeftEncoderRates()) + " Right Encoder: "  + std::to_string(encoders->getRightEncoderRates()));
 	if (is_turn_degrees_on) {
 		processTurningDegrees();
 	}
@@ -97,25 +96,28 @@ void Mobility::process() {
 void Mobility::processDistance() {
 	if(use_left_drive_encoder || use_right_drive_encoder) {
 		if(distance_PID->OnTarget()) {
-			disableDistancePID();
+			/*disableDistancePID();
 			stopDriveStraight();
 			setStraightSpeed(0.0);
 			setLeft(0.0);
 			setRight(0.0);
-			is_drive_distance_on = false;
+			is_drive_distance_on = false;*/
+			frc::DriverStation::ReportError("On Target");
 		}
 	}
 	else {
-		if(drive_distance_timer->HasPeriodPassed(drive_dist_time) ) {
-			frc::DriverStation::ReportError("Stopping drive dist");
-			stopDriveStraight();
-			setStraightSpeed(0.0);
-			setLeft(0.0);
-			setRight(0.0);
+		if(drive_distance_timer->Get() >= (drive_dist_time + std::min(0.3f, drive_dist_time))) {
 			is_drive_distance_on = false;
 			drive_distance_timer->Stop();
 			drive_distance_timer->Reset();
 			drive_dist_time = 0.0;
+			stopDriveStraight();
+		}
+		else if(drive_distance_timer->Get() >= drive_dist_time ) {
+			frc::DriverStation::ReportError("Stopping drive dist");
+			setStraightSpeed(0.0);
+			setLeft(0.0);
+			setRight(0.0);
 		}
 	}
 }
@@ -184,12 +186,13 @@ float Mobility::getNavXTemperature() {
 void Mobility::StartDriveDistance(float distance) {
 	is_drive_distance_on = true;
 	if(use_left_drive_encoder || use_right_drive_encoder) {
+		startDriveStraight();
 		encoders->DriveEncoderReset();
 		distance_PID->SetSetpoint(distance);
 		enableDistancePID();
 	}
 	else {
-		drive_dist_time = estimateTimeFromPoints(DISTANCES_TO_TIMES, distance);
+		drive_dist_time = estimateTimeFromPoints(DISTANCES_TO_TIMES, ARRAY_SIZE(DISTANCES_TO_TIMES) , distance);
 		DriverStation::ReportError("Starting drive distance without encoders: " + std::to_string(drive_dist_time));
 		drive_distance_timer->Start();
 		startDriveStraight();
@@ -197,8 +200,10 @@ void Mobility::StartDriveDistance(float distance) {
 	}
 }
 
-float Mobility::estimateTimeFromPoints(const float points[][2], float distance) {
-	for(unsigned int i = 0; i < ARRAY_SIZE(points); i++) {
+float Mobility::estimateTimeFromPoints(const float points[][2], int size, float distance) {
+	frc::DriverStation::ReportError(std::to_string(points[1][0]) + "," + std::to_string(points[1][1]));
+	frc::DriverStation::ReportError(std::to_string(size));
+	for(int i = 0; i < size; i++) {
 		if(points[i][0] == distance) {
 			return points[i][1];
 		}
@@ -232,12 +237,12 @@ float Mobility::estimateTimeFromPoints(const float points[][2], float distance) 
 	int lower_dist;
 	int lower_time;
 	//Point with distance above target
-	int upper_dist = points[ARRAY_SIZE(points)][0];
-	int upper_time = points[ARRAY_SIZE(points)][1];
+	int upper_dist = points[size][0];
+	int upper_time = points[size][1];
 
-	if(ARRAY_SIZE(points) > 0) {
-		lower_dist = points[ARRAY_SIZE(points) - 1][0];
-		lower_time = points[ARRAY_SIZE(points) - 1][1];
+	if(size > 0) {
+		lower_dist = points[size - 1][0];
+		lower_time = points[size - 1][1];
 	}
 	else {
 		lower_dist = 0;
@@ -321,7 +326,7 @@ void Mobility::turnDegrees(float degrees) {
 		rotation_output->setForwardSpeed(0);\
 	}
 	else {
-		turn_deg_time = estimateTimeFromPoints(DEGREES_TO_TIMES, degrees);
+		turn_deg_time = estimateTimeFromPoints(DEGREES_TO_TIMES, ARRAY_SIZE(DEGREES_TO_TIMES), degrees);
 		if(degrees < 0) {
 			setLeft(-1.0);
 			setRight(1.0);
@@ -404,6 +409,10 @@ bool Mobility::isGyroEnabled() {
 	return use_gyro;
 }
 
+void Mobility::resetGyro() {
+	gyro->Reset();
+}
+
 Mobility* Mobility::getInstance()
 {
 	if(INSTANCE == nullptr) {
@@ -411,4 +420,22 @@ Mobility* Mobility::getInstance()
 	}
 
 	return INSTANCE;
+}
+
+Mobility::MobilityDistanceOutput::MobilityDistanceOutput() {
+	enabled = false;
+}
+
+void Mobility::MobilityDistanceOutput::PIDWrite(double output) {
+	if(!enabled)
+		return;
+	Mobility::getInstance()->setStraightSpeed(output);
+}
+
+void Mobility::MobilityDistanceOutput::Enable() {
+	enabled = true;
+}
+
+void Mobility::MobilityDistanceOutput::Disable() {
+	enabled = false;
 }

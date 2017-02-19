@@ -11,14 +11,12 @@
 #include <Vision.h>
 #include "Diagnostics.h"
 #include "Log.h"
-
-//Auto Stuff
 #include "AutoPlays/Routine.h"
 #include "AutoPlays/Routines/DoNothing.h"
 #include "AutoPLays/Routines/CrossBaseline.h"
 #include "AutoPlays/Routines/DeliverGear.h"
-
 #include <IterativeRobot.h>
+#include <Socket.h>
 
 class Robot: public frc::IterativeRobot {
 private:
@@ -32,10 +30,10 @@ private:
 	Vision* vision;
 	Diagnostics* diagnostics;
 	Log* log;
-
+	Socket* socket;
 	Routine* auto_routine;
 
-	float drive_time;
+	float input;
 	Timer* timer;
 
 public:
@@ -56,7 +54,11 @@ public:
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Autonomous Initialized");
-
+		try	{
+		   //socket = new Socket();
+		} catch(std::exception* e) {
+					log->write(Log::ERROR_LEVEL, "Error initializing Socket\n%s", e->what());
+		}
 		try {
 			climber = Climber::getInstance();
 		} catch(std::exception* e) {
@@ -120,6 +122,8 @@ public:
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Diagnostics Initialized");
+
+		mobility->disableRightEncoder();
 	}
 
 	void DisabledInit() {
@@ -135,7 +139,14 @@ public:
 			//auto_routine->end();
 		}
 	}
+	void DisabledPeriodic(){
+		/*int AP = socket->process();
+		if(AP == -1){
+			return;
+		}*/
 
+		frc::DriverStation::ReportError(std::to_string(mobility->getGyroAngle()));
+	}
 	void AutonomousInit() override {
 		try {
 			//Set the play here
@@ -145,15 +156,25 @@ public:
 
 			//timer = new Timer();
 
-			/*drive_time = std::stof(SmartDashboard::GetString("DB/String 0", "0.0"));
-			timer->Reset();
+			input = std::stof(SmartDashboard::GetString("DB/String 0", "0.0"));
+			/*timer->Reset();
 			timer->Start();
 			mobility->startDriveStraight();
-			mobility->setStraightSpeed(1.0);
-			mobility->disableLeftEncoder();
+			mobility->setStraightSpeed(1.0);*/
+			//mobility->disableLeftEncoder();
 			mobility->disableRightEncoder();
-			mobility->StartDriveDistance(drive_time);*/
-			mobility->turnDegrees(90);
+			mobility->StartDriveDistance(24);
+
+			//Sensor turn degrees
+			//mobility->turnDegrees(input);
+
+			//No sensor turn degrees tuning
+			/*timer->Reset();
+			timer->Start();
+			mobility->resetGyro();
+			mobility->setLeft(1.0);
+			mobility->setRight(-1.0);*/
+
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in AutonomousInit\n%s", e->what());
 		}
@@ -170,8 +191,11 @@ public:
 
 			//auto_routine->process();
 
-			/*if(timer->HasPeriodPassed(drive_time)) {
+			/*if(timer->HasPeriodPassed(input)) {
 				mobility->setStraightSpeed(0.0);
+				mobility->setLeft(0.0);
+				mobility->setRight(0.0);
+				frc::DriverStation::ReportError("Angle: " + std::to_string(mobility->getGyroAngle()));
 			}*/
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in AutonomousPeriodic\n%s", e->what());
@@ -202,7 +226,6 @@ public:
 
 	void TestInit() {
 		try {
-
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in TestInit\n%s", e->what());
 		}
@@ -215,6 +238,9 @@ public:
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in TestPeriodic\n%s", e->what());
 		}
+	}
+	~Robot(){
+		//delete socket;
 	}
 };
 
