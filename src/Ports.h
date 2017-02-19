@@ -171,6 +171,18 @@ namespace Utils
 		VictorSP,
 		CANTalonSRX
 	};
+	enum AutoLocation {
+		LeftForward,		//forward = gear is facing away from alliance wall
+		MiddleForward,
+		RightForward,
+		LeftTurntPositive,			//turnt = gear is facing away from boiler
+		MiddleTurntPositive,
+		RightTurntPositive,		//negative and positive refer to which way the GEAR is facing
+		LeftTurntNegative,
+		MiddleTurntNegative,
+		RightTurntNegative
+
+	};
 
 	const MotorType motor_type = MotorType::VictorSP;
 
