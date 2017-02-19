@@ -32,6 +32,7 @@ private:
 	frc::Joystick* joy_right;
 	frc::Joystick* button_box_1;
 	frc::Joystick* button_box_2;
+	frc::Joystick* button_box_3;
 };
 
 #endif /* SRC_OI_H_ */

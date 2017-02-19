@@ -32,26 +32,27 @@ OI::OI() {
 	joy_right = new frc::Joystick(OIPorts::JOYSTICK_RIGHT);
 	button_box_1 = new frc::Joystick(OIPorts::JOYSTICK_BUTTONS_1);
 	button_box_2 = new frc::Joystick(OIPorts::JOYSTICK_BUTTONS_2);
+	button_box_3 = new frc::Joystick(OIPorts::JOYSTICK_BUTTONS_3);
 }
 
 void OI::process() {
-	if (joy_left->GetRawButton(OIPorts::BUTTON_DRIVE_STRAIGHT)) {
+	if (joy_left->GetRawButton(OIPorts::B_DRIVE_STRAIGHT)) {
 		if (!mobility->isDrivingStraight()) {
 			mobility->startDriveStraight();
 		}
 		mobility->setStraightSpeed(joy_left->GetRawAxis(OIPorts::AXIS_Y) * -1);
 	}
-	else if (joy_right->GetRawButton(OIPorts::BUTTON_DRIVE_STRAIGHT)) {
+	else if (joy_right->GetRawButton(OIPorts::B_DRIVE_STRAIGHT)) {
 		if (!mobility->isDrivingStraight()) {
 			mobility->startDriveStraight();
 		}
 		mobility->setStraightSpeed(joy_right->GetRawAxis(OIPorts::AXIS_Y) * -1);
 	}
-	else if(joy_right->GetRawButton(OIPorts::ROTATE_BUTTON)) {
+	else if(joy_right->GetRawButton(OIPorts::B_ROTATE)) {
 		mobility->setLeft(joy_right->GetRawAxis(OIPorts::AXIS_Z));
 		mobility->setRight(joy_right->GetRawAxis(OIPorts::AXIS_Z) * -1);
 	}
-	else if(joy_left->GetRawButton(OIPorts::ROTATE_BUTTON)) {
+	else if(joy_left->GetRawButton(OIPorts::B_ROTATE)) {
 			mobility->setLeft(joy_left->GetRawAxis(OIPorts::AXIS_Z));
 			mobility->setRight(joy_left->GetRawAxis(OIPorts::AXIS_Z) * -1);
 		}
@@ -65,95 +66,91 @@ void OI::process() {
 
 
 
-	if (button_box_1->GetRawButton(OIPorts::OPEN_GEAR_BUTTON) && !gear->isOpen()) {
+	if (button_box_2->GetRawButton(OIPorts::B_GEAR_RELEASE) && !gear->isOpen()) {
 		gear->open();
-		frc::DriverStation::ReportError("Opening gear");
+		//frc::DriverStation::ReportError("Opening gear");
 
 	}
-	else if(!button_box_1->GetRawButton(OIPorts::OPEN_GEAR_BUTTON) && gear->isOpen()) {
+	else if(!button_box_2->GetRawButton(OIPorts::B_GEAR_RELEASE) && gear->isOpen()) {
 		gear->close();
-		frc::DriverStation::ReportError("Closing gear");
+		//frc::DriverStation::ReportError("Closing gear");
 	}
 
 
 
-	if(button_box_1->GetRawButton(OIPorts::CLIMBER_ON_SWITCH) && (CLIMB_SPEED != climber->getSpeed())) {
+	float percent = (-1 * button_box_2->GetRawAxis(OIPorts::P_CLIMBER_SPEED) * 0.4) + 0.6;
+	if(button_box_1->GetRawButton(OIPorts::S2_CLIMBER_TOGGLE) && ((CLIMB_SPEED * percent) != climber->getSpeed())) {
 		//Percent from 0.2 to 1.0
-		float percent = (-1 * button_box_1->GetRawAxis(OIPorts::AXIS_Z) * 0.4) + 0.6;
 		climber->moveClimber(percent * CLIMB_SPEED);
 		//frc::DriverStation::ReportError("Moving up");
 	}
-	else if(!button_box_1->GetRawButton(OIPorts::CLIMBER_ON_SWITCH) || (0.0 != climber->getSpeed())) {
+	else if(!button_box_1->GetRawButton(OIPorts::S2_CLIMBER_TOGGLE) || (0.0 != climber->getSpeed())) {
 		climber->moveClimber(0);
 		//frc::DriverStation::ReportError("Stopped moving");
 	}
 
-
-
-	if(button_box_1->GetRawButton(OIPorts::SHOOTER_ON_SWITCH) && (SHOOTER_SPEED != shooter->getSpeed())) {
-		float percent = (-1 * button_box_1->GetRawAxis(OIPorts::AXIS_Y) * 0.4) + 0.6;
-		shooter->setShooterSpeed(percent * SHOOTER_SPEED);
-		//frc::DriverStation::ReportError("Shooter on");
+	percent = (button_box_2->GetRawAxis(OIPorts::P_CLIMBER_SPEED));
+	if(button_box_1->GetRawButton(OIPorts::S2_AUTO_AZIMUTH_TOGGLE) && (shooter->getAzimuthSpeed() != percent)) {
+		shooter->setAzimuthSpeed(percent);
 	}
-	else if (!button_box_1->GetRawButton(OIPorts::SHOOTER_ON_SWITCH) || (0.0 != shooter->getSpeed())) {
-		shooter->setShooterSpeed(0);
-	    //frc::DriverStation::ReportError("Shooter off");
-	}
-
-
-
-	if(joy_left->GetRawButton(3)) {
-		shooter->setAzimuthSpeed(-0.25);
-	}
-	else if(joy_left->GetRawButton(4)) {
-		shooter->setAzimuthSpeed(0.25);
-	}
-	else {
+	else if(!button_box_1->GetRawButton(OIPorts::S2_AUTO_AZIMUTH_TOGGLE) && (shooter->getAzimuthSpeed() != 0.0)) {
 		shooter->setAzimuthSpeed(0.0);
 	}
 
 
 
-	if (button_box_1->GetRawButton(OIPorts::INTAKE_ROLLER_IN) && (INTAKE_SPEED != intake->getSpeed())) {
+	percent = (-1 * button_box_1->GetRawAxis(OIPorts::P_SHOOTER_SPEED) * 0.4) + 0.6;
+	if(button_box_1->GetRawButton(OIPorts::S2_SHOOTER_WHEELS_TOGGLE) && (percent * SHOOTER_SPEED != shooter->getSpeed())) {
+		shooter->setShooterSpeed(percent * SHOOTER_SPEED);
+		frc::DriverStation::ReportError("Shooter on");
+	}
+	else if (!button_box_1->GetRawButton(OIPorts::S2_SHOOTER_WHEELS_TOGGLE) && (0.0 != shooter->getSpeed())) {
+		shooter->setShooterSpeed(0);
+	    frc::DriverStation::ReportError("Shooter off");
+	}
+
+
+
+	if (button_box_2->GetRawButton(OIPorts::S3_INTAKE_REVERSE) && (INTAKE_SPEED != intake->getSpeed())) {
 		intake->setSpeedIntake(INTAKE_SPEED);
 	    //frc::DriverStation::ReportError("Intaking");
 	}
-	else if (button_box_1->GetRawButton(OIPorts::INTAKE_ROLLER_OUT) && (OPPOSITE_INTAKE_SPEED != intake->getSpeed())) {
+	else if (button_box_2->GetRawButton(OIPorts::S3_INTAKE_FORWARD) && (OPPOSITE_INTAKE_SPEED != intake->getSpeed())) {
 		intake->setSpeedIntake(OPPOSITE_INTAKE_SPEED);
 	    //frc::DriverStation::ReportError("Opposite-intaking");
 	}
-	else if (!button_box_1->GetRawButton(OIPorts::INTAKE_ROLLER_IN) && (!button_box_1->GetRawButton(OIPorts::INTAKE_ROLLER_OUT))) {
-		intake->setSpeedIntake(0);
+	else if (intake->getSpeed() != 0.0) {
+		intake->setSpeedIntake(0.0);
 	    //frc::DriverStation::ReportError("Intake and opposite-intake off");
 	}
 
 
 
-	if (button_box_1->GetRawButton(OIPorts::BLENDER_FORWARD_SWITCH) && (BLENDER_SPEED != feeder->getSpeed())) {
+	if (button_box_2->GetRawButton(OIPorts::S3_BLENDER_FORWARD) && (BLENDER_SPEED != feeder->getBlenderSpeed())) {
 		feeder->setBlenderSpeed(BLENDER_SPEED);
 		frc::DriverStation::ReportError("Blending forward");
 	}
-	else if (button_box_1->GetRawButton(OIPorts::BLENDER_REVERSE_SWITCH) && (BLENDER_REVERSE_SPEED != feeder->getSpeed())) {
+	else if (button_box_2->GetRawButton(OIPorts::S3_BLENDER_REVERSE) && (BLENDER_REVERSE_SPEED != feeder->getBlenderSpeed())) {
 		feeder->setBlenderSpeed(BLENDER_REVERSE_SPEED);
 		frc::DriverStation::ReportError("Blender reverse");
 	}
-	else if (!button_box_1->GetRawButton(OIPorts::BLENDER_FORWARD_SWITCH) && (!button_box_1->GetRawButton(OIPorts::BLENDER_REVERSE_SWITCH))) {
-		feeder->setBlenderSpeed(0);
+	else if (feeder->getBlenderSpeed() != 0.0) {
+		feeder->setBlenderSpeed(0.0);
 		//frc::DriverStation::ReportError("Blender off");
 	}
 
 
 
-	if (button_box_1->GetRawButton(OIPorts::FEEDER_FORWARD_SWITCH) && (FEEDER_SPEED != feeder->getSpeed())) {
+	if (button_box_2->GetRawButton(OIPorts::S3_LOADER_FORWARD) && (FEEDER_SPEED != feeder->getFeederSpeed())) {
 		feeder->setFeederSpeed(FEEDER_SPEED);
 		//frc::DriverStation::ReportError("Feeding forward");
 	}
-	else if (button_box_1->GetRawButton(OIPorts::FEEDER_REVERSE_SWITCH) && (FEEDER_REVERSE_SPEED != feeder->getSpeed())) {
+	else if (button_box_2->GetRawButton(OIPorts::S3_LOADER_REVERSE) && (FEEDER_REVERSE_SPEED != feeder->getFeederSpeed())) {
 		feeder->setFeederSpeed(FEEDER_REVERSE_SPEED);
 		//frc::DriverStation::ReportError("Feeding reverse");
 	}
-	else if (!button_box_1->GetRawButton(OIPorts::FEEDER_FORWARD_SWITCH) && (!button_box_1->GetRawButton(OIPorts::FEEDER_REVERSE_SWITCH))) {
-		feeder->setFeederSpeed(0);
+	else if (feeder->getFeederSpeed() != 0.0) {
+		feeder->setFeederSpeed(0.0);
 		//frc::DriverStation::ReportError("Feeder off");
 	}
 	/*if (button_box_1->GetRawButton(OIPorts::MOBILITY_ROTATION_PID_SWITCH) && (!mobility->isRotationPIDEnabled())) {

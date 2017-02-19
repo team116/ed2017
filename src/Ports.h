@@ -82,11 +82,51 @@ namespace OIPorts
 	const unsigned int JOYSTICK_RIGHT = 1;
 	const unsigned int JOYSTICK_BUTTONS_1 = 2;
 	const unsigned int JOYSTICK_BUTTONS_2 = 3;
+	const unsigned int JOYSTICK_BUTTONS_3 = 4;
 
-	//Buttons
-	const unsigned int BUTTON_DRIVE_STRAIGHT = 1;
-	const unsigned int ROTATE_BUTTON = 2;
-	const unsigned int OPEN_GEAR_BUTTON = 8;
+
+	/*
+	 * KEY
+	 * S2 - 2 Position switch
+	 * S3 - 3 Position switch
+	 * B - button
+	 * P - Potentiometer
+	 */
+
+
+	//Drive Joystick controls
+	const unsigned int B_DRIVE_STRAIGHT = 1;
+	const unsigned int B_ROTATE = 2;
+
+
+	//Button Box 1 controls
+	const unsigned int B_SHOOT = 1;
+	const unsigned int S2_SHOOTER_WHEELS_TOGGLE = 2;
+	const unsigned int S2_SHOOTER_SPEED_AUTO_MANUAL_TOGGLE = 3;
+	const unsigned int S2_CONVERTER = 4;
+	const unsigned int S2_CAMERA_TOGGLE = 5;
+	const unsigned int S2_CLIMBER_TOGGLE = 6;
+	const unsigned int S2_AUTO_AZIMUTH_TOGGLE = 7;
+	const unsigned int P_SHOOTER_AZIMUTH_ANGLE = 0;
+	const unsigned int P_SHOOTER_SPEED = 1;
+
+
+	//Button Box 2 controls
+	const unsigned int B_GEAR_RELEASE = 1;
+	const unsigned int B_GEAR_AUTO_ALIGN = 2;
+	const unsigned int S3_BLENDER_FORWARD = 3;
+	const unsigned int S3_BLENDER_REVERSE = 4;
+	const unsigned int S3_LOADER_FORWARD = 5;
+	const unsigned int S3_LOADER_REVERSE = 6;
+	const unsigned int S3_INTAKE_FORWARD = 7;
+	const unsigned int S3_INTAKE_REVERSE = 8;
+	const unsigned int P_CLIMBER_SPEED = 0;
+
+
+	//Button Box 3 controls
+
+
+	/*const unsigned int OPEN_GEAR_BUTTON = 8;
 
 	//3 position switches
 	const unsigned int INTAKE_ROLLER_IN = 6;    //These are commented out because there is only one three-way
@@ -98,7 +138,7 @@ namespace OIPorts
 
 	//2-way Toggle Switches
 	const unsigned int CLIMBER_ON_SWITCH = 5;
-	const unsigned int SHOOTER_ON_SWITCH = 9;
+	const unsigned int SHOOTER_ON_SWITCH = 9;*/
 	/*const unsigned int MOBILITY_ROTATION_PID_SWITCH = 9;
 	const unsigned int MOBILITY_DISTANCE_PID_SWITCH = 10;
 	const unsigned int SHOOTER_SPEED_PID_SWITCH = 11;
