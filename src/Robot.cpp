@@ -55,7 +55,7 @@ public:
 
 		log->write(Log::DEBUG_LEVEL, "Autonomous Initialized");
 		try	{
-		   socket = new Socket();
+		   //socket = new Socket();
 		} catch(std::exception* e) {
 					log->write(Log::ERROR_LEVEL, "Error initializing Socket\n%s", e->what());
 		}
@@ -140,10 +140,12 @@ public:
 		}
 	}
 	void DisabledPeriodic(){
-		int AP = socket->process();
+		/*int AP = socket->process();
 		if(AP == -1){
 			return;
-		}
+		}*/
+
+		frc::DriverStation::ReportError(std::to_string(mobility->getGyroAngle()));
 	}
 	void AutonomousInit() override {
 		try {
@@ -238,7 +240,7 @@ public:
 		}
 	}
 	~Robot(){
-		delete socket;
+		//delete socket;
 	}
 };
 
