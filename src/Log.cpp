@@ -55,23 +55,23 @@ void Log::write(Log::debugLevelType debug_level, const char* str, ...)
 		bool is_error = false;
 
 		if(PRINT_TO_DS) {
+			frc::DriverStation& ds = frc::DriverStation::GetInstance();
 			switch(debug_level) {
 			case Log::ERROR_LEVEL:
 				//Allow it to fall through to warning because they both do the same thing anyways
-			case Log::WARNING_LEVEL:
 				is_error = true;
-				frc::DriverStation::ReportError(buffer);
-				frc::DriverStation& ds = frc::DriverStation::GetInstance();
 				snprintf(system_info, 255, "Battery: %2.2f BrownOut: %d IsDSAttached: %d IsFMSAttached: %d IsSysActive: %d Enabled: %d IsAutonomous: %d IsTeleop: %d IsTest: %d",
-						ds.GetBatteryVoltage(),
-						ds.IsBrownedOut(),
-						ds.IsDSAttached(),
-						ds.IsFMSAttached(),
-						ds.IsSysActive(),
-						ds.IsEnabled(),
-						ds.IsAutonomous(),
-						ds.IsOperatorControl(),
-						ds.IsTest());
+										ds.GetBatteryVoltage(),
+										ds.IsBrownedOut(),
+										ds.IsDSAttached(),
+										ds.IsFMSAttached(),
+										ds.IsSysActive(),
+										ds.IsEnabled(),
+										ds.IsAutonomous(),
+										ds.IsOperatorControl(),
+										ds.IsTest());
+			case Log::WARNING_LEVEL:
+				frc::DriverStation::ReportError(buffer);
 				break;
 			}
 		}
