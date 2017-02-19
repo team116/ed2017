@@ -22,8 +22,11 @@ void Feeder::setFeederSpeed(float speed){
 void Feeder::setBlenderSpeed(float speed){
 	blender->Set(-speed);
 }
-float Feeder::getSpeed() {
+float Feeder::getFeederSpeed() {
 	return feeder->Get();
+}
+float Feeder::getBlenderSpeed() {
+	return blender->Get();
 }
 
 Feeder* Feeder::getInstance()

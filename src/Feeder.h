@@ -16,7 +16,8 @@ public:
 
 	void setFeederSpeed(float speed);
 	void setBlenderSpeed(float speed);
-	float getSpeed();
+	float getFeederSpeed();
+	float getBlenderSpeed();
 
 private:
 	Feeder();
