@@ -33,7 +33,7 @@ public:
 	float getSpeed();
 	float getShooterEncoderRate();
 	float getAzimuthPosition();
-	float getAzimuthSetValue();
+	float getAzimuthSpeed();
 	float getShooterSetValue();
 	bool getLimitSwitch();
 

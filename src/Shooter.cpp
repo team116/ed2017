@@ -50,7 +50,7 @@ Shooter::Shooter() {
 }
 
 void Shooter::process() {
-	frc::DriverStation::ReportError("Limit Switch: " + std::to_string(azimuth_limit_switch->Get()) + " Azimuth: " + std::to_string(azimuth_encoder->Get()));
+	//frc::DriverStation::ReportError("Limit Switch: " + std::to_string(azimuth_limit_switch->Get()) + " Azimuth: " + std::to_string(azimuth_encoder->Get()));
 }
 
 float Shooter::getShooterEncoderRate() {
@@ -64,7 +64,7 @@ float Shooter::getAzimuthPosition() {
 		return azimuth_current_angle;
 }
 
-float Shooter::getAzimuthSetValue() {
+float Shooter::getAzimuthSpeed() {
 	return azimuth->Get();
 }
 
