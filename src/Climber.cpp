@@ -21,7 +21,7 @@ void Climber::process() {
 }
 
 void Climber::moveClimber(float speed) {
-	frc::DriverStation::ReportError("Setting climber to " + std::to_string(speed));
+	//frc::DriverStation::ReportError("Setting climber to " + std::to_string(speed));
 	climber_left->Set(-speed);
 	climber_right->Set(speed);
 }
