@@ -24,20 +24,22 @@ Shooter::Shooter() {
 	azimuth = Utils::constructMotor(RobotPorts::MOTOR_SHOOTER_AZIMUTH);
 	target_azimuth_angle = 0;
 
-	shooter_encoder = new frc::Encoder(RobotPorts::SHOOTER_ENCODER_1, RobotPorts::SHOOTER_ENCODER_2);
-	azimuth_encoder = new frc::AnalogPotentiometer(RobotPorts::AZIMUTH_ENCODER);
+	shooter->SetFeedbackDevice(CANTalon::FeedbackDevice::EncRising);
+	shooter->ConfigEncoderCodesPerRev(1);
+
+	azimuth_encoder = new frc::AnalogPotentiometer(RobotPorts::AZIMUTH_ENCODER, 360.0, 0.0);
 
 	//FALSE IS PRESSED, TRUE IS NOT PRESSED
 	azimuth_limit_switch = new frc::DigitalInput(RobotPorts::LS_SHOOTER_AZIMUTH);
 
 	//PID STUFF
-	shooter_PID = new frc::PIDController(0.01, 0.0, 0.0, shooter_encoder, shooter);
+	/*shooter_PID = new frc::PIDController(0.01, 0.0, 0.0, shooter_encoder, shooter);
 	shooter_PID->SetContinuous(false);
 	shooter_PID->SetInputRange(0,9000.0);
 	shooter_PID->SetOutputRange(-1, 1);
 	shooter_PID->SetPIDSourceType(frc::PIDSourceType::kRate);
 	shooter_PID->SetAbsoluteTolerance(50);
-	shooter_PID->Disable();
+	shooter_PID->Disable();*/
 
 	azimuth_PID = new frc::PIDController(0.1, 0, 0, azimuth_encoder, azimuth);
 	azimuth_PID->SetContinuous(false);
@@ -49,11 +51,11 @@ Shooter::Shooter() {
 }
 
 void Shooter::process() {
-	//frc::DriverStation::ReportError("Limit Switch: " + std::to_string(azimuth_limit_switch->Get()) + " Azimuth: " + std::to_string(azimuth_encoder->Get()));
+	//frc::DriverStation::ReportError("Limit Switch: " + std::to_string(azimuth_limit_switch->Get()) + " Azimuth: " + std::to_string(azimuth_encoder->Get()) + " Speed: " + std::to_string(shooter->GetSpeed()));
 }
 
 float Shooter::getShooterEncoderRate() {
-	return shooter_encoder->GetRate();
+	return shooter->GetEncVel();
 }
 
 float Shooter::getAzimuthPosition() {
@@ -109,17 +111,20 @@ void Shooter::setShooterSpeed(float speed) {
 
 }
 void Shooter::setShooterRPM(float speed) {
-	shooter_PID->SetSetpoint(speed);
+	shooter->SetSetpoint(speed);
 }
 void Shooter::enableShooterPID() {
-	shooter_PID->Enable();
+	shooter->SetControlMode(frc::CANSpeedController::ControlMode::kSpeed);
 }
 void Shooter::disableShooterPID() {
-	shooter_PID->Disable();
+	shooter->SetControlMode(frc::CANSpeedController::ControlMode::kPercentVbus);
 }
 
 bool Shooter::isShooterPIDEnabled() {
-	return shooter_PID->IsEnabled();
+	if(shooter->GetControlMode() == frc::CANSpeedController::kPercentVbus) {
+		return false;
+	}
+	return true;
 }
 
 void Shooter::enableShooterAzimuthEncoder() {

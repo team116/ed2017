@@ -52,13 +52,12 @@ private:
 	static Shooter* INSTANCE;
 	CANTalon* shooter;
 	frc::SpeedController* azimuth;
-	frc::Encoder* shooter_encoder;
 	frc::AnalogPotentiometer* azimuth_encoder;
 	float target_azimuth_angle;
 	frc::DigitalInput* azimuth_limit_switch;
 
 	//PID stuff
-	frc::PIDController* shooter_PID;
+	//frc::PIDController* shooter_PID;
 	frc::PIDController* azimuth_PID;
 
 	bool use_shooter_azimuth_encoder;
