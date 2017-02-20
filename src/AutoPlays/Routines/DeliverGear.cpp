@@ -11,8 +11,8 @@
 #include "AutoPlays/Actions/DropGear.h"
 
 DeliverGear::DeliverGear() {
-	addAction(new DriveStraight(118.0));
-	addAction(new TurnDegrees(15.0));
+	addAction(new DriveStraight(75.0));
+	//addAction(new TurnDegrees(15.0));
 	addAction(new DropGear());
 	addAction(new DriveStraight(-20.0));
 }
