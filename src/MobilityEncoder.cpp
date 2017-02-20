@@ -9,7 +9,8 @@
 #include <Ports.h>
 #include <DriverStation.h>
 
-const float PULSE_PER_REV = 250;
+const float LEFT_PULSE_PER_REV = 250;
+const float RIGHT_PULSE_PER_REV = 360;
 const float WHEEL_DIAMETER = 4.0;
 
 MobilityEncoder::MobilityEncoder() {
@@ -18,8 +19,8 @@ MobilityEncoder::MobilityEncoder() {
 	left_drive_encoder = new frc::Encoder(RobotPorts::LEFT_DRIVE_ENCODER_1, RobotPorts::LEFT_DRIVE_ENCODER_2);
 	right_drive_encoder = new frc::Encoder(RobotPorts::RIGHT_DRIVE_ENCODER_1, RobotPorts::RIGHT_DRIVE_ENCODER_2);
 
-	left_drive_encoder->SetDistancePerPulse(3.14 * WHEEL_DIAMETER / PULSE_PER_REV);
-	right_drive_encoder->SetDistancePerPulse(3.14 * WHEEL_DIAMETER / PULSE_PER_REV);
+	left_drive_encoder->SetDistancePerPulse(3.14 * WHEEL_DIAMETER / LEFT_PULSE_PER_REV);
+	right_drive_encoder->SetDistancePerPulse(3.14 * WHEEL_DIAMETER / RIGHT_PULSE_PER_REV);
 
 	pid_source = frc::PIDSourceType::kRate;
 
