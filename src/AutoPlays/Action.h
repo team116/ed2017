@@ -21,6 +21,12 @@ public:
 
 	//Returns whether or not the routine is finished
 	virtual bool isFinished() = 0;
+
+	void setTimeout(float);
+	float getTimeout();
+
+private:
+	float timeout = -1.0;
 };
 
 
