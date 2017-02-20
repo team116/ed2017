@@ -11,7 +11,7 @@
 OI* OI::INSTANCE = nullptr;
 
 const float CLIMB_SPEED = 1.0;
-const float SHOOTER_SPEED = 1.0;
+const float SHOOTER_SPEED = -0.97;
 const float INTAKE_SPEED = 1.0;
 const float OPPOSITE_INTAKE_SPEED = -1.0;
 const float BLENDER_SPEED = 1.0;
@@ -107,7 +107,7 @@ void OI::process() {
 		shooter->setShooterSpeed(percent * SHOOTER_SPEED);
 		frc::DriverStation::ReportError("Shooter on");
 	}
-	else if (!button_box_1->GetRawButton(OIPorts::S2_SHOOTER_WHEELS_TOGGLE) && (0.0 != shooter->getSpeed())) {
+	else if (!button_box_1->GetRawButton(OIPorts::S2_SHOOTER_WHEELS_TOGGLE) && (00 != shooter->getSpeed())) {
 		shooter->setShooterSpeed(0);
 	    frc::DriverStation::ReportError("Shooter off");
 	}

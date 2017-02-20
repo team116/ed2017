@@ -124,6 +124,16 @@ namespace OIPorts
 
 
 	//Button Box 3 controls
+	const unsigned int AUTO_DIAGNOSTICS = 1;
+	const unsigned int GYRO = 2;
+	const unsigned int SHOOTER_AZ_PID = 3;
+	const unsigned int SHOOTER_AZIMUTH = 4;
+	const unsigned int SHOOTER_SPEED_PID = 5;
+	const unsigned int SHOOTER_SPEED = 6;
+	const unsigned int MOBILITY_ROTATION = 7;
+	const unsigned int MOBILITY_DISTANCE = 8;
+	const unsigned int MOBILITY_RIGHT = 9;
+	const unsigned int MOBILITY_LEFT = 10;
 
 
 	/*const unsigned int OPEN_GEAR_BUTTON = 8;
@@ -160,6 +170,18 @@ namespace Utils
 	enum MotorType {
 		VictorSP,
 		CANTalonSRX
+	};
+	enum AutoLocation {
+		LeftForward,		//forward = gear is facing away from alliance wall
+		MiddleForward,
+		RightForward,
+		LeftTurntPositive,			//turnt = gear is facing away from boiler
+		MiddleTurntPositive,
+		RightTurntPositive,		//negative and positive refer to which way the GEAR is facing
+		LeftTurntNegative,
+		MiddleTurntNegative,
+		RightTurntNegative
+
 	};
 
 	const MotorType motor_type = MotorType::VictorSP;
