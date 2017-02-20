@@ -71,8 +71,9 @@ public:
 	void turnDegrees(float degrees);
 	bool isTurnDegreesDone();
 
-	void StartDriveDistance(float_t);
+	void StartDriveDistance(float distance, float speed = 1.0);
 	bool isDriveDistanceDone();
+	void stopDriveDistance();
 
 
 	//Use these instead of directly enabling/disabling the PID controller and PID output
