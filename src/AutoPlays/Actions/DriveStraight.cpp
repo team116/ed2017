@@ -20,7 +20,7 @@ void DriveStraight::process() {
 }
 
 void DriveStraight::end() {
-
+	mobility->stopDriveDistance();
 }
 bool DriveStraight::isFinished() {
 	return mobility->isDriveDistanceDone();
