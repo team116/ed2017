@@ -124,10 +124,12 @@ public:
 		log->write(Log::DEBUG_LEVEL, "Diagnostics Initialized");
 
 		mobility->disableRightEncoder();
+		mobility->enableLeftEncoder();
 	}
 
 	void DisabledInit() {
 		mobility->stopDriveStraight();
+		mobility->stopDriveDistance();
 		mobility->disableDistancePID();
 		mobility->disableRotationPID();
 		shooter->disableAzimuthPID();
@@ -145,28 +147,28 @@ public:
 			return;
 		}*/
 
-		frc::DriverStation::ReportError(std::to_string(mobility->getGyroAngle()));
+		//frc::DriverStation::ReportError(std::to_string(mobility->getGyroAngle()));
 	}
 	void AutonomousInit() override {
 		try {
 			//Set the play here
-			//auto_routine = new DoNothing();
+			auto_routine = new DeliverGear();
 
-			//auto_routine->start();
+			auto_routine->start();
 
 			//timer = new Timer();
 
-			input = std::stof(SmartDashboard::GetString("DB/String 0", "0.0"));
+			//input = std::stof(SmartDashboard::GetString("DB/String 0", "0.0"));
 			/*timer->Reset();
 			timer->Start();
 			mobility->startDriveStraight();
 			mobility->setStraightSpeed(1.0);*/
 			//mobility->disableLeftEncoder();
-			mobility->disableRightEncoder();
-			mobility->StartDriveDistance(24);
+			//mobility->disableRightEncoder();
+			//mobility->StartDriveDistance(24);
 
 			//Sensor turn degrees
-			//mobility->turnDegrees(input);
+			//mobility->turnDegrees(15);
 
 			//No sensor turn degrees tuning
 			/*timer->Reset();
@@ -182,14 +184,14 @@ public:
 
 	void AutonomousPeriodic() {
 		try {
-			mobility->process();
+			/*mobility->process();
 			climber->process();
 			gear->process();
 			intake->process();
 			shooter->process();
-			diagnostics->process();
+			diagnostics->process();*/
 
-			//auto_routine->process();
+			auto_routine->process();
 
 			/*if(timer->HasPeriodPassed(input)) {
 				mobility->setStraightSpeed(0.0);
@@ -204,7 +206,7 @@ public:
 
 	void TeleopInit() {
 		try {
-
+			DisabledInit();
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in TeleopInit\n%s", e->what());
 		}
