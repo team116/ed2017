@@ -9,10 +9,11 @@
 #define SRC_AUTOPLAYS_ROUTINES_DELIVERGEAR_H_
 
 #include <AutoPlays/Routine.h>
+#include <Ports.h>
 
 class DeliverGear: public Routine {
 public:
-	DeliverGear();
+	DeliverGear(Utils::AutoLocation location);
 };
 
 #endif /* SRC_AUTOPLAYS_ROUTINES_DELIVERGEAR_H_ */

@@ -152,7 +152,7 @@ public:
 	void AutonomousInit() override {
 		try {
 			//Set the play here
-			auto_routine = new DeliverGear();
+			auto_routine = new DeliverGear(Utils::AutoLocation::MiddleForward);
 
 			auto_routine->start();
 

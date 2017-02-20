@@ -9,6 +9,6 @@
 #include "AutoPlays/Actions/DriveStraight.h"
 
 CrossBaseline::CrossBaseline() {
-	addAction(new DriveStraight(118.0));
+	addAction(new DriveStraight(98.0));
 }
 
