@@ -10,6 +10,7 @@
 
 #include <AutoPlays/Action.h>
 #include <queue>
+#include <Timer.h>
 
 class Routine {
 public:
@@ -36,6 +37,8 @@ private:
 	//Queue of actions in chronological order
 	std::queue<Action*> actions;
 	Action* current_action;
+
+	frc::Timer* timeout_timer;
 };
 
 

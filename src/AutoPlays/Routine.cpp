@@ -12,6 +12,7 @@ void Routine::addAction(Action* action) {
 }
 
 void Routine::start() {
+	timeout_timer = new frc::Timer();
 	if(!actions.empty()) {
 		current_action = actions.front();
 		actions.pop();
@@ -24,7 +25,8 @@ void Routine::start() {
 
 void Routine::process() {
 	if(current_action != nullptr) {
-		if(current_action->isFinished()) {
+		bool timed_out = (current_action->getTimeout() > 0.0) && (timeout_timer->Get() >= current_action->getTimeout());
+		if(current_action->isFinished() || timed_out) {
 			current_action->end();
 			if(!actions.empty()) {
 				current_action = actions.front();
@@ -34,6 +36,8 @@ void Routine::process() {
 			else {
 				current_action = nullptr;
 			}
+
+			timeout_timer->Reset();
 		}
 		else {
 			current_action->process();
