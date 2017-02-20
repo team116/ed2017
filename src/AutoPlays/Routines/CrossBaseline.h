@@ -9,6 +9,8 @@
 #define SRC_AUTOPLAYS_CROSSBASELINE_H_
 
 #include <AutoPlays/Routine.h>
+#include <Ports.h>
+#include <Mobility.h>
 
 class CrossBaseline: public Routine {
 public:

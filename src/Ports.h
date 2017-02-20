@@ -173,6 +173,10 @@ namespace Utils
 		RightTurntNegative
 
 	};
+	enum Alliance {
+		Red,
+		Blue
+	};
 
 	const MotorType motor_type = MotorType::VictorSP;
 
