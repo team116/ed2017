@@ -13,7 +13,8 @@
 #include <Climber.h>
 #include <Shooter.h>
 #include <Intake.h>
-#include<Feeder.h>
+#include <Feeder.h>
+#include "Vision.h"
 class OI {
 public:
 	static OI* getInstance();
@@ -28,6 +29,7 @@ private:
 	Shooter* shooter;
 	Intake* intake;
 	Feeder* feeder;
+	Vision* vision;
 	frc::Joystick* joy_left;
 	frc::Joystick* joy_right;
 	frc::Joystick* button_box_1;

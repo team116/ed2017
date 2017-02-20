@@ -15,6 +15,8 @@ Vision::Vision() {
 
 	processor = new grip::GripPipeline();
 
+	turning_to_gear = false;
+
 	/*gear_cam = CameraServer::GetInstance()->StartAutomaticCapture("Gear Cam", 0);
 	gear_cam.SetFPS(15);
 	gear_cam.SetResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
@@ -54,6 +56,12 @@ void Vision::process() {
 	/*cv::Mat img;
 	gear_sink.GrabFrame(img);
 	processor->process(img);*/
+	if(turning_to_gear) {
+		if(mobility->isTurnDegreesDone()) {
+			frc::DriverStation::ReportError("Done turning to gear");
+			turning_to_gear = false;
+		}
+	}
 }
 
 bool Vision::canSeeGearHook() {
@@ -65,7 +73,7 @@ bool Vision::canSeeHighGoal() {
 }
 
 float Vision::gearHookDegreesHorizontal() {
-	return 0.0;
+	return -NetworkTable::GetTable("Vision/Gear")->GetNumber("angleOff", 0.0);
 }
 
 float Vision::gearHookDistance() {
@@ -81,11 +89,19 @@ float Vision::highGoalDistance() {
 }
 
 void Vision::turnToGearHook() {
-	mobility->turnDegrees(-gearHookDegreesHorizontal());
+	frc::DriverStation::ReportError("Starting turn to gear hook");
+	turning_to_gear = true;
+	float deg = -gearHookDegreesHorizontal();
+	frc::DriverStation::ReportError("Turning " + std::to_string(deg));
+	mobility->turnDegrees(deg);
 }
 
 void Vision::turnToHighGoal() {
 
+}
+
+bool Vision::isTurningToGearHook() {
+	return turning_to_gear;
 }
 
 void Vision::setGearCamMode(CameraMode mode) {
