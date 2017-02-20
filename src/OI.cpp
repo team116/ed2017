@@ -11,7 +11,7 @@
 OI* OI::INSTANCE = nullptr;
 
 const float CLIMB_SPEED = 1.0;
-const float SHOOTER_SPEED = 1.0;
+const float SHOOTER_SPEED = -0.97;
 const float INTAKE_SPEED = 1.0;
 const float OPPOSITE_INTAKE_SPEED = -1.0;
 const float BLENDER_SPEED = 1.0;
@@ -28,6 +28,7 @@ OI::OI() {
 	shooter = Shooter::getInstance();
 	intake = Intake::getInstance();
 	feeder = Feeder::getInstance();
+	vision = Vision::getInstance();
 	joy_left = new frc::Joystick(OIPorts::JOYSTICK_LEFT);
 	joy_right = new frc::Joystick(OIPorts::JOYSTICK_RIGHT);
 	button_box_1 = new frc::Joystick(OIPorts::JOYSTICK_BUTTONS_1);
@@ -36,32 +37,34 @@ OI::OI() {
 }
 
 void OI::process() {
-	if (joy_left->GetRawButton(OIPorts::B_DRIVE_STRAIGHT)) {
-		if (!mobility->isDrivingStraight()) {
-			mobility->startDriveStraight();
+	if(mobility->isTurnDegreesDone() && mobility->isDriveDistanceDone()) {
+		if (joy_left->GetRawButton(OIPorts::B_DRIVE_STRAIGHT)) {
+			if (!mobility->isDrivingStraight()) {
+				mobility->startDriveStraight();
+			}
+			mobility->setStraightSpeed(joy_left->GetRawAxis(OIPorts::AXIS_Y) * -1);
 		}
-		mobility->setStraightSpeed(joy_left->GetRawAxis(OIPorts::AXIS_Y) * -1);
-	}
-	else if (joy_right->GetRawButton(OIPorts::B_DRIVE_STRAIGHT)) {
-		if (!mobility->isDrivingStraight()) {
-			mobility->startDriveStraight();
+		else if (joy_right->GetRawButton(OIPorts::B_DRIVE_STRAIGHT)) {
+			if (!mobility->isDrivingStraight()) {
+				mobility->startDriveStraight();
+			}
+			mobility->setStraightSpeed(joy_right->GetRawAxis(OIPorts::AXIS_Y) * -1);
 		}
-		mobility->setStraightSpeed(joy_right->GetRawAxis(OIPorts::AXIS_Y) * -1);
-	}
-	else if(joy_right->GetRawButton(OIPorts::B_ROTATE)) {
-		mobility->setLeft(joy_right->GetRawAxis(OIPorts::AXIS_Z));
-		mobility->setRight(joy_right->GetRawAxis(OIPorts::AXIS_Z) * -1);
-	}
-	else if(joy_left->GetRawButton(OIPorts::B_ROTATE)) {
-			mobility->setLeft(joy_left->GetRawAxis(OIPorts::AXIS_Z));
-			mobility->setRight(joy_left->GetRawAxis(OIPorts::AXIS_Z) * -1);
+		else if(joy_right->GetRawButton(OIPorts::B_ROTATE)) {
+			mobility->setLeft(joy_right->GetRawAxis(OIPorts::AXIS_Z));
+			mobility->setRight(joy_right->GetRawAxis(OIPorts::AXIS_Z) * -1);
 		}
-	else {
-		if(mobility->isDrivingStraight()) {
-			mobility->stopDriveStraight();
+		else if(joy_left->GetRawButton(OIPorts::B_ROTATE)) {
+				mobility->setLeft(joy_left->GetRawAxis(OIPorts::AXIS_Z));
+				mobility->setRight(joy_left->GetRawAxis(OIPorts::AXIS_Z) * -1);
+			}
+		else {
+			if(mobility->isDrivingStraight()) {
+				mobility->stopDriveStraight();
+			}
+			mobility->setLeft(joy_left->GetRawAxis(OIPorts::AXIS_Y) * -1);
+			mobility->setRight(joy_right->GetRawAxis(OIPorts::AXIS_Y) * -1);
 		}
-		mobility->setLeft(joy_left->GetRawAxis(OIPorts::AXIS_Y) * -1);
-		mobility->setRight(joy_right->GetRawAxis(OIPorts::AXIS_Y) * -1);
 	}
 
 
@@ -104,7 +107,7 @@ void OI::process() {
 		shooter->setShooterSpeed(percent * SHOOTER_SPEED);
 		frc::DriverStation::ReportError("Shooter on");
 	}
-	else if (!button_box_1->GetRawButton(OIPorts::S2_SHOOTER_WHEELS_TOGGLE) && (0.0 != shooter->getSpeed())) {
+	else if (!button_box_1->GetRawButton(OIPorts::S2_SHOOTER_WHEELS_TOGGLE) && (00 != shooter->getSpeed())) {
 		shooter->setShooterSpeed(0);
 	    frc::DriverStation::ReportError("Shooter off");
 	}
@@ -153,6 +156,13 @@ void OI::process() {
 		feeder->setFeederSpeed(0.0);
 		//frc::DriverStation::ReportError("Feeder off");
 	}
+
+
+	if(button_box_2->GetRawButton(OIPorts::B_GEAR_AUTO_ALIGN) && !vision->isTurningToGearHook()) {
+		frc::DriverStation::ReportError("Turn button");
+		vision->turnToGearHook();
+	}
+
 	/*if (button_box_1->GetRawButton(OIPorts::MOBILITY_ROTATION_PID_SWITCH) && (!mobility->isRotationPIDEnabled())) {
 		mobility->enableRotationPID();
 	}

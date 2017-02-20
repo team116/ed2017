@@ -20,6 +20,8 @@ public:
 	bool canSeeGearHook();
 	bool canSeeHighGoal();
 
+	bool isTurningToGearHook();
+
 	float gearHookDegreesHorizontal();
 	float gearHookDistance();
 
@@ -54,6 +56,8 @@ private:
 
 	cs::CvSink gear_sink;
 	cs::CvSink shooter_sink;
+
+	bool turning_to_gear;
 };
 
 #endif /* SRC_VISION_H_ */
