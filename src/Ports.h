@@ -66,10 +66,6 @@ namespace RobotPorts
 	const unsigned int RIGHT_DRIVE_ENCODER_1 = 6;
 	const unsigned int RIGHT_DRIVE_ENCODER_2 = 7;
 
-
-	const unsigned int SHOOTER_ENCODER_1 = 1;
-	const unsigned int SHOOTER_ENCODER_2 = 2;
-
 	const unsigned int AZIMUTH_ENCODER = 0;
 
 	const unsigned int AZIMUTH_MOTOR_PDP = 11;
@@ -112,8 +108,10 @@ namespace OIPorts
 
 
 	//Button Box 2 controls
-	const unsigned int B_GEAR_RELEASE = 1;
-	const unsigned int B_GEAR_AUTO_ALIGN = 2;
+	const unsigned int B_AZIMUTH_LEFT = 1;
+	const unsigned int B_AZIMUTH_RIGHT = 2;
+	const unsigned int B_GEAR_RELEASE = 11;
+	//const unsigned int B_GEAR_AUTO_ALIGN = 9;
 	const unsigned int S3_BLENDER_FORWARD = 3;
 	const unsigned int S3_BLENDER_REVERSE = 4;
 	const unsigned int S3_LOADER_FORWARD = 5;
