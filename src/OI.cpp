@@ -11,7 +11,7 @@
 OI* OI::INSTANCE = nullptr;
 
 const float CLIMB_SPEED = 1.0;
-const float SHOOTER_SPEED = -0.97;
+const float SHOOTER_SPEED = -1.0;
 const float INTAKE_SPEED = 1.0;
 const float OPPOSITE_INTAKE_SPEED = -1.0;
 const float BLENDER_SPEED = 1.0;
@@ -92,20 +92,20 @@ void OI::process() {
 		//frc::DriverStation::ReportError("Stopped moving");
 	}
 
-	percent = (button_box_2->GetRawAxis(OIPorts::P_CLIMBER_SPEED));
+	/*percent = (button_box_2->GetRawAxis(OIPorts::P_CLIMBER_SPEED));
 	if(button_box_1->GetRawButton(OIPorts::S2_AUTO_AZIMUTH_TOGGLE) && (shooter->getAzimuthSpeed() != percent)) {
 		shooter->setAzimuthSpeed(percent);
 	}
 	else if(!button_box_1->GetRawButton(OIPorts::S2_AUTO_AZIMUTH_TOGGLE) && (shooter->getAzimuthSpeed() != 0.0)) {
 		shooter->setAzimuthSpeed(0.0);
-	}
+	}*/
 
 
 
 	percent = (-1 * button_box_1->GetRawAxis(OIPorts::P_SHOOTER_SPEED) * 0.4) + 0.6;
 	if(button_box_1->GetRawButton(OIPorts::S2_SHOOTER_WHEELS_TOGGLE) && (percent * SHOOTER_SPEED != shooter->getSpeed())) {
 		shooter->setShooterSpeed(percent * SHOOTER_SPEED);
-		frc::DriverStation::ReportError("Shooter on");
+		frc::DriverStation::ReportError("Shooter on " + std::to_string(percent * SHOOTER_SPEED));
 	}
 	else if (!button_box_1->GetRawButton(OIPorts::S2_SHOOTER_WHEELS_TOGGLE) && (00 != shooter->getSpeed())) {
 		shooter->setShooterSpeed(0);
@@ -157,11 +157,21 @@ void OI::process() {
 		//frc::DriverStation::ReportError("Feeder off");
 	}
 
+	if(button_box_2->GetRawButton(OIPorts::B_AZIMUTH_LEFT)) {
+		shooter->setAzimuthSpeed(-0.2);
+	}
+	else if(button_box_2->GetRawButton(OIPorts::B_AZIMUTH_RIGHT)) {
+		shooter->setAzimuthSpeed(0.2);
+	}
+	else {
+		shooter->setAzimuthSpeed(0.0);
+	}
 
-	if(button_box_2->GetRawButton(OIPorts::B_GEAR_AUTO_ALIGN) && !vision->isTurningToGearHook()) {
+
+	/*if(button_box_2->GetRawButton(OIPorts::B_GEAR_AUTO_ALIGN) && !vision->isTurningToGearHook()) {
 		frc::DriverStation::ReportError("Turn button");
 		vision->turnToGearHook();
-	}
+	}*/
 
 	/*if (button_box_1->GetRawButton(OIPorts::MOBILITY_ROTATION_PID_SWITCH) && (!mobility->isRotationPIDEnabled())) {
 		mobility->enableRotationPID();
