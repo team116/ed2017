@@ -19,6 +19,8 @@ const float BLENDER_REVERSE_SPEED = -1.0;
 const float FEEDER_SPEED = 1.0;
 const float FEEDER_REVERSE_SPEED = -1.0;
 
+const float SHOOT_BUTTON_TIME = 1.0;
+
 OI::OI() {
 	// TODO Auto-generated constructor stub
 
@@ -34,6 +36,8 @@ OI::OI() {
 	button_box_1 = new frc::Joystick(OIPorts::JOYSTICK_BUTTONS_1);
 	button_box_2 = new frc::Joystick(OIPorts::JOYSTICK_BUTTONS_2);
 	button_box_3 = new frc::Joystick(OIPorts::JOYSTICK_BUTTONS_3);
+
+	shoot_button_timer = new frc::Timer();
 }
 
 void OI::process() {
@@ -157,16 +161,60 @@ void OI::process() {
 		//frc::DriverStation::ReportError("Feeder off");
 	}
 
-	if(button_box_2->GetRawButton(OIPorts::B_AZIMUTH_LEFT)) {
-		shooter->setAzimuthSpeed(-0.2);
-	}
-	else if(button_box_2->GetRawButton(OIPorts::B_AZIMUTH_RIGHT)) {
-		shooter->setAzimuthSpeed(0.2);
-	}
-	else {
-		shooter->setAzimuthSpeed(0.0);
+
+
+	if(!shooter->isAzimuthVisionTrack()) {
+		if(button_box_2->GetRawButton(OIPorts::B_AZIMUTH_LEFT)) {
+			shooter->setAzimuthSpeed(-0.2);
+		}
+		else if(button_box_2->GetRawButton(OIPorts::B_AZIMUTH_RIGHT)) {
+			shooter->setAzimuthSpeed(0.2);
+		}
+		else {
+			shooter->setAzimuthSpeed(0.0);
+		}
 	}
 
+
+	if(button_box_1->GetRawButton(OIPorts::S2_AUTO_AZIMUTH_TOGGLE) && !shooter->isAzimuthVisionTrack()) {
+		shooter->startAzimuthVisionTrack();
+	}
+	else if(!button_box_1->GetRawButton(OIPorts::S2_AUTO_AZIMUTH_TOGGLE) && shooter->isAzimuthVisionTrack()) {
+		shooter->stopAzimuthVisionTrack();
+	}
+
+
+
+	if(button_box_1->GetRawButton(OIPorts::B_SHOOT) && (shoot_button_timer->Get() <= 0.0)) {
+		shoot_button_timer->Start();
+		if(feeder->getBlenderSpeed() != BLENDER_SPEED) {
+			feeder->setBlenderSpeed(BLENDER_SPEED);
+		}
+		if(feeder->getFeederSpeed() != FEEDER_SPEED) {
+			feeder->setFeederSpeed(FEEDER_SPEED);
+		}
+	}
+
+
+	if(shoot_button_timer->Get() > SHOOT_BUTTON_TIME) {
+		shoot_button_timer->Stop();
+		if(!button_box_1->GetRawButton(OIPorts::B_SHOOT)) {
+			feeder->setBlenderSpeed(0.0);
+			feeder->setFeederSpeed(0.0);
+			shoot_button_timer->Reset();
+		}
+	}
+
+
+
+	if(button_box_1->GetRawButton(OIPorts::S2_CAMERA_TOGGLE) && (NetworkTable::GetTable("CameraPublisher/GearCam")->GetString("settings", "") == "vision")) {
+		NetworkTable::GetTable("CameraPublisher/GearCam")->PutString("settings", "human");
+		NetworkTable::GetTable("CameraPublisher/ShooterCam")->PutString("settings", "human");
+	}
+	else if(!button_box_1->GetRawButton(OIPorts::S2_CAMERA_TOGGLE) && (NetworkTable::GetTable("CameraPublisher/GearCam")->GetString("settings", "") == "human")) {
+		NetworkTable::GetTable("CameraPublisher/GearCam")->PutString("settings", "vision");
+		NetworkTable::GetTable("CameraPublisher/ShooterCam")->PutString("settings", "vision");
+	}
 
 	/*if(button_box_2->GetRawButton(OIPorts::B_GEAR_AUTO_ALIGN) && !vision->isTurningToGearHook()) {
 		frc::DriverStation::ReportError("Turn button");
