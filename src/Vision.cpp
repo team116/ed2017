@@ -11,9 +11,6 @@ Vision* Vision::INSTANCE;
 
 Vision::Vision() {
 	mobility = Mobility::getInstance();
-	shooter = Shooter::getInstance();
-
-	processor = new grip::GripPipeline();
 
 	turning_to_gear = false;
 
@@ -65,11 +62,11 @@ void Vision::process() {
 }
 
 bool Vision::canSeeGearHook() {
-	return false;
+	return (NetworkTable::GetTable("Vision/Gear")->GetNumber("numContours", 0.0) == 2.0);
 }
 
 bool Vision::canSeeHighGoal() {
-	return false;
+	return (NetworkTable::GetTable("Vision/Shooter")->GetNumber("numContours", 0.0) == 2.0);
 }
 
 float Vision::gearHookDegreesHorizontal() {
@@ -80,8 +77,8 @@ float Vision::gearHookDistance() {
 	return 0.0;
 }
 
-float Vision::highGoalDegreesHorizontal() {
-	return 0.0;
+float Vision::highGoalOffset() {
+	return NetworkTable::GetTable("Vision/Shooter")->GetNumber("offset", 0.0);
 }
 
 float Vision::highGoalDistance() {
@@ -105,7 +102,7 @@ bool Vision::isTurningToGearHook() {
 }
 
 void Vision::setGearCamMode(CameraMode mode) {
-	std::vector<cs::VideoProperty> props = gear_cam.EnumerateProperties();
+	/*std::vector<cs::VideoProperty> props = gear_cam.EnumerateProperties();
 	switch(mode) {
 	case Human:
 		break;
@@ -118,11 +115,11 @@ void Vision::setGearCamMode(CameraMode mode) {
 		props[12].Set(1);//auto exposure
 		props[14].Set(10);//exposure
 		break;
-	}
+	}*/
 }
 
 void Vision::setShooterCamMode(CameraMode mode) {
-	std::vector<cs::VideoProperty> props = shooter_cam.EnumerateProperties();
+	/*std::vector<cs::VideoProperty> props = shooter_cam.EnumerateProperties();
 	switch(mode) {
 	case Human:
 		break;
@@ -135,7 +132,7 @@ void Vision::setShooterCamMode(CameraMode mode) {
 		props[12].Set(1);//auto exposure
 		props[14].Set(10);//exposure
 		break;
-	}
+	}*/
 }
 
 Vision* Vision::getInstance()

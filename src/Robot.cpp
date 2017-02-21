@@ -123,7 +123,7 @@ public:
 
 		log->write(Log::DEBUG_LEVEL, "Diagnostics Initialized");
 
-		mobility->disableRightEncoder();
+		mobility->enableRightEncoder();
 		mobility->enableLeftEncoder();
 	}
 
@@ -134,11 +134,12 @@ public:
 		mobility->disableRotationPID();
 		shooter->disableAzimuthPID();
 		shooter->disableShooterPID();
+		shooter->stopAzimuthVisionTrack();
 
 		gear->disableCompressor();
 
 		if(auto_routine != nullptr) {
-			//auto_routine->end();
+			auto_routine->end();
 		}
 	}
 	void DisabledPeriodic(){
