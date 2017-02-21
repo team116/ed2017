@@ -45,6 +45,15 @@ void Routine::process() {
 	}
 }
 
+void Routine::end() {
+	if(current_action != nullptr) {
+		current_action->end();
+	}
+	current_action = nullptr;
+
+	timeout_timer->Stop();
+
+}
 
 
 bool Routine::isFinished() {
