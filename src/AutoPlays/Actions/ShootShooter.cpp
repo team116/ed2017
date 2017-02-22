@@ -7,8 +7,9 @@
 
 #include <AutoPlays/Actions/ShootShooter.h>
 
-ShootShooter::ShootShooter() {
+ShootShooter::ShootShooter(float time) {
 	shooter  = Shooter::getInstance();
+	setTimeout(15.0);
 }
 void ShootShooter::start() {
 	shooter->setShooterSpeed(100.0);

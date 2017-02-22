@@ -17,29 +17,29 @@ Shoot::Shoot(Utils::Alliance color, Utils::AutoLocation location) {
 		if (color == Utils::Alliance::Blue) {
 			if (location == Utils::AutoLocation::LeftTurntPositive) {
 				addAction(new AimShooterVision());		//will needs to finish the aiming functions before this can work
-				addAction(new ShootShooter());
+				addAction(new ShootShooter(15.0));
 			}
 			else if (location == Utils::AutoLocation::MiddleTurntPositive) {
 				addAction(new AimShooterVision());
-				addAction(new ShootShooter());
+				addAction(new ShootShooter(15.0));
 			}
 			else if (location == Utils::AutoLocation::RightTurntPositive) {
 				addAction(new AimShooterVision());
-				addAction(new ShootShooter());
+				addAction(new ShootShooter(15.0));
 			}
 		}
 		else {
 			if (location == Utils::AutoLocation::LeftTurntNegative) {
 				addAction(new AimShooterVision());
-				addAction(new ShootShooter());
+				addAction(new ShootShooter(15.0));
 			}
 			else if (location == Utils::AutoLocation::MiddleTurntNegative) {
 				addAction(new AimShooterVision());
-				addAction(new ShootShooter());
+				addAction(new ShootShooter(15.0));
 			}
 			else if (location == Utils::AutoLocation::RightTurntNegative) {
 				addAction(new AimShooterVision());
-				addAction(new ShootShooter());
+				addAction(new ShootShooter(15.0));
 			}
 		}
 	}

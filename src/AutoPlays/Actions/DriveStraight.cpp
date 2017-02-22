@@ -10,6 +10,7 @@
 DriveStraight::DriveStraight(float dis) {
 	mobility = Mobility::getInstance();
 	distance = dis;
+	setTimeout(1.0);
 }
 
 void DriveStraight::start() {
