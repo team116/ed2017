@@ -16,7 +16,7 @@ Feeder::Feeder() {
 }
 
 void Feeder::setFeederSpeed(float speed){
-	feeder->Set(speed);
+	feeder->Set(-speed);
 }
 
 void Feeder::setBlenderSpeed(float speed){
