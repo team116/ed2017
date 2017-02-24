@@ -79,7 +79,15 @@ void Diagnostics::process() {
 				&& (fabs(mobility->getLeftEncoderRates()) < ENCODER_THRESHOLD)) {
 				left_enc_error_count++;
 				if (left_enc_error_count > 2) {
+					if(SmartDashboard::GetString("Left Mobility Encoder Status", "working") == "working") {
+						SmartDashboard::PutString("Left Mobility Encoder Status", "error");
+					}
 					log->write(Log::WARNING_LEVEL, "Left mobility encoder error.");
+				}
+				else {
+					if(SmartDashboard::GetString("Left Mobility Encoder Status", "error") == "error") {
+						SmartDashboard::PutString("Left Mobility Encoder Status", "working");
+					}
 				}
 				break;
 			}
@@ -91,7 +99,15 @@ void Diagnostics::process() {
 				&& (fabs(mobility->getRightEncoderRates()) < ENCODER_THRESHOLD)) {
 				right_enc_error_count++;
 				if (right_enc_error_count > 2) {
+					if(SmartDashboard::GetString("Right Mobility Encoder Status", "working") == "working") {
+						SmartDashboard::PutString("Right Mobility Encoder Status", "error");
+					}
 					log->write(Log::WARNING_LEVEL, "Right mobility encoder error. Current rate: %f", mobility->getRightEncoderRates());
+				}
+				else {
+					if(SmartDashboard::GetString("Right Mobility Encoder Status", "error") =="error") {
+						SmartDashboard::PutString("Right Mobility Encoder Status", "working");
+					}
 				}
 				break;
 			}
