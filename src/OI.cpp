@@ -107,13 +107,16 @@ void OI::process() {
 
 
 	percent = (-1 * button_box_1->GetRawAxis(OIPorts::P_SHOOTER_SPEED) * 0.4) + 0.6;
-	if(button_box_1->GetRawButton(OIPorts::S2_SHOOTER_WHEELS_TOGGLE) && (percent * SHOOTER_SPEED != shooter->getSpeed())) {
-		shooter->setShooterSpeed(percent * SHOOTER_SPEED);
-		frc::DriverStation::ReportError("Shooter on " + std::to_string(percent * SHOOTER_SPEED));
+	float speed = percent * SHOOTER_SPEED;
+	if(button_box_1->GetRawButton(OIPorts::S2_SHOOTER_WHEELS_TOGGLE) && (speed != shooter->getSpeed())) {
+		//float speed = std::stof(SmartDashboard::GetString("DB/String 0", std::to_string(0.0)));
+		shooter->setShooterSpeed(speed);
+		//shooter->setShooterRPM(speed);
+		//frc::DriverStation::ReportError("Shooter on " + std::to_string(speed));
 	}
 	else if (!button_box_1->GetRawButton(OIPorts::S2_SHOOTER_WHEELS_TOGGLE) && (00 != shooter->getSpeed())) {
 		shooter->setShooterSpeed(0);
-	    frc::DriverStation::ReportError("Shooter off");
+	    //frc::DriverStation::ReportError("Shooter off");
 	}
 
 
@@ -133,32 +136,33 @@ void OI::process() {
 
 
 
-	if (button_box_2->GetRawButton(OIPorts::S3_BLENDER_FORWARD) && (BLENDER_SPEED != feeder->getBlenderSpeed())) {
-		feeder->setBlenderSpeed(BLENDER_SPEED);
-		frc::DriverStation::ReportError("Blending forward");
-	}
-	else if (button_box_2->GetRawButton(OIPorts::S3_BLENDER_REVERSE) && (BLENDER_REVERSE_SPEED != feeder->getBlenderSpeed())) {
-		feeder->setBlenderSpeed(BLENDER_REVERSE_SPEED);
-		frc::DriverStation::ReportError("Blender reverse");
-	}
-	else if (feeder->getBlenderSpeed() != 0.0) {
-		feeder->setBlenderSpeed(0.0);
-		//frc::DriverStation::ReportError("Blender off");
-	}
+	if(shoot_button_timer->Get() <= 0.0) {
+		if (button_box_2->GetRawButton(OIPorts::S3_BLENDER_FORWARD) && (BLENDER_SPEED != feeder->getBlenderSpeed())) {
+			feeder->setBlenderSpeed(BLENDER_SPEED);
+			frc::DriverStation::ReportError("Blending forward");
+		}
+		else if (button_box_2->GetRawButton(OIPorts::S3_BLENDER_REVERSE) && (BLENDER_REVERSE_SPEED != feeder->getBlenderSpeed())) {
+			feeder->setBlenderSpeed(BLENDER_REVERSE_SPEED);
+			frc::DriverStation::ReportError("Blender reverse");
+		}
+		else if (feeder->getBlenderSpeed() != 0.0) {
+			feeder->setBlenderSpeed(0.0);
+			//frc::DriverStation::ReportError("Blender off");
+		}
 
+		if (button_box_2->GetRawButton(OIPorts::S3_LOADER_FORWARD) && (FEEDER_SPEED != feeder->getFeederSpeed())) {
+			feeder->setFeederSpeed(FEEDER_SPEED);
+			//frc::DriverStation::ReportError("Feeding forward");
+		}
+		else if (button_box_2->GetRawButton(OIPorts::S3_LOADER_REVERSE) && (FEEDER_REVERSE_SPEED != feeder->getFeederSpeed())) {
+			feeder->setFeederSpeed(FEEDER_REVERSE_SPEED);
+			//frc::DriverStation::ReportError("Feeding reverse");
+		}
+		else if (feeder->getFeederSpeed() != 0.0) {
+			feeder->setFeederSpeed(0.0);
+			//frc::DriverStation::ReportError("Feeder off");
+		}
 
-
-	if (button_box_2->GetRawButton(OIPorts::S3_LOADER_FORWARD) && (FEEDER_SPEED != feeder->getFeederSpeed())) {
-		feeder->setFeederSpeed(FEEDER_SPEED);
-		//frc::DriverStation::ReportError("Feeding forward");
-	}
-	else if (button_box_2->GetRawButton(OIPorts::S3_LOADER_REVERSE) && (FEEDER_REVERSE_SPEED != feeder->getFeederSpeed())) {
-		feeder->setFeederSpeed(FEEDER_REVERSE_SPEED);
-		//frc::DriverStation::ReportError("Feeding reverse");
-	}
-	else if (feeder->getFeederSpeed() != 0.0) {
-		feeder->setFeederSpeed(0.0);
-		//frc::DriverStation::ReportError("Feeder off");
 	}
 
 
@@ -197,8 +201,10 @@ void OI::process() {
 
 
 	if(shoot_button_timer->Get() > SHOOT_BUTTON_TIME) {
+		//frc::DriverStation::ReportError("Stopping timer: " + std::to_string(shoot_button_timer->Get()));
 		shoot_button_timer->Stop();
 		if(!button_box_1->GetRawButton(OIPorts::B_SHOOT)) {
+			//frc::DriverStation::ReportError("Stopping shoot button");
 			feeder->setBlenderSpeed(0.0);
 			feeder->setFeederSpeed(0.0);
 			shoot_button_timer->Reset();
@@ -214,6 +220,18 @@ void OI::process() {
 	else if(!button_box_1->GetRawButton(OIPorts::S2_CAMERA_TOGGLE) && (NetworkTable::GetTable("CameraPublisher/GearCam")->GetString("settings", "") == "human")) {
 		NetworkTable::GetTable("CameraPublisher/GearCam")->PutString("settings", "vision");
 		NetworkTable::GetTable("CameraPublisher/ShooterCam")->PutString("settings", "vision");
+	}
+
+
+	if(joy_right->GetRawButton(OIPorts::B_TURN_TO_GEAR)) {
+		if(vision->canSeeGearHook() && !mobility->isTrackingGear()) {
+			frc::DriverStation::ReportError("Start");
+			mobility->startTrackGear();
+		}
+	}
+	else {
+		frc::DriverStation::ReportError("Stop");
+		mobility->stopTrackGear();
 	}
 
 	/*if(button_box_2->GetRawButton(OIPorts::B_GEAR_AUTO_ALIGN) && !vision->isTurningToGearHook()) {
