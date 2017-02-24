@@ -21,17 +21,15 @@ Shooter::Shooter() {
 
 	azimuth_current_angle = 0.0;
 
-	shooter = new CANTalon(RobotPorts::MOTOR_SHOOTER_WHEEL);
 	azimuth = Utils::constructMotor(RobotPorts::MOTOR_SHOOTER_AZIMUTH);
 	target_azimuth_angle = 0;
 
 	azimuth_auto_track = false;
 
-	shooter->SetFeedbackDevice(CANTalon::FeedbackDevice::EncRising);
-	shooter->ConfigEncoderCodesPerRev(1);
+	shooter = new ShooterSpeed();
 
 	azimuth_encoder = new frc::AnalogPotentiometer(RobotPorts::AZIMUTH_ENCODER, 360.0, 0.0);
-	az_enc = new AzimuthEncoder();
+	//az_enc = new AzimuthEncoder();
 
 	//FALSE IS PRESSED, TRUE IS NOT PRESSED
 	azimuth_limit_switch = new frc::DigitalInput(RobotPorts::LS_SHOOTER_AZIMUTH);
@@ -67,8 +65,10 @@ Shooter::Shooter() {
 }
 
 void Shooter::process() {
+	//az_enc->process();
 	//frc::DriverStation::ReportError("Limit Switch: " + std::to_string(azimuth_limit_switch->Get()) + " Azimuth: " + std::to_string(azimuth_encoder->Get()) + " Speed: " + std::to_string(shooter->GetSpeed()));
-	frc::DriverStation::ReportError("Raw AZ: " + std::to_string(azimuth_encoder->Get()) + " Adjusted AZ: " + std::to_string(az_enc->getAngle()));
+	//frc::DriverStation::ReportError("Raw AZ: " + std::to_string(azimuth_encoder->Get()) + " Adjusted AZ: " + std::to_string(az_enc->getAngle()));
+	//frc::DriverStation::ReportError("SHooter: " + std::to_string(shooter->PIDGet()));
 }
 
 float Shooter::getShooterEncoderRate() {
@@ -120,11 +120,11 @@ void Shooter::setAzimuthAngle(float angle) {
 }
 
 void Shooter::setAzimuthSpeed(float speed) {
-	azimuth->Set(speed);
+	azimuth->Set(-speed);
 }
 
 void Shooter::setShooterSpeed(float speed) {
-	shooter->Set(speed);
+	shooter->Set(-speed);
 
 }
 void Shooter::setShooterRPM(float speed) {
@@ -205,6 +205,17 @@ double Shooter::AzimuthVisionTracker::PIDGet() {
 	else {
 		return 0.0;
 	}
+}
+
+Shooter::ShooterSpeed::ShooterSpeed() : CANTalon(RobotPorts::MOTOR_SHOOTER_WHEEL) {
+	SetFeedbackDevice(CANTalon::FeedbackDevice::EncRising);
+	ConfigEncoderCodesPerRev(1);
+	//SetControlMode(CANSpeedController::ControlMode::kSpeed);
+	//SelectProfileSlot(0);
+}
+
+double Shooter::ShooterSpeed::PIDGet() {
+	return GetSpeed();
 }
 
 Shooter* Shooter::getInstance()

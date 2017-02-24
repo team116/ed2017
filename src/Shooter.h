@@ -61,9 +61,16 @@ private:
 		double PIDGet();
 		Vision* vision;
 	};
+
+	class ShooterSpeed : public CANTalon {
+		public:
+			ShooterSpeed();
+			double PIDGet();
+	};
 	static Shooter* INSTANCE;
 
-	CANTalon* shooter;
+	//CANTalon* shooter;
+	ShooterSpeed* shooter;
 	frc::SpeedController* azimuth;
 	frc::AnalogPotentiometer* azimuth_encoder;
 	AzimuthEncoder* az_enc;
