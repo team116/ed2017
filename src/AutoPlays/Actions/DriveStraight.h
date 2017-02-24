@@ -13,7 +13,7 @@
 
 class DriveStraight: public Action {
 public:
-	DriveStraight(float dis);
+	DriveStraight(float dis, float speed = 1.0);
 
 	//Called once when the routine starts
 	void start();
@@ -29,6 +29,7 @@ public:
 private:
 	Mobility* mobility;
 	float distance;
+	float speed;
 };
 
 #endif /* SRC_AUTOPLAYS_DRIVESTRAIGHT_H_ */
