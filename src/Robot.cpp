@@ -123,7 +123,7 @@ public:
 
 		log->write(Log::DEBUG_LEVEL, "Diagnostics Initialized");
 
-		mobility->enableRightEncoder();
+		mobility->disableRightEncoder();
 		mobility->enableLeftEncoder();
 	}
 
@@ -143,6 +143,7 @@ public:
 		}
 	}
 	void DisabledPeriodic(){
+		shooter->process();
 		/*int AP = socket->process();
 		if(AP == -1){
 			return;
@@ -152,10 +153,18 @@ public:
 	}
 	void AutonomousInit() override {
 		try {
-			//Set the play here
-			auto_routine = new DeliverGear(Utils::AutoLocation::MiddleForward);
 
-			auto_routine->start();
+			mobility->turnDegrees(15);
+
+			/*if(vision->canSeeGearHook()) {
+				mobility->turnDegrees(vision->gearHookDegreesHorizontal());
+			}*/
+
+
+			//Set the play here
+			//auto_routine = new DeliverGear(Utils::AutoLocation::MiddleForward);
+
+			//auto_routine->start();
 
 			//timer = new Timer();
 
@@ -185,14 +194,14 @@ public:
 
 	void AutonomousPeriodic() {
 		try {
-			/*mobility->process();
+			mobility->process();
 			climber->process();
 			gear->process();
 			intake->process();
 			shooter->process();
-			diagnostics->process();*/
+			diagnostics->process();
 
-			auto_routine->process();
+			//auto_routine->process();
 
 			/*if(timer->HasPeriodPassed(input)) {
 				mobility->setStraightSpeed(0.0);
@@ -208,6 +217,7 @@ public:
 	void TeleopInit() {
 		try {
 			DisabledInit();
+			mobility->resetGyro();
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in TeleopInit\n%s", e->what());
 		}
@@ -221,7 +231,7 @@ public:
 			gear->process();
 			intake->process();
 			shooter->process();
-			diagnostics->process();
+			//diagnostics->process();
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in TeleopPeriodic\n%s", e->what());
 		}
