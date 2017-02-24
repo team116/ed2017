@@ -13,19 +13,21 @@
 #include <Vision.h>
 
 DeliverGear::DeliverGear(Utils::AutoLocation location) {		//allll this math needs to be checked
-	if (Vision::getInstance()->canSeeGearHook()) {				//this is alllll rough ESTIMATES
+	//if (Vision::getInstance()->canSeeGearHook()) {				//this is alllll rough ESTIMATES
 		if (location == Utils::AutoLocation::LeftForward) {
 			addAction(new DriveStraight(98.0));
 			addAction(new TurnDegrees(37.0));
 			addAction(new DriveStraight(30.0));
 			addAction(new DropGear());
-			addAction(new DriveStraight(-15.0));
-			addAction(new CloseGearHolder());
+			//addAction(new DriveStraight(-15.0));
+			//addAction(new CloseGearHolder());
 		}
 		else if (location == Utils::AutoLocation::MiddleForward) {
-			addAction(new DriveStraight(99.0));
+			frc::DriverStation::ReportError("Doing middle forward");
+			addAction(new DriveStraight(50.0, 0.75));
+			addAction(new DriveStraight(20.0, 0.25));
 			addAction(new DropGear());
-			addAction(new DriveStraight(-20.0));
+			addAction(new DriveStraight(-20.0, 0.25));
 			addAction(new CloseGearHolder());
 		}
 		else if (location == Utils::AutoLocation::RightForward) {
@@ -33,9 +35,9 @@ DeliverGear::DeliverGear(Utils::AutoLocation location) {		//allll this math need
 			addAction(new TurnDegrees(-37.0));
 			addAction(new DriveStraight(30.0));
 			addAction(new DropGear());
-			addAction(new DriveStraight(-15.0));
-			addAction(new CloseGearHolder());
+			//addAction(new DriveStraight(-15.0));
+			//addAction(new CloseGearHolder());
 		}
-	}
+	//}
 }
 
