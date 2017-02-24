@@ -13,7 +13,7 @@
 
 class ShootShooter: public Action {
 public:
-	ShootShooter();
+	ShootShooter(float time);
 	void start();
 
 	void process();
