@@ -15,6 +15,7 @@
 #include <MobilityRotationPID.h>
 #include "../navx/AHRS.h"
 #include "Log.h"
+#include "Vision.h"
 
 class Mobility {
 public:
@@ -93,6 +94,10 @@ public:
 	float getLeftSetValue();
 	float getRightSetValue();
 
+	void startTrackGear();
+	bool isTrackingGear();
+	void stopTrackGear();
+
 	float getNavXTemperature();
 
 	//Sensor Toggles
@@ -125,6 +130,14 @@ private:
 		bool enabled;
 	};
 
+	class GearTracker : public frc::PIDSource {
+	public:
+		GearTracker();
+		double PIDGet();
+	private:
+		Vision* vision;
+	};
+
 	static Mobility* INSTANCE;
 
 	Log* log;
@@ -132,6 +145,8 @@ private:
 	//Functions
 	void processTurningDegrees();
 	float estimateTimeFromPoints(const float[][2], int, float);
+
+	bool tracking_gear;
 
 	MobilityEncoder* encoders;
 
@@ -153,6 +168,8 @@ private:
 	MobilityRotationPID* rotation_output;
 	frc::PIDController* rotation_PID;
 	MobilityDistanceOutput* distance_output;
+
+	GearTracker* gear_track_input;
 
 
 	//Other variables
