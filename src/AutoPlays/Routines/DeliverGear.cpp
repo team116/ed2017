@@ -15,7 +15,7 @@
 DeliverGear::DeliverGear(Utils::AutoLocation location) {
 	//if (Vision::getInstance()->canSeeGearHook()) {
 		if (location == Utils::AutoLocation::LeftForward) { 		//these numbers have all been calculated
-			addAction(new DriveStraight(109.3, 0.75));
+			addAction(new DriveStraight(130.3, 0.75));
 			addAction(new TurnDegrees(15.2));
 			addAction(new DriveStraight(69.0, 0.25));
 			addAction(new DropGear());
@@ -24,8 +24,8 @@ DeliverGear::DeliverGear(Utils::AutoLocation location) {
 		}
 		else if (location == Utils::AutoLocation::MiddleForward) {
 			frc::DriverStation::ReportError("Doing middle forward");
-			addAction(new DriveStraight(72.0, 0.75));
-			addAction(new DriveStraight(41.0, 0.25));
+			addAction(new DriveStraight(70.0, 0.75));
+			addAction(new DriveStraight(27.5, 0.25));
 			addAction(new DropGear());
 			addAction(new DriveStraight(-12.0, 0.25));
 			addAction(new CloseGearHolder());
