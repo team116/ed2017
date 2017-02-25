@@ -14,7 +14,7 @@
 
 class CrossBaseline: public Routine {
 public:
-	CrossBaseline();
+	CrossBaseline(Utils::AutoLocation location);
 };
 
 #endif /* SRC_AUTOPLAYS_CROSSBASELINE_H_ */
