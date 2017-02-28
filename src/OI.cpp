@@ -41,31 +41,48 @@ OI::OI() {
 }
 
 void OI::process() {
+
+	//Make sure we're not doing an automated mobility thing
 	if(mobility->isTurnDegreesDone() && mobility->isDriveDistanceDone()) {
+		//Check left joystick drive straight button
 		if (joy_left->GetRawButton(OIPorts::B_DRIVE_STRAIGHT)) {
+			//If it isnt already driving straight, make it drive straight
 			if (!mobility->isDrivingStraight()) {
 				mobility->startDriveStraight();
 			}
+
+			//Set the straight speed according to this joystick
 			mobility->setStraightSpeed(joy_left->GetRawAxis(OIPorts::AXIS_Y) * -1);
 		}
+		//Check right joystick drive straight button
 		else if (joy_right->GetRawButton(OIPorts::B_DRIVE_STRAIGHT)) {
+			//If it isnt already driving straight, make it drive straight
 			if (!mobility->isDrivingStraight()) {
 				mobility->startDriveStraight();
 			}
+
+			//Set the straight speed according to this joystick
 			mobility->setStraightSpeed(joy_right->GetRawAxis(OIPorts::AXIS_Y) * -1);
 		}
+		//Check right joystick rotate button
 		else if(joy_right->GetRawButton(OIPorts::B_ROTATE)) {
 			mobility->setLeft(joy_right->GetRawAxis(OIPorts::AXIS_Z));
 			mobility->setRight(joy_right->GetRawAxis(OIPorts::AXIS_Z) * -1);
 		}
+		//Check left joystick rotate button
 		else if(joy_left->GetRawButton(OIPorts::B_ROTATE)) {
-				mobility->setLeft(joy_left->GetRawAxis(OIPorts::AXIS_Z));
-				mobility->setRight(joy_left->GetRawAxis(OIPorts::AXIS_Z) * -1);
-			}
+			mobility->setLeft(joy_left->GetRawAxis(OIPorts::AXIS_Z));
+			mobility->setRight(joy_left->GetRawAxis(OIPorts::AXIS_Z) * -1);
+		}
+		//If we're not doing any of the fancy drive straight or rotate stuff, do normal driving
 		else {
+			//Disable drive straight if it's enabled (we know drive straight button isnt being pressed if we've made it to this else statement)
 			if(mobility->isDrivingStraight()) {
 				mobility->stopDriveStraight();
 			}
+
+			//Set both sides to the speeds of their corresponding joysticks
+			//Multiply by -1 because y axis is flipped on these joysticks
 			mobility->setLeft(joy_left->GetRawAxis(OIPorts::AXIS_Y) * -1);
 			mobility->setRight(joy_right->GetRawAxis(OIPorts::AXIS_Y) * -1);
 		}
@@ -73,6 +90,7 @@ void OI::process() {
 
 
 
+	//GEAR RELEASE
 	if (button_box_2->GetRawButton(OIPorts::B_GEAR_RELEASE) && !gear->isOpen()) {
 		gear->open();
 		//frc::DriverStation::ReportError("Opening gear");
@@ -85,6 +103,8 @@ void OI::process() {
 
 
 
+
+	//CLIMBER
 	float percent = (-1 * button_box_2->GetRawAxis(OIPorts::P_CLIMBER_SPEED) * 0.4) + 0.6;
 	if(button_box_1->GetRawButton(OIPorts::S2_CLIMBER_TOGGLE) && ((CLIMB_SPEED * percent) != climber->getSpeed())) {
 		//Percent from 0.2 to 1.0
@@ -96,19 +116,17 @@ void OI::process() {
 		//frc::DriverStation::ReportError("Stopped moving");
 	}
 
-	/*percent = (button_box_2->GetRawAxis(OIPorts::P_CLIMBER_SPEED));
-	if(button_box_1->GetRawButton(OIPorts::S2_AUTO_AZIMUTH_TOGGLE) && (shooter->getAzimuthSpeed() != percent)) {
-		shooter->setAzimuthSpeed(percent);
-	}
-	else if(!button_box_1->GetRawButton(OIPorts::S2_AUTO_AZIMUTH_TOGGLE) && (shooter->getAzimuthSpeed() != 0.0)) {
-		shooter->setAzimuthSpeed(0.0);
-	}*/
 
 
 
+	//SHOOTER
+	//Get percent of shooter speed from shooter dial
 	percent = (-1 * button_box_1->GetRawAxis(OIPorts::P_SHOOTER_SPEED) * 0.4) + 0.6;
+	//Speed is the percent of our max speed constant
 	float speed = percent * SHOOTER_SPEED;
 	if(button_box_1->GetRawButton(OIPorts::S2_SHOOTER_WHEELS_TOGGLE) && (speed != shooter->getSpeed())) {
+		//Reading speed from driverstation right now, ignoring the dial.
+		//This is probably just for testing, but it lets us type in an exact speed manually
 		speed = std::stof(SmartDashboard::GetString("DB/String 0", std::to_string(0.0)));
 		shooter->setShooterSpeed(speed);
 		//shooter->setShooterRPM(speed);
@@ -121,6 +139,8 @@ void OI::process() {
 
 
 
+
+	//INTAKE (3 states: forward, backwards, and off)
 	if (button_box_2->GetRawButton(OIPorts::S3_INTAKE_REVERSE) && (INTAKE_SPEED != intake->getSpeed())) {
 		intake->setSpeedIntake(INTAKE_SPEED);
 	    //frc::DriverStation::ReportError("Intaking");
