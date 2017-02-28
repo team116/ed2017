@@ -12,31 +12,31 @@
 #include "AutoPlays/Actions/CloseGearHolder.h"
 #include <Vision.h>
 
-DeliverGear::DeliverGear(Utils::AutoLocation location) {		//allll this math needs to be checked
-	//if (Vision::getInstance()->canSeeGearHook()) {				//this is alllll rough ESTIMATES
-		if (location == Utils::AutoLocation::LeftForward) {
-			addAction(new DriveStraight(98.0));
-			addAction(new TurnDegrees(37.0));
-			addAction(new DriveStraight(30.0));
+DeliverGear::DeliverGear(Utils::AutoLocation location) {
+	//if (Vision::getInstance()->canSeeGearHook()) {
+		if (location == Utils::AutoLocation::LeftForward) { 		//these numbers have all been calculated
+			addAction(new DriveStraight(130.3, 0.75));
+			addAction(new TurnDegrees(15.2));
+			addAction(new DriveStraight(69.0, 0.25));
 			addAction(new DropGear());
-			//addAction(new DriveStraight(-15.0));
-			//addAction(new CloseGearHolder());
+			addAction(new DriveStraight(-12.0, 0.25));
+			addAction(new CloseGearHolder());
 		}
 		else if (location == Utils::AutoLocation::MiddleForward) {
 			frc::DriverStation::ReportError("Doing middle forward");
-			addAction(new DriveStraight(50.0, 0.75));
-			addAction(new DriveStraight(20.0, 0.25));
+			addAction(new DriveStraight(70.0, 0.75));
+			addAction(new DriveStraight(27.5, 0.25));
 			addAction(new DropGear());
-			addAction(new DriveStraight(-20.0, 0.25));
+			addAction(new DriveStraight(-12.0, 0.25));
 			addAction(new CloseGearHolder());
 		}
 		else if (location == Utils::AutoLocation::RightForward) {
-			addAction(new DriveStraight(98.0));
-			addAction(new TurnDegrees(-37.0));
-			addAction(new DriveStraight(30.0));
+			addAction(new DriveStraight(130.3, 0.75));
+			addAction(new TurnDegrees(-15.2));
+			addAction(new DriveStraight(66.5, 0.25));
 			addAction(new DropGear());
-			//addAction(new DriveStraight(-15.0));
-			//addAction(new CloseGearHolder());
+			addAction(new DriveStraight(-12.0, 0.25));
+			addAction(new CloseGearHolder());
 		}
 	//}
 }

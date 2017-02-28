@@ -13,12 +13,12 @@ AimShooterVision::AimShooterVision() {
 void AimShooterVision::start() {
 
 }
-void AimShooterVision::process() {
+void AimShooterVision::process() {		//can be a process to look for shooter
 
 }
 void AimShooterVision::end() {
 
 }
-bool AimShooterVision::isFinished() {
+bool AimShooterVision::isFinished() {		//bool for isfinished could be offsets (1 and -1)
 
 }
