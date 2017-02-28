@@ -169,6 +169,19 @@ namespace Utils
 		VictorSP,
 		CANTalonSRX
 	};
+	enum AutoPlay {
+		CrossBaseline,
+		DeliverGear,
+		DeliverGearAndShoot,
+		DeliverGearAndShootAndEmptyHopper,
+		DoNothing,
+		EmptyAllHoppers,
+		EmptyHopper,
+		EmptyHopperAndShoot,
+		Shoot,
+		ShootAndCrossBaseline,
+		ShootAndDeliverGear
+	};
 	enum AutoLocation {
 		LeftForward,		//forward = gear is facing away from alliance wall
 		MiddleForward,

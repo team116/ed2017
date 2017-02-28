@@ -11,16 +11,24 @@
 #include <Vision.h>
 #include "Diagnostics.h"
 #include "Log.h"
-#include "AutoPlays/Routine.h"
-#include "AutoPlays/Routines/DoNothing.h"
-#include "AutoPLays/Routines/CrossBaseline.h"
-#include "AutoPlays/Routines/DeliverGear.h"
 #include <IterativeRobot.h>
 #include <Socket.h>
 
+#include <AutoPlays/Routine.h>
+#include <AutoPlays/Routines/CrossBaseline.h>
+#include <AutoPlays/Routines/DeliverGear.h>
+#include <AutoPlays/Routines/DeliverGearandShoot.h>
+#include <AutoPlays/Routines/DeliverGearandShootandEmptyHopper.h>
+#include <AutoPlays/Routines/DoNothing.h>
+#include <AutoPlays/Routines/EmptyAllHoppers.h>
+#include <AutoPlays/Routines/EmptyHopper.h>
+#include <AutoPlays/Routines/EmptyHopperandShoot.h>
+#include <AutoPlays/Routines/Shoot.h>
+#include <AutoPlays/Routines/ShootandCrossBaseline.h>
+#include <AutoPlays/Routines/ShootandDeliverGear.h>
+
 class Robot: public frc::IterativeRobot {
 private:
-	Autonomous* autonomous;
 	Climber* climber;
 	Gear* gear;
 	Intake* intake;
@@ -48,9 +56,9 @@ public:
 		log->write(Log::DEBUG_LEVEL, "Log Initialized");
 
 		try {
-			autonomous = Autonomous::getInstance();
+			socket = new Socket();
 		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Autonomous\n%s", e->what());
+			log->write(Log::ERROR_LEVEL, "Error initializing Socket\n%s", e->what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Autonomous Initialized");
@@ -142,12 +150,53 @@ public:
 		}
 	}
 	void DisabledPeriodic(){
-		/*int AP = socket->process();
-		if(AP == -1){
+		Socket::Packet packet = socket->process();
+		if (packet.play == Socket::NO_UPDATE.play &&
+		    packet.location == Socket::NO_UPDATE.location &&
+			packet.alliance == Socket::NO_UPDATE.alliance){
 			return;
-		}*/
+		}
 
-		//frc::DriverStation::ReportError(std::to_string(mobility->getGyroAngle()));
+		delete auto_routine;
+		auto_routine = nullptr;
+		Socket::PlaySelection selection = Socket::packetToSelection(packet);
+		switch (selection.play) {
+		case Utils::AutoPlay::CrossBaseline:
+			auto_routine = new CrossBaseline();
+			break;
+		case Utils::AutoPlay::DeliverGear:
+			auto_routine = new DeliverGear(selection.location);
+			break;
+		case Utils::AutoPlay::DeliverGearAndShoot:
+			auto_routine = new DeliverGearandShoot(selection.alliance, selection.location);
+			break;
+		case Utils::AutoPlay::DeliverGearAndShootAndEmptyHopper:
+			auto_routine = new DeliverGearandShootandEmptyHopper();
+			break;
+		case Utils::AutoPlay::DoNothing:
+			auto_routine = new DoNothing();
+			break;
+		case Utils::AutoPlay::EmptyAllHoppers:
+			auto_routine = new EmptyAllHoppers();
+			break;
+		case Utils::AutoPlay::EmptyHopper:
+			auto_routine = new EmptyHopper();
+			break;
+		case Utils::AutoPlay::EmptyHopperAndShoot:
+			auto_routine = new EmptyHopperandShoot();
+			break;
+		case Utils::AutoPlay::Shoot:
+			auto_routine = new Shoot(selection.alliance, selection.location);
+			break;
+		case Utils::AutoPlay::ShootAndCrossBaseline:
+			auto_routine = new ShootandCrossBaseline(selection.alliance, selection.location);
+			break;
+		case Utils::AutoPlay::ShootAndDeliverGear:
+			auto_routine = new ShootandDeliverGear();
+			break;
+		default:
+			log->write(Log::WARNING_LEVEL, "Socket::PlaySelection contained unknown play value %d", (int)selection.play);
+		}
 	}
 	void AutonomousInit() override {
 		try {
@@ -242,7 +291,8 @@ public:
 		}
 	}
 	~Robot(){
-		//delete socket;
+		delete socket;
+		socket = nullptr;
 	}
 };
 

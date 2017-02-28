@@ -5,62 +5,48 @@
  *      Author: attar
  */
 
+#include <Socket.h>
+#include <Ports.h>
+
+#include <arpa/inet.h>
+#include <cerrno>
 #include <iostream>
+#include <netinet/in.h>
+#include <string>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <stdlib.h>
 #include <unistd.h>
-#include <netdb.h>
-#include <Socket.h>
+
 using namespace std;
-Socket::Socket() {
-	// TODO Auto-generated constructor stub
 
-    /* ---------- INITIALIZING VARIABLES ---------- */
+const Socket::Packet Socket::NO_UPDATE = Packet{
+	.play = -1,
+	.location = -1,
+	.alliance = -1
+};
 
-    /*
-       1. client is a file descriptor to store the values
-       returned by the socket system call and the accept
-       system call.
-       2. portNum is for storing port number on which
-       the accepts connections
-       3. isExit is bool variable which will be used to
-       end the loop
-       4. The client reads characters from the socket
-       connection into a dynamic variable (buffer).
-       5. A sockaddr_in is a structure containing an internet
-       address. This structure is already defined in netinet/in.h, so
-       we don't need to declare it again.
-        DEFINITION:
-        struct sockaddr_in
-        {
-          short   sin_family;
-          u_short sin_port;
-          struct  in_addr sin_addr;
-          char    sin_zero[8];
-        };
-        6. serv_addr will contain the address of the server
-    */
+const uint16_t Socket::PACKET_PLAY_MASK = 0xFF00;
+const uint16_t Socket::PACKET_LOCATION_MASK = 0x00FE;
+const uint16_t Socket::PACKET_ALLIANCE_MASK = 0X0001;
 
+Socket::Socket() :
+	raw_packet(0),
+	unused_packet(0)
+{
+	log = Log::getInstance();
 
-    int portNum = 1500; // NOTE that the port number is same for both client and server
-    bool isExit = false;
-    char* ip = "127.0.0.1";
+    int portNum = 1184; // NOTE that the port number is same for both client and server
+    string ip = "10.1.16.15";
 
     struct sockaddr_in server_addr;
 
-    client = socket(AF_INET, SOCK_STREAM, SOCK_NONBLOCK);//add	nonblocking
+    sock = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);//add	nonblocking
 
-    /* ---------- ESTABLISHING SOCKET CONNECTION ----------*/
-    /* --------------- socket() function ------------------*/
-
-    if (client < 0)
+    if(sock < 0)
     {
-        cout << "\nError establishing socket..." << endl;
-        exit(1);
+    	log->write(Log::WARNING_LEVEL, "Error creating socket: %s", strerror(errno));
+    	throw exception();
     }
 
     /*
@@ -75,8 +61,6 @@ Socket::Socket() {
             references to this socket. If the socket call fails,
             it returns -1.
     */
-
-    cout << "\n=> Socket client has been created..." << endl;
 
     /*
         The variable serv_addr is a structure of sockaddr_in.
@@ -93,17 +77,14 @@ Socket::Socket() {
     // and 0 if invalid
     // inet_pton converts IP to packets
     // inet_ntoa converts back packets to IP
-    //inet_pton(AF_INET, ip, &server_addr.sin_addr);
-
-    /*if (connect(client,(struct sockaddr *)&server_addr, sizeof(server_addr)) == 0)
-        cout << "=> Connection to the server " << inet_ntoa(server_addr.sin_addr) << " with port number: " << portNum << endl;*/
-
+    inet_pton(AF_INET, ip.c_str(), &server_addr.sin_addr);
 
     /* ---------- CONNECTING THE SOCKET ---------- */
     /* ---------------- connect() ---------------- */
 
-    if (connect(client,(struct sockaddr *)&server_addr, sizeof(server_addr)) == 0)
-        cout << "=> Connection to the server port number: " << portNum << endl;
+    if(connect(sock,(struct sockaddr *)&server_addr, sizeof(server_addr)) == -1) {
+    	log->write(Log::WARNING_LEVEL, "Unable to establish connection to RPi: %s", strerror(errno));
+    }
 
     /*
         The connect function is called by the client to
@@ -117,22 +98,56 @@ Socket::Socket() {
         Note that the client needs to know the port number of
         the server but not its own port number.
     */
-
-    cout << "=> Awaiting confirmation from the server..." << endl;
 }
- int Socket::process (){
-	 int bufsize = 1024;
-	 char buffer[bufsize];
-	 int receive = recv(client, buffer, bufsize, 0);
-	 if(receive == -1){
-		 return -1;
-	 }
 
-	 return buffer[receive - 1];
+Socket::Packet Socket::process () {
+	int receive = recv(sock, &raw_packet + unused_packet, sizeof(raw_packet) - unused_packet, 0);
+	if(receive < 1) {
+		return NO_UPDATE;
+	}
 
- }
+	if((unsigned)(unused_packet + receive) < sizeof(raw_packet)) {
+		// we haven't read the entire packet
+		unused_packet = unused_packet + receive;
+		return NO_UPDATE;
+	}
+
+	// reset state and return expanded values
+	raw_packet = 0;
+	unused_packet = 0;
+	return Packet{
+		.play = (short)((raw_packet & PACKET_PLAY_MASK) >> 8),
+		.location = (short)((raw_packet & PACKET_LOCATION_MASK) >> 1),
+		.alliance = (short)(raw_packet & PACKET_ALLIANCE_MASK)
+	};
+}
+
+Socket::PlaySelection Socket::packetToSelection(const Packet &packet) {
+	return PlaySelection{
+		.play = (Utils::AutoPlay)packet.play,
+		.location = (Utils::AutoLocation)packet.location,
+		.alliance = (Utils::Alliance)packet.alliance
+	};
+}
+
+bool Socket::validPacket(const Packet& packet) {
+	bool valid = true;
+	if(packet.play < 0 || packet.play > 10) {
+		log->write(Log::WARNING_LEVEL, "Auto packet contained invalid play %d", packet.play);
+		valid = false;
+	}
+	else if(packet.location < 0 || packet.location > 8) {
+		log->write(Log::WARNING_LEVEL, "Auto packet contained invalid location %d", packet.location);
+		valid = false;
+	}
+	else if(packet.alliance < 0 || packet.alliance > 1) {
+		log->write(Log::WARNING_LEVEL, "Auto packet contained invalid alliance %d", packet.alliance);
+		valid = false;
+	}
+	return valid;
+}
+
 Socket::~Socket() {
-	// TODO Auto-generated destructor stub
-	::close(client);
+	::close(sock);
 }
 
