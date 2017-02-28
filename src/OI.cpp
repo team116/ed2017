@@ -109,10 +109,10 @@ void OI::process() {
 	percent = (-1 * button_box_1->GetRawAxis(OIPorts::P_SHOOTER_SPEED) * 0.4) + 0.6;
 	float speed = percent * SHOOTER_SPEED;
 	if(button_box_1->GetRawButton(OIPorts::S2_SHOOTER_WHEELS_TOGGLE) && (speed != shooter->getSpeed())) {
-		//float speed = std::stof(SmartDashboard::GetString("DB/String 0", std::to_string(0.0)));
+		speed = std::stof(SmartDashboard::GetString("DB/String 0", std::to_string(0.0)));
 		shooter->setShooterSpeed(speed);
 		//shooter->setShooterRPM(speed);
-		//frc::DriverStation::ReportError("Shooter on " + std::to_string(speed));
+		frc::DriverStation::ReportError("Shooter on " + std::to_string(speed));
 	}
 	else if (!button_box_1->GetRawButton(OIPorts::S2_SHOOTER_WHEELS_TOGGLE) && (00 != shooter->getSpeed())) {
 		shooter->setShooterSpeed(0);
@@ -188,19 +188,54 @@ void OI::process() {
 	}
 
 
-
-	if(button_box_1->GetRawButton(OIPorts::B_SHOOT) && (shoot_button_timer->Get() <= 0.0)) {
-		shoot_button_timer->Start();
-		if(feeder->getBlenderSpeed() != BLENDER_SPEED) {
-			feeder->setBlenderSpeed(BLENDER_SPEED);
+	if(button_box_1->GetRawButton(OIPorts::B_SHOOT)) {
+		frc::DriverStation::ReportError("Time: " + std::to_string(shoot_button_timer->Get()));
+		if(shoot_button_timer->Get() <= 0.0) {
+			shoot_button_timer->Reset();
+			shoot_button_timer->Start();
 		}
+
 		if(feeder->getFeederSpeed() != FEEDER_SPEED) {
 			feeder->setFeederSpeed(FEEDER_SPEED);
 		}
+
+
+		if(shoot_button_timer->Get() >= 0.8) {
+			if(feeder->getBlenderSpeed() != BLENDER_SPEED) {
+				feeder->setBlenderSpeed(BLENDER_SPEED);
+			}
+			shoot_button_timer->Reset();
+			shoot_button_timer->Start();
+		}
+		else if(shoot_button_timer->Get() >= 0.65) {
+			frc::DriverStation::ReportError(std::to_string(feeder->getBlenderSpeed()));
+			if(feeder->getBlenderSpeed() != (-BLENDER_SPEED)) {
+				feeder->setBlenderSpeed(-BLENDER_SPEED);
+				frc::DriverStation::ReportError("Flipping blender");
+			}
+		}
+		else {
+			if(feeder->getBlenderSpeed() != BLENDER_SPEED) {
+				feeder->setBlenderSpeed(BLENDER_SPEED);
+			}
+		}
+	}
+
+	else {
+		/*if(feeder->getBlenderSpeed() != 0.0) {
+			feeder->setBlenderSpeed(0.0);
+		}
+
+		if(feeder->getFeederSpeed() != 0.0) {
+			feeder->setFeederSpeed(0.0);
+		}*/
+		shoot_button_timer->Stop();
+		shoot_button_timer->Reset();
+		shoot_button_timer->Stop();
 	}
 
 
-	if(shoot_button_timer->Get() > SHOOT_BUTTON_TIME) {
+	/*if(shoot_button_timer->Get() > SHOOT_BUTTON_TIME) {
 		//frc::DriverStation::ReportError("Stopping timer: " + std::to_string(shoot_button_timer->Get()));
 		shoot_button_timer->Stop();
 		if(!button_box_1->GetRawButton(OIPorts::B_SHOOT)) {
@@ -209,7 +244,7 @@ void OI::process() {
 			feeder->setFeederSpeed(0.0);
 			shoot_button_timer->Reset();
 		}
-	}
+	}*/
 
 
 
@@ -230,7 +265,7 @@ void OI::process() {
 		}
 	}
 	else {
-		frc::DriverStation::ReportError("Stop");
+		//frc::DriverStation::ReportError("Stop");
 		mobility->stopTrackGear();
 	}
 
