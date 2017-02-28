@@ -142,11 +142,12 @@ public:
 		mobility->disableRotationPID();
 		shooter->disableAzimuthPID();
 		shooter->disableShooterPID();
+		shooter->stopAzimuthVisionTrack();
 
 		gear->disableCompressor();
 
 		if(auto_routine != nullptr) {
-			//auto_routine->end();
+			auto_routine->end();
 		}
 	}
 	void DisabledPeriodic(){
@@ -162,7 +163,7 @@ public:
 		Socket::PlaySelection selection = Socket::packetToSelection(packet);
 		switch (selection.play) {
 		case Utils::AutoPlay::CrossBaseline:
-			auto_routine = new CrossBaseline();
+			auto_routine = new CrossBaseline(selection.location);
 			break;
 		case Utils::AutoPlay::DeliverGear:
 			auto_routine = new DeliverGear(selection.location);
@@ -200,10 +201,18 @@ public:
 	}
 	void AutonomousInit() override {
 		try {
-			//Set the play here
-			auto_routine = new DeliverGear(Utils::AutoLocation::MiddleForward);
 
-			auto_routine->start();
+			mobility->turnDegrees(15);
+
+			/*if(vision->canSeeGearHook()) {
+				mobility->turnDegrees(vision->gearHookDegreesHorizontal());
+			}*/
+
+
+			//Set the play here
+			//auto_routine = new DeliverGear(Utils::AutoLocation::MiddleForward);
+
+			//auto_routine->start();
 
 			//timer = new Timer();
 
@@ -233,14 +242,14 @@ public:
 
 	void AutonomousPeriodic() {
 		try {
-			/*mobility->process();
+			mobility->process();
 			climber->process();
 			gear->process();
 			intake->process();
 			shooter->process();
-			diagnostics->process();*/
+			diagnostics->process();
 
-			auto_routine->process();
+			//auto_routine->process();
 
 			/*if(timer->HasPeriodPassed(input)) {
 				mobility->setStraightSpeed(0.0);
@@ -256,6 +265,7 @@ public:
 	void TeleopInit() {
 		try {
 			DisabledInit();
+			mobility->resetGyro();
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in TeleopInit\n%s", e->what());
 		}
@@ -269,7 +279,7 @@ public:
 			gear->process();
 			intake->process();
 			shooter->process();
-			diagnostics->process();
+			//diagnostics->process();
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in TeleopPeriodic\n%s", e->what());
 		}

@@ -93,6 +93,7 @@ namespace OIPorts
 	//Drive Joystick controls
 	const unsigned int B_DRIVE_STRAIGHT = 1;
 	const unsigned int B_ROTATE = 2;
+	const unsigned int B_TURN_TO_GEAR = 3;
 
 
 	//Button Box 1 controls
@@ -201,7 +202,7 @@ namespace Utils
 
 	const MotorType motor_type = MotorType::VictorSP;
 
-	frc::SpeedController* constructMotor(unsigned int port);;
+	frc::SpeedController* constructMotor(unsigned int port);
 }
 
 #endif /* SRC_PORTS_H_ */

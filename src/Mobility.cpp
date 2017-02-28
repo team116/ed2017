@@ -19,6 +19,10 @@ const float POSITION_CONSTANT = 104.46;
 const float DISTANCE_TO_FULL_SPEED = 104.8;// inches
 const float ONTARGET_TIME = 0.1;
 
+const float ROT_P = 0.05;
+const float ROT_I = 0.0;
+const float ROT_D = 0.06;
+
 //First num in point is distance in inches, second num in point is time in seconds
 const float DISTANCES_TO_TIMES[][2] = {{0, 0}, {4.8125, 0.1}, {11.6666, 0.2}, {18.6875, 0.3}, {35.75, 0.4}, {41.4583, 0.5},
 		{56.625, 0.6}, {65.5, 0.7}, {76.875, 0.8}, {95.0, 0.9}, {106.7083, 1.0}};
@@ -59,7 +63,7 @@ Mobility::Mobility() {
 	//PID controllers
 	rotation_output = new MobilityRotationPID(front_left, front_right, back_left, back_right);
 	rotation_output->Disable();
-	rotation_PID = new frc::PIDController(0.07, 0.0, 0.1, gyro, rotation_output);
+	rotation_PID = new frc::PIDController(0.05, 0.0, 0.06, gyro, rotation_output);
 	rotation_PID->Disable();
 	rotation_PID->SetContinuous(true);
 	rotation_PID->SetInputRange(-180, 180);
@@ -68,15 +72,19 @@ Mobility::Mobility() {
 	rotation_PID->SetAbsoluteTolerance(1.0);
 
 	distance_output = new MobilityDistanceOutput();
-	distance_PID = new frc::PIDController(0.26, 0, 0.6, encoders, distance_output);
+	distance_PID = new frc::PIDController(0.15, 0, 0.3, encoders, distance_output);
 	distance_PID->Disable();
 	distance_PID->SetContinuous(false);
-	distance_PID->SetInputRange(0, 650);
+	distance_PID->SetInputRange(-650, 650);
 	distance_PID->SetOutputRange(-1.0, 1.0);
 	distance_PID->SetPIDSourceType(PIDSourceType::kDisplacement);
 	distance_PID->SetAbsoluteTolerance(1.0);
 
-	LiveWindow::GetInstance()->AddActuator("Mobility", "Distance PID", distance_PID);
+	gear_track_input = new GearTracker();
+
+	tracking_gear = false;
+
+	LiveWindow::GetInstance()->AddActuator("Mobility", "Rotation PID", rotation_PID);
 
 	drive_distance_timer = new Timer();
 	turn_degrees_timer = new Timer();
@@ -96,11 +104,24 @@ void Mobility::process() {
 void Mobility::processDistance() {
 	if(use_left_drive_encoder || use_right_drive_encoder) {
 		if(distance_PID->OnTarget()) {
+			if(drive_distance_timer->Get() >= ONTARGET_TIME) {
+				frc::DriverStation::ReportError("Drive dist done");
+				stopDriveDistance();
+				setStraightSpeed(0.0);
+				setLeft(0.0);
+				setRight(0.0);
+				drive_distance_timer->Stop();
+				drive_distance_timer->Reset();
+			}
+			else if(drive_distance_timer->Get() <= 0.0) {
+				drive_distance_timer->Reset();
+				drive_distance_timer->Start();
+			}
 			frc::DriverStation::ReportError("On Target");
-			stopDriveDistance();
-			setStraightSpeed(0.0);
-			setLeft(0.0);
-			setRight(0.0);
+		}
+		else if(drive_distance_timer->Get() > 0.0) {
+			drive_distance_timer->Stop();
+			drive_distance_timer->Reset();
 		}
 	}
 	else {
@@ -270,7 +291,7 @@ bool Mobility::isDriveDistanceDone() {
 
 //Drive Straight
 void Mobility::startDriveStraight() {
-	frc::DriverStation::ReportError("Starting drive straight");
+	//frc::DriverStation::ReportError("Starting drive straight");
 	if(use_gyro) {
 		rotation_PID->SetSetpoint(gyro->GetYaw());
 		enableRotationPID();
@@ -418,6 +439,20 @@ void Mobility::resetGyro() {
 	gyro->Reset();
 }
 
+void Mobility::startTrackGear() {
+	rotation_PID = new frc::PIDController(ROT_P, ROT_I, ROT_D, gear_track_input, rotation_output);
+	tracking_gear = true;
+}
+
+bool Mobility::isTrackingGear() {
+	return tracking_gear;
+}
+
+void Mobility::stopTrackGear() {
+	rotation_PID = new frc::PIDController(ROT_P, ROT_I, ROT_D, gyro, rotation_output);
+	tracking_gear = false;
+}
+
 Mobility* Mobility::getInstance()
 {
 	if(INSTANCE == nullptr) {
@@ -443,4 +478,17 @@ void Mobility::MobilityDistanceOutput::Enable() {
 
 void Mobility::MobilityDistanceOutput::Disable() {
 	enabled = false;
+}
+
+Mobility::GearTracker::GearTracker() {
+	vision = Vision::getInstance();
+}
+
+double Mobility::GearTracker::PIDGet() {
+	if(vision->canSeeGearHook()) {
+		return vision->gearHookOffset();
+	}
+	else {
+		return 0.0;
+	}
 }

@@ -16,17 +16,17 @@ Feeder::Feeder() {
 }
 
 void Feeder::setFeederSpeed(float speed){
-	feeder->Set(speed);
+	feeder->Set(-speed);
 }
 
 void Feeder::setBlenderSpeed(float speed){
 	blender->Set(-speed);
 }
 float Feeder::getFeederSpeed() {
-	return feeder->Get();
+	return -feeder->Get();
 }
 float Feeder::getBlenderSpeed() {
-	return blender->Get();
+	return -blender->Get();
 }
 
 Feeder* Feeder::getInstance()

@@ -35,6 +35,8 @@ private:
 	frc::Joystick* button_box_1;
 	frc::Joystick* button_box_2;
 	frc::Joystick* button_box_3;
+
+	frc::Timer* shoot_button_timer;
 };
 
 #endif /* SRC_OI_H_ */
