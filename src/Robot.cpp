@@ -139,6 +139,7 @@ public:
 		gear->disableCompressor();
 
 		if(auto_routine != nullptr) {
+			frc::DriverStation::ReportError("Disabled Init ending routine");
 			auto_routine->end();
 		}
 	}
@@ -154,7 +155,7 @@ public:
 	void AutonomousInit() override {
 		try {
 
-			mobility->turnDegrees(15);
+			//mobility->turnDegrees(15);
 
 			/*if(vision->canSeeGearHook()) {
 				mobility->turnDegrees(vision->gearHookDegreesHorizontal());
@@ -162,9 +163,9 @@ public:
 
 
 			//Set the play here
-			//auto_routine = new DeliverGear(Utils::AutoLocation::MiddleForward);
+			auto_routine = new DeliverGear(Utils::AutoLocation::MiddleForward);
 
-			//auto_routine->start();
+			auto_routine->start();
 
 			//timer = new Timer();
 
@@ -201,7 +202,15 @@ public:
 			shooter->process();
 			diagnostics->process();
 
-			//auto_routine->process();
+			if(auto_routine != nullptr) {
+				if(auto_routine->isFinished()) {
+					auto_routine->end();
+					auto_routine = nullptr;
+					frc::DriverStation::ReportError("Ending routine in auto periodic");
+				} else {
+					auto_routine->process();
+				}
+			}
 
 			/*if(timer->HasPeriodPassed(input)) {
 				mobility->setStraightSpeed(0.0);
@@ -246,7 +255,7 @@ public:
 
 	void TestPeriodic() {
 		try {
-			TeleopPeriodic();
+			//TeleopPeriodic();
 			gear->enableCompressor();
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in TestPeriodic\n%s", e->what());

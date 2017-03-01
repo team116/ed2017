@@ -6,7 +6,7 @@
  */
 
 #include <AutoPlays/Routine.h>
-//#include <DriverStation.h>
+#include <DriverStation.h>
 
 void Routine::addAction(Action* action) {
 	actions.push(action);
@@ -29,13 +29,16 @@ void Routine::start() {
 }
 
 void Routine::process() {
+	frc::DriverStation::ReportError("routine process 1");
 	if(current_action != nullptr) {
 		//frc::DriverStation::ReportError("timeout: " + std::to_string(current_action->getTimeout()) + " current: " + std::to_string(timeout_timer->Get()));
 		bool timed_out = (current_action->getTimeout() > 0.0) && (timeout_timer->Get() >= current_action->getTimeout());
 		//frc::DriverStation::ReportError("Timed out: " + std::to_string(timed_out));
+		frc::DriverStation::ReportError("routine process 2");
 		if(current_action->isFinished() || timed_out) {
 			current_action->end();
 			if(!actions.empty()) {
+				frc::DriverStation::ReportError("popping next action");
 				current_action = actions.front();
 				actions.pop();
 				current_action->start();
@@ -54,13 +57,14 @@ void Routine::process() {
 }
 
 void Routine::end() {
+	frc::DriverStation::ReportError("End Routine 1");
 	if(current_action != nullptr) {
 		current_action->end();
 	}
 	current_action = nullptr;
 
 	timeout_timer->Stop();
-
+	frc::DriverStation::ReportError("End Routine 2");
 }
 
 

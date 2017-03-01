@@ -24,8 +24,8 @@ DeliverGear::DeliverGear(Utils::AutoLocation location) {
 		}
 		else if (location == Utils::AutoLocation::MiddleForward) {
 			frc::DriverStation::ReportError("Doing middle forward");
-			addAction(new DriveStraight(70.0, 0.75));
-			addAction(new DriveStraight(27.5, 0.25));
+			addAction(new DriveStraight(60.0, 0.75));
+			addAction(new DriveStraight(15.0, 0.25));
 			addAction(new DropGear());
 			addAction(new DriveStraight(-12.0, 0.25));
 			addAction(new CloseGearHolder());

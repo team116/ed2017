@@ -41,7 +41,7 @@ float MobilityEncoder::getRightEncoderRates() {
 }
 
 double MobilityEncoder::PIDGet() {
-	frc::DriverStation::ReportError("Left: " + std::to_string(left_drive_encoder->GetDistance()) + " Right: "  + std::to_string(right_drive_encoder->GetDistance()));
+	//frc::DriverStation::ReportError("Left: " + std::to_string(left_drive_encoder->GetDistance()) + " Right: "  + std::to_string(right_drive_encoder->GetDistance()));
 	if(use_left_enc && use_right_enc)
 		return ((left_drive_encoder->GetDistance() + right_drive_encoder->GetDistance()) / 2);
 	else if(use_left_enc && !use_right_enc)
