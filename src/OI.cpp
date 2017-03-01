@@ -14,8 +14,8 @@ const float CLIMB_SPEED = 1.0;
 const float SHOOTER_SPEED = -1.0;
 const float INTAKE_SPEED = 1.0;
 const float OPPOSITE_INTAKE_SPEED = -1.0;
-const float BLENDER_SPEED = 1.0;
-const float BLENDER_REVERSE_SPEED = -1.0;
+const float BLENDER_SPEED = 0.75;
+const float BLENDER_REVERSE_SPEED = -0.75;
 const float FEEDER_SPEED = 1.0;
 const float FEEDER_REVERSE_SPEED = -1.0;
 
@@ -130,7 +130,7 @@ void OI::process() {
 		speed = std::stof(SmartDashboard::GetString("DB/String 0", std::to_string(0.0)));
 		shooter->setShooterSpeed(speed);
 		//shooter->setShooterRPM(speed);
-		frc::DriverStation::ReportError("Shooter on " + std::to_string(speed));
+		//frc::DriverStation::ReportError("Shooter on " + std::to_string(speed));
 	}
 	else if (!button_box_1->GetRawButton(OIPorts::S2_SHOOTER_WHEELS_TOGGLE) && (00 != shooter->getSpeed())) {
 		shooter->setShooterSpeed(0);
@@ -229,8 +229,8 @@ void OI::process() {
 		}
 		else if(shoot_button_timer->Get() >= 0.65) {
 			frc::DriverStation::ReportError(std::to_string(feeder->getBlenderSpeed()));
-			if(feeder->getBlenderSpeed() != (-BLENDER_SPEED)) {
-				feeder->setBlenderSpeed(-BLENDER_SPEED);
+			if(feeder->getBlenderSpeed() != (BLENDER_REVERSE_SPEED)) {
+				feeder->setBlenderSpeed(BLENDER_REVERSE_SPEED);
 				frc::DriverStation::ReportError("Flipping blender");
 			}
 		}
