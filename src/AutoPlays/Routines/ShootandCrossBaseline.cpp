@@ -13,7 +13,7 @@
 #include <Vision.h>
 
 ShootandCrossBaseline::ShootandCrossBaseline(Utils::Alliance color, Utils::AutoLocation location) {
-	if (Vision::getInstance()->canSeeHighGoal()) {
+	//if (Vision::getInstance()->canSeeHighGoal()) {
 		if (color == Utils::Alliance::Blue) {
 			if (location == Utils::AutoLocation::LeftTurntPositive) {
 				addAction(new AimShooterVision());

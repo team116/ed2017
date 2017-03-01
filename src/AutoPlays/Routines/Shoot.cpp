@@ -13,7 +13,7 @@
 #include "AutoPlays/Actions/ShootShooter.h"
 
 Shoot::Shoot(Utils::Alliance color, Utils::AutoLocation location) {
-	if (Vision::getInstance()->canSeeGearHook()) {
+	//if (Vision::getInstance()->canSeeGearHook()) {
 		if (color == Utils::Alliance::Blue) {
 			if (location == Utils::AutoLocation::LeftTurntPositive) {
 				addAction(new AimShooterVision());		//will needs to finish the aiming functions before this can work
