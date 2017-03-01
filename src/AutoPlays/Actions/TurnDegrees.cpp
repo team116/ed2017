@@ -10,6 +10,7 @@
 TurnDegrees::TurnDegrees(float ang) {
 	mobility =Mobility::getInstance();
 	angle = ang;
+	setTimeout(2.5); //Random guess
 }
 
 void TurnDegrees::start() {
