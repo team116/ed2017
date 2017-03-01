@@ -11,10 +11,12 @@
 #include <AutoPlays/Action.h>
 #include <Mobility.h>
 #include <Shooter.h>
+#include <Timer.h>
 
 class AimShooterManual: public Action {
 public:
-	AimShooterManual();
+	AimShooterManual(float speed = 0.43);
+
 	void start();
 
 	void process();
@@ -25,6 +27,7 @@ public:
 
 private:
 	Shooter* shooter;
+	float speed;
 };
 
 #endif /* SRC_AUTOPLAYS_ACTIONS_AIMSHOOTERMANUAL_H_ */

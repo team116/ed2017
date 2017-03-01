@@ -7,11 +7,12 @@
 
 #include <AutoPlays/Actions/AimShooterManual.h>
 
-AimShooterManual::AimShooterManual() {
+AimShooterManual::AimShooterManual(float speed) {
 	shooter = Shooter::getInstance();
+	setTimeout (10.0);
 }
 void AimShooterManual::start() {
-
+	shooter->setShooterSpeed(speed);
 }
 void AimShooterManual::process() {
 

@@ -16,32 +16,44 @@ Shoot::Shoot(Utils::Alliance color, Utils::AutoLocation location) {
 	//if (Vision::getInstance()->canSeeGearHook()) {
 		if (color == Utils::Alliance::Blue) {
 			if (location == Utils::AutoLocation::LeftTurntPositive) {
-				addAction(new AimShooterVision());		//will needs to finish the aiming functions before this can work
-				addAction(new ShootShooter(15.0));
+				//addAction(new AimShooterVision());		//will needs to finish the aiming functions before this can work
+				//addAction(new ShootShooter(15.0));
+				addAction (new DriveStraight(-58.0));
+				addAction(new AimShooterManual());
 			}
 			else if (location == Utils::AutoLocation::MiddleTurntPositive) {
-				addAction(new AimShooterVision());
-				addAction(new ShootShooter(15.0));
+				//addAction(new AimShooterVision());
+				//addAction(new ShootShooter(15.0));
+				addAction (new DriveStraight(-146.0));
+				addAction(new AimShooterManual());
 			}
 			else if (location == Utils::AutoLocation::RightTurntPositive) {
-				addAction(new AimShooterVision());
-				addAction(new ShootShooter(15.0));
+				//addAction(new AimShooterVision());
+				//addAction(new ShootShooter(15.0));
+				addAction(new DriveStraight(-243.0));
+				addAction(new AimShooterManual());
 			}
 		}
-		else {
+		else if (color == Utils::Alliance::Red){
 			if (location == Utils::AutoLocation::LeftTurntNegative) {
-				addAction(new AimShooterVision());
-				addAction(new ShootShooter(15.0));
+				//addAction(new AimShooterVision());
+				//addAction(new ShootShooter(15.0));
+				addAction(new DriveStraight(-243.0));
+				addAction(new AimShooterManual());
 			}
 			else if (location == Utils::AutoLocation::MiddleTurntNegative) {
-				addAction(new AimShooterVision());
-				addAction(new ShootShooter(15.0));
+				//addAction(new AimShooterVision());
+				//addAction(new ShootShooter(15.0));
+				addAction(new DriveStraight(-146.0));
+				addAction(new AimShooterManual());
 			}
 			else if (location == Utils::AutoLocation::RightTurntNegative) {
-				addAction(new AimShooterVision());
-				addAction(new ShootShooter(15.0));
+				//addAction(new AimShooterVision());
+				//addAction(new ShootShooter(15.0));
+				addAction(new DriveStraight(-58.0));
+				addAction(new AimShooterManual());
 			}
 		}
 	}
-}
+
 
