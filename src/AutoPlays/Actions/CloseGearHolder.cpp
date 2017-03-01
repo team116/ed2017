@@ -6,28 +6,23 @@
  */
 
 #include <AutoPlays/Actions/CloseGearHolder.h>
+#include <DriverStation.h>
 
 CloseGearHolder::CloseGearHolder() {
 	gear = Gear::getInstance();
+
+	setTimeout(0.5);
 }
 void CloseGearHolder::start() {
+	frc::DriverStation::ReportError("Starting close gear holder");
 	gear->close();
-	close_gear_timer->Start();
 }
 void CloseGearHolder::process() {
 
 }
 void CloseGearHolder::end() {
-
+	frc::DriverStation::ReportError("Ending close gear holder");
 }
 bool CloseGearHolder::isFinished() {
-	if (close_gear_timer->HasPeriodPassed(0.5)) {
-		return (true);
-	}
-	else {
-		return (false);
-	}
-		close_gear_timer->Stop();
-		close_gear_timer->Reset();
-
+	return false;
 }

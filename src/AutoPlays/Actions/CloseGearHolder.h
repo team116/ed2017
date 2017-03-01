@@ -25,7 +25,6 @@ public:
 
 private:
 	Gear* gear;
-	Timer* close_gear_timer;
 	float close_gear_time;
 };
 
