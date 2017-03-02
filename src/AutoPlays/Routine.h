@@ -11,11 +11,12 @@
 #include <AutoPlays/Action.h>
 #include <queue>
 #include <Timer.h>
+#include "Log.h"
 
 class Routine {
 public:
 	//Constructor. Make sure to push the actions into the action queue
-	Routine() {};
+	Routine();
 
 	//Called once when the routine starts
 	void start();
@@ -39,6 +40,9 @@ private:
 	Action* current_action;
 
 	frc::Timer* timeout_timer;
+
+protected:
+	Log* log;
 };
 
 

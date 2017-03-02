@@ -130,6 +130,7 @@ public:
 	void DisabledInit() {
 		mobility->stopDriveStraight();
 		mobility->stopDriveDistance();
+		mobility->stopTurnDegrees();
 		mobility->disableDistancePID();
 		mobility->disableRotationPID();
 		shooter->disableAzimuthPID();
@@ -139,7 +140,7 @@ public:
 		gear->disableCompressor();
 
 		if(auto_routine != nullptr) {
-			frc::DriverStation::ReportError("Disabled Init ending routine");
+			log->write(Log::TRACE_LEVEL, "Disabled Init ending routine");
 			auto_routine->end();
 		}
 	}
@@ -206,7 +207,7 @@ public:
 				if(auto_routine->isFinished()) {
 					auto_routine->end();
 					auto_routine = nullptr;
-					frc::DriverStation::ReportError("Ending routine in auto periodic");
+					log->write(Log::TRACE_LEVEL, "Ending routine in auto periodic");
 				} else {
 					auto_routine->process();
 				}

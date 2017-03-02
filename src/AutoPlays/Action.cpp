@@ -7,6 +7,10 @@
 
 #include "Action.h"
 
+Action::Action() {
+	log = Log::getInstance();
+}
+
 void Action::setTimeout(float time) {
 	timeout = time;
 }

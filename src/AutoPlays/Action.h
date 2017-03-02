@@ -8,8 +8,12 @@
 #ifndef SRC_AUTOPLAYS_ACTION_H_
 #define SRC_AUTOPLAYS_ACTION_H_
 
+#include "Log.h"
+
 class Action {
 public:
+	Action();
+
 	//Called once when the routine starts
 	virtual void start() = 0;
 
@@ -27,6 +31,9 @@ public:
 
 private:
 	float timeout = -1.0;
+
+protected:
+	Log* log;
 };
 
 

@@ -13,14 +13,14 @@ DropGear::DropGear() {
 	setTimeout(1.0);
 }
 void DropGear::start() {
-	frc::DriverStation::ReportError("Opening gear");
+	log->write(Log::INFO_LEVEL, "[Action] Starting Drop Gear");
 	gear->open();
 }
 void DropGear::process() {
 
 }
 void DropGear::end() {
-	frc::DriverStation::ReportError("Ending open gear");
+	log->write(Log::INFO_LEVEL, "[Action] Ending Drop Gear");
 }
 bool DropGear::isFinished() {
 	return false;

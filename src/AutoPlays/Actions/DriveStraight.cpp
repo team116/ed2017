@@ -17,7 +17,7 @@ DriveStraight::DriveStraight(float dis, float s) {
 }
 
 void DriveStraight::start() {
-	frc::DriverStation::ReportError("Starting Drive Straight: " + std::to_string(distance) + "," + std::to_string(speed));
+	log->write(Log::INFO_LEVEL, "[Action] Starting Drive Straight. Distance: %f Speed %f Timeout: %f", distance, speed, getTimeout());
 	mobility->StartDriveDistance(distance, speed);
 }
 void DriveStraight::process() {
@@ -25,8 +25,8 @@ void DriveStraight::process() {
 }
 
 void DriveStraight::end() {
-	frc::DriverStation::ReportError("Ending Drive Straight: " + std::to_string(distance) + "," + std::to_string(speed));
 	mobility->stopDriveDistance();
+	log->write(Log::INFO_LEVEL, "[Action] Drive Straight Ended. Distance: %f Speed %f Timeout: %f", distance, speed, getTimeout());
 }
 bool DriveStraight::isFinished() {
 	return mobility->isDriveDistanceDone();
