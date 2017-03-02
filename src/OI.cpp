@@ -159,11 +159,11 @@ void OI::process() {
 	if(shoot_button_timer->Get() <= 0.0) {
 		if (button_box_2->GetRawButton(OIPorts::S3_BLENDER_FORWARD) && (BLENDER_SPEED != feeder->getBlenderSpeed())) {
 			feeder->setBlenderSpeed(BLENDER_SPEED);
-			frc::DriverStation::ReportError("Blending forward");
+			//frc::DriverStation::ReportError("Blending forward");
 		}
 		else if (button_box_2->GetRawButton(OIPorts::S3_BLENDER_REVERSE) && (BLENDER_REVERSE_SPEED != feeder->getBlenderSpeed())) {
 			feeder->setBlenderSpeed(BLENDER_REVERSE_SPEED);
-			frc::DriverStation::ReportError("Blender reverse");
+			//frc::DriverStation::ReportError("Blender reverse");
 		}
 		else if (feeder->getBlenderSpeed() != 0.0) {
 			feeder->setBlenderSpeed(0.0);
@@ -209,7 +209,7 @@ void OI::process() {
 
 
 	if(button_box_1->GetRawButton(OIPorts::B_SHOOT)) {
-		frc::DriverStation::ReportError("Time: " + std::to_string(shoot_button_timer->Get()));
+		//frc::DriverStation::ReportError("Time: " + std::to_string(shoot_button_timer->Get()));
 		if(shoot_button_timer->Get() <= 0.0) {
 			shoot_button_timer->Reset();
 			shoot_button_timer->Start();
@@ -228,10 +228,10 @@ void OI::process() {
 			shoot_button_timer->Start();
 		}
 		else if(shoot_button_timer->Get() >= 0.65) {
-			frc::DriverStation::ReportError(std::to_string(feeder->getBlenderSpeed()));
+			//frc::DriverStation::ReportError(std::to_string(feeder->getBlenderSpeed()));
 			if(feeder->getBlenderSpeed() != (BLENDER_REVERSE_SPEED)) {
 				feeder->setBlenderSpeed(BLENDER_REVERSE_SPEED);
-				frc::DriverStation::ReportError("Flipping blender");
+				//frc::DriverStation::ReportError("Flipping blender");
 			}
 		}
 		else {
