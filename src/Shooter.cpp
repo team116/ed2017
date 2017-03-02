@@ -68,7 +68,7 @@ void Shooter::process() {
 	//az_enc->process();
 	//frc::DriverStation::ReportError("Limit Switch: " + std::to_string(azimuth_limit_switch->Get()) + " Azimuth: " + std::to_string(azimuth_encoder->Get()) + " Speed: " + std::to_string(shooter->GetSpeed()));
 	//frc::DriverStation::ReportError("Raw AZ: " + std::to_string(azimuth_encoder->Get()) + " Adjusted AZ: " + std::to_string(az_enc->getAngle()));
-	//frc::DriverStation::ReportError("Shooter: " + std::to_string(shooter->PIDGet()));
+	//frc::DriverStation::ReportError("Shooter: " + std::to_string(shooter->GetEncVel()) + ", " + std::to_string(shooter->GetSpeed()));
 }
 
 float Shooter::getShooterEncoderRate() {
@@ -210,6 +210,9 @@ double Shooter::AzimuthVisionTracker::PIDGet() {
 Shooter::ShooterSpeed::ShooterSpeed() : CANTalon(RobotPorts::MOTOR_SHOOTER_WHEEL) {
 	SetFeedbackDevice(CANTalon::FeedbackDevice::EncRising);
 	ConfigEncoderCodesPerRev(1);
+
+	SetVelocityMeasurementPeriod(CANTalon::VelocityMeasurementPeriod::Period_100Ms);
+	SetVelocityMeasurementWindow(64);
 	//SetControlMode(CANSpeedController::ControlMode::kSpeed);
 	//SelectProfileSlot(0);
 }
