@@ -24,7 +24,7 @@ namespace RobotPorts
 	const unsigned int MOTOR_CLIMBER_RIGHT = 6;
 	const unsigned int MOTOR_SHOOTER_AZIMUTH = 7;
 	const unsigned int MOTOR_INTAKE = 8;
-	const unsigned int SERVO_CONVERTER = 9;
+	const unsigned int SERVO_AGITATOR = 9;
 	const unsigned int MOTOR_BLENDER = 10;//N0*/
 
 	//ANDERSON BOT PORTS

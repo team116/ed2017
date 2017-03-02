@@ -12,7 +12,7 @@ Converter* Converter::INSTANCE = nullptr;
 
 Converter::Converter() {
 	is_open = false;
-	servo_converter = new frc::Servo(RobotPorts::SERVO_CONVERTER);
+	servo_converter = new frc::Servo(RobotPorts::SERVO_AGITATOR);
 }
 
 void Converter::openServoConverter() {

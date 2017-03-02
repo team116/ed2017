@@ -13,6 +13,8 @@ Feeder* Feeder::INSTANCE = nullptr;
 Feeder::Feeder() {
 	feeder = Utils::constructMotor(RobotPorts::MOTOR_SHOOTER_FEEDER);
 	blender = Utils::constructMotor(RobotPorts::MOTOR_BLENDER);
+
+	alligator = new frc::Servo(RobotPorts::SERVO_AGITATOR);//agitator
 }
 
 void Feeder::setFeederSpeed(float speed){
@@ -27,6 +29,14 @@ float Feeder::getFeederSpeed() {
 }
 float Feeder::getBlenderSpeed() {
 	return -blender->Get();
+}
+
+void Feeder::setAgitatorAngle(float angle) {
+	alligator->SetAngle(angle);
+}
+
+float Feeder::getAgitatorAngle() {
+	return alligator->GetAngle();
 }
 
 Feeder* Feeder::getInstance()
