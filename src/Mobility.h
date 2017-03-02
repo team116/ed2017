@@ -70,6 +70,7 @@ public:
 	 * Degrees ranges from -180 to 180
 	 */
 	void turnDegrees(float degrees);
+	void stopTurnDegrees();
 	bool isTurnDegreesDone();
 
 	void StartDriveDistance(float distance, float speed = 1.0);

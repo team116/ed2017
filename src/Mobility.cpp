@@ -145,12 +145,7 @@ void Mobility::processTurningDegrees() {
 				turn_degrees_timer->Start();
 			}
 			else if(turn_degrees_timer->Get() >= ONTARGET_TIME) {
-				disableRotationPID();
-				is_turn_degrees_on = false;
-				setLeft(0);
-				setRight(0);
-				turn_degrees_timer->Stop();
-				turn_degrees_timer->Reset();
+				stopTurnDegrees();
 				frc::DriverStation::ReportError("Turn Degrees done");
 			}
 		}
@@ -161,12 +156,7 @@ void Mobility::processTurningDegrees() {
 	}
 	else {
 		if(turn_degrees_timer->HasPeriodPassed(turn_deg_time)) {
-			setLeft(0.0);
-			setRight(0.0);
-			is_turn_degrees_on = false;
-			turn_degrees_timer->Stop();
-			turn_degrees_timer->Reset();
-			turn_deg_time = 0.0;
+			stopTurnDegrees();
 		}
 	}
 }
@@ -365,6 +355,16 @@ void Mobility::turnDegrees(float degrees) {
 		turn_degrees_timer->Reset();
 		turn_degrees_timer->Start();
 	}
+}
+
+void Mobility::stopTurnDegrees() {
+	disableRotationPID();
+	is_turn_degrees_on = false;
+	setLeft(0);
+	setRight(0);
+	turn_degrees_timer->Stop();
+	turn_degrees_timer->Reset();
+	turn_deg_time = 0.0;
 }
 
 void Mobility::disableRotationPID() {
