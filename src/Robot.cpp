@@ -163,7 +163,7 @@ public:
 
 
 			//Set the play here
-			auto_routine = new DeliverGear(Utils::AutoLocation::MiddleForward);
+			auto_routine = new DeliverGear(Utils::AutoLocation::RightForward);
 
 			auto_routine->start();
 
