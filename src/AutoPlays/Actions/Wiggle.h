@@ -14,7 +14,7 @@
 
 class Wiggle: public Action {
 public:
-	Wiggle();
+	Wiggle(float time);
 	void start();
 
 	void process();
