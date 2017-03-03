@@ -10,13 +10,13 @@
 #include "AutoPlays/Actions/TurnDegrees.h"
 
 CrossBaseline::CrossBaseline(Utils::AutoLocation location) {
-	if (location == Utils::AutoLocation::LeftForward) {
+	if (location == Utils::AutoLocation::Boiler) {				//previously leftforward
 		addAction(new DriveStraight(131.0));
 	}
-	else if (location == Utils::AutoLocation::MiddleForward) {
+	else if (location == Utils::AutoLocation::Middle) {
 		addAction(new DriveStraight(96.0));
 	}
-	else if (location == Utils::AutoLocation::RightForward) {
+	else if (location == Utils::AutoLocation::LoadingStation) {		//previously rightforward
 		addAction(new DriveStraight(131.0));
 	}
 }
