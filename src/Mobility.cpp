@@ -138,6 +138,10 @@ void Mobility::processDistance() {
 	}
 }
 
+float Mobility::getDistanceError() {
+	return distance_PID->GetError();
+}
+
 void Mobility::processTurningDegrees() {
 	if(use_gyro) {
 		if (rotation_PID->OnTarget()) {
@@ -205,6 +209,10 @@ void Mobility::StartDriveDistance(float distance, float speed) {
 		startDriveStraight();
 		setStraightSpeed(1.0);
 	}
+}
+
+void Mobility::setDistancePIDOutputRange(float min, float max) {
+	distance_PID->SetOutputRange(min, max);
 }
 
 void Mobility::stopDriveDistance() {

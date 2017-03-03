@@ -82,6 +82,7 @@ public:
 	void disableDistancePID();
 	void enableDistancePID();
 	bool isDistancePIDEnabled();
+	void setDistancePIDOutputRange(float min, float max);
 
 	void disableRotationPID();
 	void enableRotationPID();
@@ -113,6 +114,8 @@ public:
 	bool isGyroEnabled();
 
 	void resetGyro();
+
+	float getDistanceError();
 
 private:
 	Mobility();
