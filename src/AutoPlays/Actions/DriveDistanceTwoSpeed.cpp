@@ -36,5 +36,5 @@ void DriveDistanceTwoSpeed::end() {
 }
 
 bool DriveDistanceTwoSpeed::isFinished() {
-
+	return mobility->isDriveDistanceDone();
 }
