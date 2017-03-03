@@ -15,9 +15,9 @@
 DeliverGear::DeliverGear(Utils::AutoLocation location) {
 	//if (Vision::getInstance()->canSeeGearHook()) {
 		if (location == Utils::AutoLocation::LeftForward) { 		//these numbers have all been calculated
-			addAction(new DriveStraight(45.0, 0.75));
-			addAction(new TurnDegrees(50.0));
-			addAction(new DriveStraight(80.0, 0.75));
+			addAction(new DriveStraight(51.0, 0.75));
+			addAction(new TurnDegrees(56.0));
+			addAction(new DriveStraight(55.0, 0.75));
 			addAction(new DriveStraight(30.0, 0.25));
 			addAction(new DropGear());
 			addAction(new DriveStraight(-12.0, 0.25));
