@@ -10,10 +10,13 @@
 
 #include <VictorSP.h>
 #include <Servo.h>
+#include <Timer.h>
 
 class Feeder {
 public:
 	static Feeder* getInstance();
+
+	void process();
 
 	//Feeder
 	void setFeederSpeed(float speed);
@@ -35,6 +38,10 @@ private:
 	frc::SpeedController* feeder;
 
 	frc::Servo* alligator; //agitator
+
+	bool run_alligator;
+	bool alligator_high;
+	frc::Timer* alligator_timer;
 };
 
 #endif /* SRC_FEEDER_H_ */

@@ -8,6 +8,7 @@
 #include <Mobility.h>
 #include <OI.h>
 #include <Shooter.h>
+#include <Feeder.h>
 #include <Vision.h>
 #include "Diagnostics.h"
 #include "Log.h"
@@ -27,6 +28,7 @@ private:
 	Mobility* mobility;
 	OI* oi;
 	Shooter* shooter;
+	Feeder* feeder;
 	Vision* vision;
 	Diagnostics* diagnostics;
 	Log* log;
@@ -108,6 +110,14 @@ public:
 		log->write(Log::DEBUG_LEVEL, "Shooter Initialized");
 
 		try {
+			feeder = Feeder::getInstance();
+		} catch(std::exception* e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Feeder\n%s", e->what());
+		}
+
+		log->write(Log::DEBUG_LEVEL, "Feeder Initialized");
+
+		try {
 			vision = Vision::getInstance();
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error initializing Vision\n%s", e->what());
@@ -125,6 +135,8 @@ public:
 
 		mobility->disableRightEncoder();
 		mobility->enableLeftEncoder();
+
+		NetworkTable::GetTable("SmartDashboard")->PutString("testkey", "team 116");
 	}
 
 	void DisabledInit() {
@@ -201,6 +213,7 @@ public:
 			gear->process();
 			intake->process();
 			shooter->process();
+			feeder->process();
 			diagnostics->process();
 
 			if(auto_routine != nullptr) {
@@ -241,6 +254,7 @@ public:
 			gear->process();
 			intake->process();
 			shooter->process();
+			feeder->process();
 			//diagnostics->process();
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in TeleopPeriodic\n%s", e->what());
