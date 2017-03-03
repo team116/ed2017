@@ -28,7 +28,7 @@ void Routine::start() {
 		timeout_timer->Start();
 	}
 	else {
-		log->write(Log::TRACE_LEVEL, "[Routine] Routine is empty; Cannot start");
+		log->write(Log::WARNING_LEVEL, "[Routine] Routine is empty; Cannot start");
 		current_action = nullptr;
 	}
 }
@@ -39,13 +39,13 @@ void Routine::process() {
 		if(current_action->isFinished() || timed_out) {
 			current_action->end();
 			if(!actions.empty()) {
-				log->write(Log::TRACE_LEVEL, (timed_out ? "[Routine] Action timed out, moving to next action (%f actions left)" : "[Routine] Action finished, moving to next action (%f actions left)"), actions.size());
+				log->write((timed_out ? Log::WARNING_LEVEL : Log::INFO_LEVEL), (timed_out ? "[Routine] Action timed out, moving to next action (%f actions left)" : "[Routine] Action finished, moving to next action (%f actions left)"), actions.size());
 				current_action = actions.front();
 				actions.pop();
 				current_action->start();
 			}
 			else {
-				log->write(Log::TRACE_LEVEL, (timed_out ? "[Routine] Action timed out, no more actions" : "[Routine] Action finished, no more actions"));
+				log->write((timed_out ? Log::WARNING_LEVEL : Log::INFO_LEVEL), (timed_out ? "[Routine] Action timed out, no more actions" : "[Routine] Action finished, no more actions"));
 				current_action = nullptr;
 			}
 
