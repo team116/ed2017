@@ -171,9 +171,9 @@ namespace Utils
 		CANTalonSRX
 	};
 	enum AutoLocation {
-		LeftForward,		//forward = gear is facing away from alliance wall
-		MiddleForward,
-		RightForward,
+		Boiler,		//forward = gear is facing away from alliance wall, previously leftforward
+		Middle,
+		LoadingStation,
 		LeftTurntPositive,			//turnt = gear is facing away from boiler
 		MiddleTurntPositive,
 		RightTurntPositive,		//negative and positive refer to which way the GEAR is facing

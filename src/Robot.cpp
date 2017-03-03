@@ -166,7 +166,7 @@ public:
 		try {
 
 			//Set the play here
-			auto_routine = new DeliverGear(Utils::AutoLocation::MiddleForward);
+			auto_routine = new DeliverGear(Utils::Alliance::Blue, Utils::AutoLocation::Middle);
 
 			auto_routine->start();
 
