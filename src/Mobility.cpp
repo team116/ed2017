@@ -214,6 +214,8 @@ void Mobility::stopDriveDistance() {
 	drive_dist_time = 0.0;
 	stopDriveStraight();
 	disableDistancePID();
+	setLeft(0.0);
+	setRight(0.0);
 }
 
 float Mobility::estimateTimeFromPoints(const float points[][2], int size, float distance) {
