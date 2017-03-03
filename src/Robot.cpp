@@ -136,7 +136,7 @@ public:
 		mobility->disableRightEncoder();
 		mobility->enableLeftEncoder();
 
-		NetworkTable::GetTable("SmartDashboard")->PutString("testkey", "team 116");
+		//NetworkTable::GetTable("SmartDashboard")->PutString("testkey", "team 116");
 	}
 
 	void DisabledInit() {
@@ -157,49 +157,18 @@ public:
 		}
 	}
 	void DisabledPeriodic(){
-		shooter->process();
 		/*int AP = socket->process();
 		if(AP == -1){
 			return;
 		}*/
-
-		//frc::DriverStation::ReportError(std::to_string(mobility->getGyroAngle()));
 	}
 	void AutonomousInit() override {
 		try {
-
-			//mobility->turnDegrees(15);
-
-			/*if(vision->canSeeGearHook()) {
-				mobility->turnDegrees(vision->gearHookDegreesHorizontal());
-			}*/
-
 
 			//Set the play here
 			auto_routine = new DeliverGear(Utils::AutoLocation::MiddleForward);
 
 			auto_routine->start();
-
-			//timer = new Timer();
-
-			//input = std::stof(SmartDashboard::GetString("DB/String 0", "0.0"));
-			/*timer->Reset();
-			timer->Start();
-			mobility->startDriveStraight();
-			mobility->setStraightSpeed(1.0);*/
-			//mobility->disableLeftEncoder();
-			//mobility->disableRightEncoder();
-			//mobility->StartDriveDistance(24);
-
-			//Sensor turn degrees
-			//mobility->turnDegrees(15);
-
-			//No sensor turn degrees tuning
-			/*timer->Reset();
-			timer->Start();
-			mobility->resetGyro();
-			mobility->setLeft(1.0);
-			mobility->setRight(-1.0);*/
 
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in AutonomousInit\n%s", e->what());
@@ -226,12 +195,6 @@ public:
 				}
 			}
 
-			/*if(timer->HasPeriodPassed(input)) {
-				mobility->setStraightSpeed(0.0);
-				mobility->setLeft(0.0);
-				mobility->setRight(0.0);
-				frc::DriverStation::ReportError("Angle: " + std::to_string(mobility->getGyroAngle()));
-			}*/
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in AutonomousPeriodic\n%s", e->what());
 		}
