@@ -26,7 +26,7 @@ DeliverGear::DeliverGear(Utils::Alliance color, Utils::AutoLocation location) {
 			}
 		addAction(new DriveStraight(65.0, 0.75));
 		addAction(new DriveStraight(12.0, 0.25));
-		addAction(new Wiggle(3.0));
+		addAction(new Wiggle(color, location, 3.0));
 		addAction(new DropGear());
 		addAction(new DriveStraight(-12.0, 0.25));
 		addAction(new DriveStraight(-24.0, 0.75));
@@ -36,14 +36,14 @@ DeliverGear::DeliverGear(Utils::Alliance color, Utils::AutoLocation location) {
 		frc::DriverStation::ReportError("Doing middle forward");
 		addAction(new DriveStraight(49.0, 0.75));
 		addAction(new DriveStraight(12.0, 0.25));
-		addAction(new Wiggle(3.0));
+		addAction(new Wiggle(color, location, 3.0));
 		addAction(new DropGear());
 		addAction(new DriveStraight(-12.0, 0.25));
 		addAction(new DriveStraight(-24.0, 0.75));
 		addAction(new CloseGearHolder());
 	}
 	else if (location == Utils::AutoLocation::LoadingStation) {
-		addAction(new DriveStraight(70.0, 0.75));
+		addAction(new DriveStraight(64.0, 0.75));
 			if (color == Utils::Alliance::Blue) {
 				addAction(new TurnDegrees(-60.0));
 			}
@@ -52,7 +52,7 @@ DeliverGear::DeliverGear(Utils::Alliance color, Utils::AutoLocation location) {
 			}
 		addAction(new DriveStraight(45.0, 0.75));
 		addAction(new DriveStraight(12.0, 0.25));
-		addAction(new Wiggle(3.0));
+		addAction(new Wiggle(color, location, 3.0));
 		addAction(new DropGear());
 		addAction(new DriveStraight(-12.0, 0.25));
 		addAction(new DriveStraight(-24.0, 0.75));
