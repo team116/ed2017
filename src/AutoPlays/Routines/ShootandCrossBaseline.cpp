@@ -14,56 +14,56 @@
 #include "AutoPlays/Actions/AimShooterManual.h"
 
 ShootandCrossBaseline::ShootandCrossBaseline(Utils::Alliance color, Utils::AutoLocation location) {
-	//if (Vision::getInstance()->canSeeHighGoal()) {
+	//if (Vision::getInstance()->canSeeHighGoal()) {		//need to add steps
 		if (color == Utils::Alliance::Blue) {
-			if (location == Utils::AutoLocation::LeftTurntPositive) {
+			if (location == Utils::AutoLocation::Boiler) {		//previously leftturntpositive
 				//addAction(new AimShooterVision());
 				//addAction(new ShootShooter(10.0));
-				addAction (new DriveStraight(-58.0));
+				addAction (new DriveStraight(5.0));
 				addAction(new AimShooterManual());
-				addAction(new TurnDegrees(-45.0));
+				addAction(new TurnDegrees(50.0));
 				addAction(new DriveStraight(90.0));
 			}
-			else if (location == Utils::AutoLocation::MiddleTurntPositive) {
+			else if (location == Utils::AutoLocation::Middle) {	//previously middleturntpositive
 				//addAction(new AimShooterVision());
 				//addAction(new ShootShooter(10.0));
-				addAction (new DriveStraight(-146.0));
+				addAction (new DriveStraight(146.0));
 				addAction(new AimShooterManual());
-				addAction(new TurnDegrees(-45.0));
+				addAction(new TurnDegrees(50.0));
 				addAction(new DriveStraight(90.0));
 			}
-			else if (location == Utils::AutoLocation::RightTurntPositive) {
+			else if (location == Utils::AutoLocation::LoadingStation) {		//previously rightturntpositive
 				//addAction(new AimShooterVision());
 				//addAction(new ShootShooter(10.0));
-				addAction(new DriveStraight(-243.0));
+				addAction(new DriveStraight(243.0));
 				addAction(new AimShooterManual());
-				addAction(new TurnDegrees(-45.0));
+				//addAction(new TurnDegrees(50 .0));
 				addAction(new DriveStraight(90.0));
 			}
 		}
 		else if (color == Utils::Alliance::Red) {
-			if (location == Utils::AutoLocation::LeftTurntNegative) {
+			if (location == Utils::AutoLocation::LeftTurntNegative) {	//previously leftturntpositive
 				//addAction(new AimShooterVision());
 				//addAction(new ShootShooter(10.0));
-				addAction(new DriveStraight(-243.0));
+				addAction(new DriveStraight(243.0));
 				addAction(new AimShooterManual());
-				addAction(new TurnDegrees(45.0));
+				addAction(new TurnDegrees(-50.0));
 				addAction(new DriveStraight(90.0));
 			}
-			else if (location == Utils::AutoLocation::MiddleTurntNegative) {
+			else if (location == Utils::AutoLocation::MiddleTurntNegative) {		//previously middleturntpositive
 				//addAction(new AimShooterVision());
 				//addAction(new ShootShooter(10.0));
-				addAction(new DriveStraight(-146.0));
+				addAction(new DriveStraight(146.0));
 				addAction(new AimShooterManual());
-				addAction(new TurnDegrees(45.0));
+				addAction(new TurnDegrees(-50.0));
 				addAction(new DriveStraight(90.0));
 			}
-			else if (location == Utils::AutoLocation::RightTurntNegative) {
+			else if (location == Utils::AutoLocation::RightTurntNegative) {		//previously rightturntpositive
 				//addAction(new AimShooterVision());
 				//addAction(new ShootShooter(10.0));
-				addAction(new DriveStraight(-58.0));
+				addAction(new DriveStraight(58.0));
 				addAction(new AimShooterManual());
-				addAction(new TurnDegrees(45.0));
+				addAction(new TurnDegrees(-50.0));
 				addAction(new DriveStraight(90.0));
 			}
 		}

@@ -14,15 +14,15 @@
 
 Shoot::Shoot(Utils::Alliance color, Utils::AutoLocation location) {
 	if (location == Utils::AutoLocation::Boiler) {
-		addAction(new DriveStraight(-5.0));
+		addAction(new DriveStraight(5.0));
 		addAction(new AimShooterManual());
 	}
 	else if (location == Utils::AutoLocation::Middle) {
-		addAction (new DriveStraight(-146.0));
+		addAction (new DriveStraight(146.0));
 		addAction(new AimShooterManual());
 	}
 	else if (location == Utils::AutoLocation::LoadingStation) {
-		addAction(new DriveStraight(-243.0));
+		addAction(new DriveStraight(243.0));
 		addAction(new AimShooterManual());
 	}
 }
