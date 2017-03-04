@@ -197,7 +197,7 @@ float Mobility::getNavXTemperature() {
 //Drive Distance
 void Mobility::StartDriveDistance(float distance, float speed) {
 	is_drive_distance_on = true;
-	if(use_left_drive_encoder || use_right_drive_encoder) {
+	if((use_left_drive_encoder || use_right_drive_encoder) && use_distance_PID) {
 		startDriveStraight();
 		encoders->DriveEncoderReset();
 		distance_PID->SetOutputRange(-speed, speed);
@@ -346,12 +346,12 @@ void Mobility::turnDegrees(float degrees) {
 	if(degrees == 0)
 		return;
 
-	if(use_gyro) {
+	if(use_gyro && use_rotation_PID) {
 		gyro->Reset();
 		rotation_PID->SetSetpoint(degrees);
 		enableRotationPID();
 
-		rotation_output->setForwardSpeed(0);\
+		rotation_output->setForwardSpeed(0);
 	}
 	else {
 		turn_deg_time = estimateTimeFromPoints(DEGREES_TO_TIMES, ARRAY_SIZE(DEGREES_TO_TIMES), degrees);

@@ -297,19 +297,19 @@ void OI::process() {
 	}*/
 
 	if (button_box_3->GetRawButton(OIPorts::MOBILITY_ROTATION_PID) && (!mobility->isRotationPIDEnabled())) {
-		mobility->enableRotationPID();
+		mobility->use_rotation_PID = true;
 		log->write(Log::WARNING_LEVEL, "Enabled Mobility Rotation PID");
 	}
 	else if(!button_box_3->GetRawButton(OIPorts::MOBILITY_ROTATION_PID) && (mobility->isRotationPIDEnabled())) {
-		mobility->disableRotationPID();
+		mobility->use_rotation_PID = false;
 		log->write(Log::WARNING_LEVEL, "Disabled Mobility Rotation PID");
 	}
 	if (button_box_3->GetRawButton(OIPorts::MOBILITY_DISTANCE_PID) && (!mobility->isDistancePIDEnabled())) {
-		mobility->enableDistancePID();
+		mobility->use_distance_PID = true;
 		log->write(Log::WARNING_LEVEL, "Enabling Mobility Distance PID");
 	}
 	else if (!button_box_3->GetRawButton(OIPorts::MOBILITY_DISTANCE_PID) && (mobility->isDistancePIDEnabled())) {
-		mobility->disableDistancePID();
+		mobility->use_distance_PID = false;
 		log->write(Log::WARNING_LEVEL, "Disabling Mobility Distance PID");
 	}
 	if (button_box_3->GetRawButton(OIPorts::SHOOTER_SPEED_PID) && (!shooter->isShooterPIDEnabled())) {

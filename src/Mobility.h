@@ -117,6 +117,9 @@ public:
 
 	float getDistanceError();
 
+	bool use_distance_PID;
+	bool use_rotation_PID;
+
 private:
 	Mobility();
 
@@ -189,8 +192,6 @@ private:
 	bool use_left_drive_encoder;
 	bool use_right_drive_encoder;
 	bool use_gyro;
-	bool use_distance_PID;
-	bool use_rotation_PID;
 
 
 	//Manual stuff
