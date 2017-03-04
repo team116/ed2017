@@ -158,6 +158,9 @@ public:
 		}
 	}
 	void DisabledPeriodic(){
+		//Makes sure the sensor toggles get read
+		oi->process();
+
 		/*int AP = socket->process();
 		if(AP == -1){
 			return;
@@ -165,6 +168,8 @@ public:
 	}
 	void AutonomousInit() override {
 		try {
+			//Makes sure the sensor toggles get read
+			oi->process();
 
 			//Set the play here
 			auto_routine = new DeliverGear(Utils::Alliance::Blue, Utils::AutoLocation::Middle);

@@ -198,6 +198,7 @@ float Mobility::getNavXTemperature() {
 void Mobility::StartDriveDistance(float distance, float speed) {
 	is_drive_distance_on = true;
 	if((use_left_drive_encoder || use_right_drive_encoder) && use_distance_PID) {
+		//frc::DriverStation::ReportError("Drive Dist using PID");
 		startDriveStraight();
 		encoders->DriveEncoderReset();
 		distance_PID->SetOutputRange(-speed, speed);
@@ -206,7 +207,7 @@ void Mobility::StartDriveDistance(float distance, float speed) {
 	}
 	else {
 		drive_dist_time = estimateTimeFromPoints(DISTANCES_TO_TIMES, ARRAY_SIZE(DISTANCES_TO_TIMES) , distance);
-		DriverStation::ReportError("Starting drive distance without encoders: " + std::to_string(drive_dist_time));
+		log->write(Log::INFO_LEVEL, "Starting drive distance without encoders: %f", drive_dist_time);
 		drive_distance_timer->Start();
 		startDriveStraight();
 		setStraightSpeed(1.0);
@@ -347,6 +348,7 @@ void Mobility::turnDegrees(float degrees) {
 		return;
 
 	if(use_gyro && use_rotation_PID) {
+		//frc::DriverStation::ReportError("Turn deg using PID");
 		gyro->Reset();
 		rotation_PID->SetSetpoint(degrees);
 		enableRotationPID();
@@ -354,6 +356,7 @@ void Mobility::turnDegrees(float degrees) {
 		rotation_output->setForwardSpeed(0);
 	}
 	else {
+		//frc::DriverStation::ReportError("Turn deg not using PID");
 		turn_deg_time = estimateTimeFromPoints(DEGREES_TO_TIMES, ARRAY_SIZE(DEGREES_TO_TIMES), degrees);
 		if(degrees < 0) {
 			setLeft(-1.0);
