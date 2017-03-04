@@ -13,14 +13,14 @@ DropGear::DropGear() {
 	setTimeout(1.0);
 }
 void DropGear::start() {
-	log->write(Log::INFO_LEVEL, "[Action] Starting Drop Gear");
+	log->write(Log::INFO_LEVEL, "[Action] Starting Drop Gear. Timeout: %f", getTimeout());
 	gear->open();
 }
 void DropGear::process() {
 
 }
 void DropGear::end() {
-	log->write(Log::INFO_LEVEL, "[Action] Ending Drop Gear");
+	log->write(Log::INFO_LEVEL, "[Action] Ending Drop Gear. Timeout: %f", getTimeout());
 }
 bool DropGear::isFinished() {
 	return false;

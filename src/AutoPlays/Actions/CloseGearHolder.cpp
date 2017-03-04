@@ -14,14 +14,14 @@ CloseGearHolder::CloseGearHolder() {
 	setTimeout(0.5);
 }
 void CloseGearHolder::start() {
-	log->write(Log::INFO_LEVEL, "[Action] Starting Close Gear Holder");
+	log->write(Log::INFO_LEVEL, "[Action] Starting Close Gear Holder. Timeout: %f", getTimeout());
 	gear->close();
 }
 void CloseGearHolder::process() {
 
 }
 void CloseGearHolder::end() {
-	log->write(Log::INFO_LEVEL, "[Action] Close Gear Holder Ended");
+	log->write(Log::INFO_LEVEL, "[Action] Close Gear Holder Ended. Timeout: %f", getTimeout());
 }
 bool CloseGearHolder::isFinished() {
 	return false;

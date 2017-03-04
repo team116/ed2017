@@ -20,6 +20,7 @@ Wiggle::Wiggle(float time) {
 
 }
 void Wiggle::start() {
+	log->write(Log::INFO_LEVEL, "[Action] Starting Wiggle. Timeout: %f", getTimeout());
 	wiggle_timer->Start();
 }
 void Wiggle::process() {
@@ -42,6 +43,7 @@ void Wiggle::process() {
 void Wiggle::end() {
 	mobility->setLeft(0.0);
 	mobility->setRight(0.0);
+	log->write(Log::INFO_LEVEL, "[Action] Ended Wiggle. Timeout: %f", getTimeout());
 }
 bool Wiggle::isFinished() {
 	return false;

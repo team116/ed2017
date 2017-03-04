@@ -14,7 +14,7 @@ TurnDegrees::TurnDegrees(float ang) {
 }
 
 void TurnDegrees::start() {
-	log->write(Log::DEBUG_LEVEL, "[Action] Starting Turn Degrees. Angle: %f", angle);
+	log->write(Log::DEBUG_LEVEL, "[Action] Starting Turn Degrees. Angle: %f Timeout: %f", angle, getTimeout());
 	mobility->turnDegrees(angle);
 }
 
@@ -23,7 +23,7 @@ void TurnDegrees::process() {
 }
 void TurnDegrees::end() {
 	mobility->stopTurnDegrees();
-	log->write(Log::DEBUG_LEVEL, "[Action] Turn Degrees Ended. Angle: %f", angle);
+	log->write(Log::DEBUG_LEVEL, "[Action] Turn Degrees Ended. Angle: %f Timeout: %f", angle, getTimeout());
 }
 bool TurnDegrees::isFinished(){
 	return mobility->isTurnDegreesDone();
