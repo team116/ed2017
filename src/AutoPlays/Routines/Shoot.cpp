@@ -12,22 +12,22 @@
 #include "AutoPlays/Actions/AimShooterManual.h"
 #include "AutoPlays/Actions/ShootShooter.h"
 
-Shoot::Shoot(Utils::Alliance color, Utils::AutoLocation location) {
+Shoot::Shoot(Utils::Alliance color, Utils::AutoLocation location) {		//numbers here may need to change
 	//if (Vision::getInstance()->canSeeGearHook()) {
 		if (color == Utils::Alliance::Blue) {
-			if (location == Utils::AutoLocation::LeftTurntPositive) {
-				//addAction(new AimShooterVision());		//will needs to finish the aiming functions before this can work
+			if (location == Utils::AutoLocation::Boiler) {		//previously leftturntpositive
+				//addAction(new AimShooterVision());
 				//addAction(new ShootShooter(15.0));
-				addAction (new DriveStraight(-58.0));
+				addAction (new DriveStraight(-5.0));
 				addAction(new AimShooterManual());
 			}
-			else if (location == Utils::AutoLocation::MiddleTurntPositive) {
+			else if (location == Utils::AutoLocation::Middle) {		//previously middleturntpositive
 				//addAction(new AimShooterVision());
 				//addAction(new ShootShooter(15.0));
 				addAction (new DriveStraight(-146.0));
 				addAction(new AimShooterManual());
 			}
-			else if (location == Utils::AutoLocation::RightTurntPositive) {
+			else if (location == Utils::AutoLocation::LoadingStation) {		//previously rightturntpositive
 				//addAction(new AimShooterVision());
 				//addAction(new ShootShooter(15.0));
 				addAction(new DriveStraight(-243.0));
@@ -35,22 +35,22 @@ Shoot::Shoot(Utils::Alliance color, Utils::AutoLocation location) {
 			}
 		}
 		else if (color == Utils::Alliance::Red){
-			if (location == Utils::AutoLocation::LeftTurntNegative) {
+			if (location == Utils::AutoLocation::LoadingStation) {		//previously leftturntpositive
 				//addAction(new AimShooterVision());
 				//addAction(new ShootShooter(15.0));
 				addAction(new DriveStraight(-243.0));
 				addAction(new AimShooterManual());
 			}
-			else if (location == Utils::AutoLocation::MiddleTurntNegative) {
+			else if (location == Utils::AutoLocation::Middle) {	//previously middleturntpositive
 				//addAction(new AimShooterVision());
 				//addAction(new ShootShooter(15.0));
 				addAction(new DriveStraight(-146.0));
 				addAction(new AimShooterManual());
 			}
-			else if (location == Utils::AutoLocation::RightTurntNegative) {
+			else if (location == Utils::AutoLocation::Boiler) {		//previously rightturntpositive
 				//addAction(new AimShooterVision());
 				//addAction(new ShootShooter(15.0));
-				addAction(new DriveStraight(-58.0));
+				addAction(new DriveStraight(-5.0));
 				addAction(new AimShooterManual());
 			}
 		}
