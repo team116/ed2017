@@ -6,6 +6,7 @@
  */
 
 #include <AutoPlays/Routines/ShootandCrossBaseline.h>
+#include "AutoPlays/Routines/Shoot.h"
 #include "AutoPlays/Actions/TurnDegrees.h"
 #include "AutoPlays/Actions/DriveStraight.h"
 #include "AutoPlays/Actions/AimShooterVision.h"
@@ -14,6 +15,29 @@
 #include "AutoPlays/Actions/AimShooterManual.h"
 
 ShootandCrossBaseline::ShootandCrossBaseline(Utils::Alliance color, Utils::AutoLocation location) {
+	if (location == Utils::AutoLocation::Boiler) {
+		addAction(new Shoot(color, location));
+			if (color == Utils::Alliance::Blue) {
+				addAction(new TurnDegrees(135.0));
+			}
+			else if (color == Utils::Alliance::Red) {
+				addAction(new TurnDegrees(-135.0));
+			}
+			addAction(new DriveStraight(90.0));
+	}
+	else if (location == Utils::AutoLocation::Middle) {
+		addAction(new Shoot(color, location));
+			if (color == Utils::Alliance::Blue) {
+				addAction(new TurnDegrees(135.0));
+			}
+			else if (color == Utils::Alliance::Red) {
+				addAction(new TurnDegrees(-135.0));
+			}
+		addAction(new DriveStraight(90.0));
+	}
+}
+
+/*ShootandCrossBaseline::ShootandCrossBaseline(Utils::Alliance color, Utils::AutoLocation location) {
 	//if (Vision::getInstance()->canSeeHighGoal()) {		//need to add steps
 		if (color == Utils::Alliance::Blue) {
 			if (location == Utils::AutoLocation::Boiler) {		//previously leftturntpositive
@@ -69,6 +93,6 @@ ShootandCrossBaseline::ShootandCrossBaseline(Utils::Alliance color, Utils::AutoL
 		}
 
 	}
-
+*/
 
 
