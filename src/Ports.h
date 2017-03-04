@@ -125,20 +125,20 @@ namespace OIPorts
 	//Button Box 3 controls
 	const unsigned int AUTO_DIAGNOSTICS = 1;
 	const unsigned int GYRO = 2;
-	const unsigned int SHOOTER_AZ_PID = 3;
-	const unsigned int SHOOTER_AZIMUTH = 4;
+	const unsigned int SHOOTER_AZIMUTH_ANGLE_PID = 3;
+	const unsigned int SHOOTER_AZIMUTH_ENCODER= 4;
 	const unsigned int SHOOTER_SPEED_PID = 5;
-	const unsigned int SHOOTER_SPEED = 6;
-	const unsigned int MOBILITY_ROTATION = 7;
-	const unsigned int MOBILITY_DISTANCE = 8;
-	const unsigned int MOBILITY_RIGHT = 9;
-	const unsigned int MOBILITY_LEFT = 10;
+	const unsigned int SHOOTER_SPEED_ENCODER = 6;
+	const unsigned int MOBILITY_ROTATION_PID = 7;
+	const unsigned int MOBILITY_DISTANCE_PID = 8;
+	const unsigned int MOBILITY_RIGHT_ENCODER = 9;
+	const unsigned int MOBILITY_LEFT_ENCODER = 10;
 
 
 	/*const unsigned int OPEN_GEAR_BUTTON = 8;
 
 	//3 position switches
-	const unsigned int INTAKE_ROLLER_IN = 6;    //These are commented out because there is only one three-way
+0	const unsigned int INTAKE_ROLLER_IN = 6;    //These are commented out because there is only one three-way
 	const unsigned int INTAKE_ROLLER_OUT = 7;  //toggle switch on the driver station and these require 3-way
 	const unsigned int BLENDER_FORWARD_SWITCH = 1;  //toggle switches.
 	const unsigned int BLENDER_REVERSE_SWITCH = 2;
