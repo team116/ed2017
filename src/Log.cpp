@@ -103,14 +103,20 @@ void Log::generateTimestamp(char* str, size_t len)
 
 char* Log::generateLogFilename()
 {
-	const char base[] = "log ";
+	std::string base;
+	if(frc::DriverStation::GetInstance().IsFMSAttached()) {
+		base = "FMS_log ";
+	}
+	else {
+		base = "log ";
+	}
 	const char ext[] = ".txt";
 	FILE* previous_log_file;
 
 	int file_num = 0;
 
 	while(true){
-		sprintf(filename,"/var/volatile/tmp/%s%d%s",base,file_num,ext);
+		sprintf(filename,"/home/lvuser/%s%d%s",base.c_str(),file_num,ext);
 
 		previous_log_file = fopen(filename,"r");
 		if(!previous_log_file){
