@@ -11,10 +11,11 @@
 #include <AutoPlays/Action.h>
 #include <Timer.h>
 #include <Mobility.h>
+#include <Ports.h>
 
 class Wiggle: public Action {
 public:
-	Wiggle(float time);
+	Wiggle(Utils::Alliance color, Utils::AutoLocation location, float time);
 	void start();
 
 	void process();

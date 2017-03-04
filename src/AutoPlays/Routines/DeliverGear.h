@@ -10,6 +10,7 @@
 
 #include <AutoPlays/Routine.h>
 #include <Ports.h>
+#include "AutoPlays/Actions/Wiggle.h"
 
 class DeliverGear: public Routine {
 public:

@@ -11,7 +11,7 @@
 const float SPEED = 0.5;
 const float PERIOD = 0.15;
 
-Wiggle::Wiggle(float time) {
+Wiggle::Wiggle(Utils::Alliance color, Utils::AutoLocation location, float time) {
 	mobility = Mobility::getInstance();
 	wiggle_timer = new frc::Timer();
 	left_side = false;

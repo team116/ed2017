@@ -12,7 +12,7 @@
 #include "AutoPlays/Actions/CloseGearHolder.h"
 #include "AutoPlays/Actions/Wiggle.h"
 
-Test::Test() {
-	addAction(new Wiggle(2.0));
+Test::Test(Utils::Alliance color, Utils::AutoLocation location) {
+	addAction(new Wiggle(color, location, 2.0));
 }
 
