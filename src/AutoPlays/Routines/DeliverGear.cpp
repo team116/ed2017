@@ -43,7 +43,7 @@ DeliverGear::DeliverGear(Utils::Alliance color, Utils::AutoLocation location) {
 		addAction(new CloseGearHolder());
 	}
 	else if (location == Utils::AutoLocation::LoadingStation) {
-		addAction(new DriveStraight(70.0, 0.75));
+		addAction(new DriveStraight(64.0, 0.75));
 			if (color == Utils::Alliance::Blue) {
 				addAction(new TurnDegrees(-60.0));
 			}

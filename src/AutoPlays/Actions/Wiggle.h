@@ -28,6 +28,9 @@ private:
 	Mobility* mobility;
 	Timer* wiggle_timer;
 	bool left_side;
+
+	Utils::AutoLocation loc;
+	Utils::Alliance colour;
 };
 
 #endif /* SRC_AUTOPLAYS_ACTIONS_WIGGLE_H_ */
