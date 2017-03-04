@@ -134,6 +134,7 @@ private:
 		bool enabled;
 	};
 
+
 	class GearTracker : public frc::PIDSource {
 	public:
 		GearTracker();
@@ -188,6 +189,8 @@ private:
 	bool use_left_drive_encoder;
 	bool use_right_drive_encoder;
 	bool use_gyro;
+	bool use_distance_PID;
+	bool use_rotation_PID;
 
 
 	//Manual stuff

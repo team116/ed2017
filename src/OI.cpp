@@ -24,6 +24,8 @@ const float SHOOT_BUTTON_TIME = 1.0;
 OI::OI() {
 	// TODO Auto-generated constructor stub
 
+	log = Log::getInstance();
+
 	mobility = Mobility::getInstance();
 	gear = Gear::getInstance();
 	climber = Climber::getInstance();
@@ -294,60 +296,76 @@ void OI::process() {
 		vision->turnToGearHook();
 	}*/
 
-	/*if (button_box_1->GetRawButton(OIPorts::MOBILITY_ROTATION_PID_SWITCH) && (!mobility->isRotationPIDEnabled())) {
+	if (button_box_3->GetRawButton(OIPorts::MOBILITY_ROTATION_PID) && (!mobility->isRotationPIDEnabled())) {
 		mobility->enableRotationPID();
+		log->write(Log::WARNING_LEVEL, "Enabled Mobility Rotation PID");
 	}
-	else if(!button_box_1->GetRawButton(OIPorts::MOBILITY_ROTATION_PID_SWITCH) && (mobility->isRotationPIDEnabled())) {
+	else if(!button_box_3->GetRawButton(OIPorts::MOBILITY_ROTATION_PID) && (mobility->isRotationPIDEnabled())) {
 		mobility->disableRotationPID();
+		log->write(Log::WARNING_LEVEL, "Disabled Mobility Rotation PID");
 	}
-	if (button_box_1->GetRawButton(OIPorts::MOBILITY_DISTANCE_PID_SWITCH) && (!mobility->isDistancePIDEnabled())) {
+	if (button_box_3->GetRawButton(OIPorts::MOBILITY_DISTANCE_PID) && (!mobility->isDistancePIDEnabled())) {
 		mobility->enableDistancePID();
+		log->write(Log::WARNING_LEVEL, "Enabling Mobility Distance PID");
 	}
-	else if (!button_box_1->GetRawButton(OIPorts::MOBILITY_DISTANCE_PID_SWITCH) && (mobility->isDistancePIDEnabled())) {
+	else if (!button_box_3->GetRawButton(OIPorts::MOBILITY_DISTANCE_PID) && (mobility->isDistancePIDEnabled())) {
 		mobility->disableDistancePID();
+		log->write(Log::WARNING_LEVEL, "Disabling Mobility Distance PID");
 	}
-	if (button_box_1->GetRawButton(OIPorts::SHOOTER_SPEED_PID_SWITCH) && (!shooter->isShooterPIDEnabled())) {
+	if (button_box_3->GetRawButton(OIPorts::SHOOTER_SPEED_PID) && (!shooter->isShooterPIDEnabled())) {
 		shooter->enableShooterPID();
+		log->write(Log::WARNING_LEVEL, "Enabling Shooter Speed PID");
 	}
-	else if (!button_box_1->GetRawButton(OIPorts::SHOOTER_SPEED_PID_SWITCH) && (shooter->isShooterPIDEnabled())) {
+	else if (!button_box_3->GetRawButton(OIPorts::SHOOTER_SPEED_PID) && (shooter->isShooterPIDEnabled())) {
 		shooter->disableShooterPID();
+		log->write(Log::WARNING_LEVEL, "Disabling Shooter Speed PID");
 	}
-	if (button_box_1->GetRawButton(OIPorts::SHOOTER_AZIMUTH_ANGLE_PID_SWITCH) && (!shooter->isAzimuthPIDEnabled())) {
+	if (button_box_3->GetRawButton(OIPorts::SHOOTER_AZIMUTH_ANGLE_PID) && (!shooter->isAzimuthPIDEnabled())) {
 		shooter->enableAzimuthPID();
+		log->write(Log::WARNING_LEVEL, "Enabling Shooter Azimuth Angle PID");
 	}
-	else if (!button_box_1->GetRawButton(OIPorts::SHOOTER_AZIMUTH_ANGLE_PID_SWITCH) && (shooter->isAzimuthPIDEnabled())) {
+	else if (!button_box_3->GetRawButton(OIPorts::SHOOTER_AZIMUTH_ANGLE_PID) && (shooter->isAzimuthPIDEnabled())) {
 		shooter->disableAzimuthPID();
+		log->write(Log::WARNING_LEVEL, "Disabling Shooter Azimuth Angle PID");
 	}
-	if(button_box_1->GetRawButton(OIPorts::MOBILITY_LEFT_ENCODER_SWITCH) && (!mobility->isLeftEncoderEnabled())) {
+	if(button_box_3->GetRawButton(OIPorts::MOBILITY_LEFT_ENCODER) && (!mobility->isLeftEncoderEnabled())) {
 		mobility->enableLeftEncoder();
+		log->write(Log::WARNING_LEVEL, "Enabling Mobility Left Encoder");
 	}
-	else if (!button_box_1->GetRawButton(OIPorts::MOBILITY_LEFT_ENCODER_SWITCH)&&(mobility->isLeftEncoderEnabled())) {
+	else if (!button_box_3->GetRawButton(OIPorts::MOBILITY_LEFT_ENCODER)&&(mobility->isLeftEncoderEnabled())) {
 		mobility->disableLeftEncoder();
+		log->write(Log::WARNING_LEVEL, "Disabling Mobility Left Encoder");
 	}
-	if (button_box_1->GetRawButton(OIPorts::MOBILITY_RIGHT_ENCODER_SWITCH)&&(!mobility->isRightEncoderEnabled())) {
+	if (button_box_3->GetRawButton(OIPorts::MOBILITY_RIGHT_ENCODER)&&(!mobility->isRightEncoderEnabled())) {
 		mobility->enableRightEncoder();
+		log->write(Log::WARNING_LEVEL, "Enabling Mobility Right Encoder");
 	}
-	else if (!button_box_1->GetRawButton(OIPorts::MOBILITY_RIGHT_ENCODER_SWITCH)&&(mobility->isRightEncoderEnabled())) {
+	else if (!button_box_3->GetRawButton(OIPorts::MOBILITY_RIGHT_ENCODER)&&(mobility->isRightEncoderEnabled())) {
 		mobility->disableRightEncoder();
+		log->write(Log::WARNING_LEVEL, "Disabling Mobility Right Encoder");
 	}
-	if (button_box_1->GetRawButton(OIPorts::SHOOTER_AZIMUTH_ENCODER_SWITCH)&&(!shooter->isShooterAzimuthEncoderEnabled())) {
+	if (button_box_3->GetRawButton(OIPorts::SHOOTER_AZIMUTH_ENCODER)&&(!shooter->isShooterAzimuthEncoderEnabled())) {
 		shooter->enableShooterAzimuthEncoder();
+		log->write(Log::WARNING_LEVEL, "Enabling Shooter Azimuth Encoder");
 	}
-	else if (!button_box_1->GetRawButton(OIPorts::SHOOTER_AZIMUTH_ENCODER_SWITCH)&&(shooter->isShooterAzimuthEncoderEnabled())) {
+	else if (!button_box_3->GetRawButton(OIPorts::SHOOTER_AZIMUTH_ENCODER)&&(shooter->isShooterAzimuthEncoderEnabled())) {
 		shooter->disableShooterAzimuthEncoder();
+		log->write(Log::WARNING_LEVEL, "Disabling Shooter Azimuth Encoder");
 	}
-	if (button_box_1->GetRawButton(OIPorts::SHOOTER_AZIMUTH_LIMIT_SWITCH)&&(!shooter->isShooterAzimuthLimitSwitchEnabled())) {
+	/*if (button_box_1->GetRawButton(OIPorts::SHOOTER_AZIMUTH_LIMIT_SWITCH)&&(!shooter->isShooterAzimuthLimitSwitchEnabled())) {
 		shooter->enableShooterAzimuthLimitSwitch();
 	}
 	else if (!button_box_1->GetRawButton(OIPorts::SHOOTER_AZIMUTH_LIMIT_SWITCH)&&(shooter->isShooterAzimuthLimitSwitchEnabled())) {
 		shooter->disableShooterAzimuthLimitSwitch();
+	} */
+	if (button_box_3->GetRawButton(OIPorts::SHOOTER_SPEED_ENCODER)&&(!shooter->isShooterSpeedEncoderEnabled())) {
+		shooter->enableShooterSpeedEncoder();
+		log->write(Log::WARNING_LEVEL, "Enabling Shooter Speed Encoder");
 	}
-	if (button_box_1->GetRawButton(OIPorts::SHOOTER_SPEED_ENCODER_SWITCH)&&(!shooter->isShooterSpeedEncoderEnabled())) {
-		shooter->enableShooterAzimuthLimitSwitch();
+	else if(!button_box_3->GetRawButton(OIPorts::SHOOTER_SPEED_ENCODER)&&(shooter->isShooterSpeedEncoderEnabled())) {
+		shooter->disableShooterSpeedEncoder();
+		log->write(Log::WARNING_LEVEL, "Disabling Shooter Speed Encoder");
 	}
-	else if(!button_box_1->GetRawButton(OIPorts::SHOOTER_SPEED_ENCODER_SWITCH)&&(shooter->isShooterSpeedEncoderEnabled())) {
-		shooter->disableShooterAzimuthLimitSwitch();
-	}*/
 }
 
 OI* OI::getInstance()

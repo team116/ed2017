@@ -15,6 +15,8 @@
 #include <Intake.h>
 #include <Feeder.h>
 #include "Vision.h"
+#include "Log.h"
+
 class OI {
 public:
 	static OI* getInstance();
@@ -23,6 +25,8 @@ public:
 private:
 	OI();
 	static OI* INSTANCE;
+
+	Log* log;
 	Mobility* mobility;
 	Gear* gear;
 	Climber* climber;

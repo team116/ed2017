@@ -36,6 +36,8 @@ Mobility::Mobility() {
 	use_left_drive_encoder = true;
 	use_right_drive_encoder = true;
 	use_gyro = true;
+	use_distance_PID = true;
+	use_rotation_PID = true;
 
 
 	//Motor Controllers
