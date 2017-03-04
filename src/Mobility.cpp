@@ -207,7 +207,7 @@ void Mobility::StartDriveDistance(float distance, float speed) {
 	}
 	else {
 		drive_dist_time = estimateTimeFromPoints(DISTANCES_TO_TIMES, ARRAY_SIZE(DISTANCES_TO_TIMES) , distance);
-		log->write(Log::INFO_LEVEL, "Starting drive distance without encoders: %f", drive_dist_time);
+		log->write(Log::INFO_LEVEL, "Starting drive distance without encoders. Time: %f", drive_dist_time);
 		drive_distance_timer->Start();
 		startDriveStraight();
 		setStraightSpeed(1.0);

@@ -29,7 +29,7 @@ Feeder::Feeder() {
 void Feeder::process() {
 	if(run_alligator) {
 		if(alligator_timer->Get() >= AGITATOR_PERIOD) {
-			frc::DriverStation::ReportError("Flipping alligator");
+			//frc::DriverStation::ReportError("Flipping alligator");
 			if(alligator_high) {
 				alligator->SetAngle(AGITATOR_ANGLE_LOW);
 				alligator_high = false;
@@ -56,14 +56,14 @@ void Feeder::setBlenderSpeed(float speed){
 		run_alligator = true;
 		alligator_timer->Reset();
 		alligator_timer->Start();
-		frc::DriverStation::ReportError("Starting alligator");
+		//frc::DriverStation::ReportError("Starting alligator");
 	}
 	else if((speed == 0) && run_alligator) {
 		run_alligator = false;
 		alligator_timer->Stop();
 		alligator_timer->Reset();
 		alligator_timer->Stop();
-		frc::DriverStation::ReportError("Stopping alligator");
+		//frc::DriverStation::ReportError("Stopping alligator");
 	}
 }
 float Feeder::getFeederSpeed() {
