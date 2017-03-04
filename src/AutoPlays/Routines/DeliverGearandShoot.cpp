@@ -6,6 +6,7 @@
  */
 
 #include <AutoPlays/Routines/DeliverGearandShoot.h>
+#include "AutoPlays/Routines/DeliverGear.h"
 #include "AutoPlays/Actions/TurnDegrees.h"
 #include "AutoPlays/Actions/DriveStraight.h"
 #include "AutoPlays/Actions/DropGear.h"
@@ -17,92 +18,31 @@
 #include <Vision.h>
 
 DeliverGearandShoot::DeliverGearandShoot(Utils::Alliance color, Utils::AutoLocation location) {
-	//if (Vision::getInstance()->canSeeGearHook()) {
-		if (color == Utils::Alliance::Blue) {
-			if (location == Utils::AutoLocation::Boiler) {		//previously leftforward blue side
-				addAction(new DriveStraight(50.0, 0.75));
-				addAction(new TurnDegrees(56.0));
-				addAction(new DriveStraight(65.0, 0.75));
-				addAction(new DriveStraight(12.0, 0.25));
-				addAction(new Wiggle(2.0));
-				addAction(new DropGear());
-				addAction(new DriveStraight(-12.0, 0.25));
-				addAction(new DriveStraight(-24.0, 0.75));
-				addAction(new CloseGearHolder());
-				addAction(new TurnDegrees(-10.0));		//test these values
-				addAction(new DriveStraight(-100.0, 0.75));
-				//addAction(new AimShooterVision());
-				//addAction(new ShootShooter(15.0));
-				addAction(new AimShooterManual());
+	if (location == Utils::AutoLocation::Boiler) {
+		addAction(new DeliverGear(color, location));
+			if (color == Utils::Alliance::Blue) {
+				addAction(new TurnDegrees(170.0));
 			}
-			else if (location == Utils::AutoLocation::Middle) {		//previously miffleforward blue side
-				addAction(new DriveStraight(49.0, 0.75));
-				addAction(new DriveStraight(12.0, 0.25));
-				addAction(new Wiggle(2.0));
-				addAction(new DropGear());
-				addAction(new CloseGearHolder());
-				addAction(new DriveStraight(-12.0, 0.25));
-				addAction(new TurnDegrees(45.0));
-				addAction(new DriveStraight(-98.0, 0.75));
-				//addAction(new AimShooterVision());
-				//addAction(new ShootShooter(15.0));
-				addAction(new AimShooterManual());
+			else if (color == Utils::Alliance::Red) {
+				addAction(new TurnDegrees(-170.0));
 			}
-			/*else if (location == Utils::AutoLocation::LoadingStation)  {		//previously rightforward blue side
-				addAction(new DriveStraight(70.0, 0.75));
-				addAction(new TurnDegrees(-60.0));
-				addAction(new DriveStraight(45.0, 0.75));
-				addAction(new DriveStraight(12.0, 0.25));
-				addAction(new Wiggle(2.0));
-				addAction(new DropGear());
-					addAction(new TurnDegrees(120.0));
-					addAction(new DriveStraight(-192.0, 0.75));
-					addAction(new AimShooterVision());
-					addAction(new ShootShooter(15.0));
-			}*/
-		}
-		else if (color == Utils::Alliance::Red) {
-			/*if (location == Utils::AutoLocation::LoadingStation) {		//previously leftforward
-				addAction(new DriveStraight(70.0, 0.75));
-				addAction(new TurnDegrees(60.0));
-				addAction(new DriveStraight(45.0, 0.75));
-				addAction(new DriveStraight(12.0, 0.25));
-				addAction(new Wiggle(2.0));
-				addAction(new DropGear());
-					addAction(new TurnDegrees(-120));
-					addAction(new DriveStraight(-192.0, 0.75));
-					addAction(new AimShooterVision());
-					addAction(new ShootShooter(15.0));
-			}*/
-			if (location == Utils::AutoLocation::Middle) {	//previously middleforward
-				addAction(new DriveStraight(49.0, 0.75));
-				addAction(new DriveStraight(12.0, 0.25));
-				addAction(new Wiggle(2.0));
-				addAction(new DropGear());
-				addAction(new CloseGearHolder());
-				addAction(new DriveStraight(-12.0));
-				addAction(new TurnDegrees(-45.0));
-				addAction(new DriveStraight(-98.0, 0.75));
-				//addAction(new AimShooterVision());
-				//addAction(new ShootShooter(15.0));
-				addAction(new AimShooterManual());
-			}
-			else if (location == Utils::AutoLocation::Boiler)  {		//previously right forward
-				addAction(new DriveStraight(50.0, 0.75));
-				addAction(new TurnDegrees(-56.0));
-				addAction(new DriveStraight(65.0, 0.75));
-				addAction(new DriveStraight(12.0, 0.25));
-				addAction(new Wiggle(2.0));
-				addAction(new DropGear());
-				addAction(new DriveStraight(-12.0, 0.25));
-				addAction(new CloseGearHolder());
-				addAction(new TurnDegrees(10.0));
-				addAction(new DriveStraight(-100.0, 0.75));
-				//addAction(new AimShooterVision());
-				//addAction(new ShootShooter(15.0));
-				addAction(new AimShooterManual());
-			}
-		}
+
+		addAction(new DriveStraight(100.0, 0.75));
+		addAction(new AimShooterManual());
 	}
+	else if (location == Utils::AutoLocation::Middle) {
+		addAction(new DeliverGear(color, location));
+			if (color == Utils::Alliance::Blue) {
+				addAction(new TurnDegrees(-100.0));
+			}
+			else if (color == Utils::Alliance::Red) {
+				addAction(new TurnDegrees(100.0));
+			}
+		addAction(new DriveStraight(98.0, 0.75));
+		addAction(new AimShooterManual());
+	}
+	/*else if (location == Utils::AutoLocation::LoadingStation) {
+		addAction(new DeliverGear(color, location));
 
-
+	}*/
+}
