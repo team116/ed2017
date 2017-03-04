@@ -9,7 +9,7 @@
 
 
 const float SPEED = 0.5;
-const float PERIOD = 0.15;
+const float PERIOD = 0.25;
 
 Wiggle::Wiggle(float time) {
 	mobility = Mobility::getInstance();

@@ -13,6 +13,6 @@
 #include "AutoPlays/Actions/Wiggle.h"
 
 Test::Test() {
-	addAction(new Wiggle(2.0));
+	addAction(new Wiggle(3.0));
 }
 
