@@ -13,7 +13,7 @@
 #include <Timer.h>
 #include "Log.h"
 
-class Routine {
+class Routine : public Action {
 public:
 	//Constructor. Make sure to push the actions into the action queue
 	Routine();

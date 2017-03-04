@@ -39,7 +39,7 @@ void Routine::process() {
 		if(current_action->isFinished() || timed_out) {
 			current_action->end();
 			if(!actions.empty()) {
-				log->write((timed_out ? Log::WARNING_LEVEL : Log::INFO_LEVEL), (timed_out ? "[Routine] Action timed out, moving to next action (%f actions left)" : "[Routine] Action finished, moving to next action (%f actions left)"), actions.size());
+				log->write((timed_out ? Log::WARNING_LEVEL : Log::INFO_LEVEL), (timed_out ? "[Routine] Action timed out, moving to next action (%d actions left)" : "[Routine] Action finished, moving to next action (%d actions left)"), actions.size());
 				current_action = actions.front();
 				actions.pop();
 				current_action->start();
