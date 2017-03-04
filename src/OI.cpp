@@ -130,6 +130,7 @@ void OI::process() {
 		//Reading speed from driverstation right now, ignoring the dial.
 		//This is probably just for testing, but it lets us type in an exact speed manually
 		speed = std::stof(SmartDashboard::GetString("DB/String 0", std::to_string(0.0)));
+		//frc::DriverStation::ReportError(SmartDashboard::GetString("DB/String 0", std::to_string(0.0)));
 		shooter->setShooterSpeed(speed);
 		//shooter->setShooterRPM(speed);
 		//frc::DriverStation::ReportError("Shooter on " + std::to_string(speed));

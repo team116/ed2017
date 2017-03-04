@@ -172,7 +172,7 @@ public:
 			oi->process();
 
 			//Set the play here
-			auto_routine = new DeliverGear(Utils::Alliance::Blue, Utils::AutoLocation::Middle);
+			auto_routine = new DeliverGear(Utils::Alliance::Red, Utils::AutoLocation::Boiler);
 
 			auto_routine->start();
 
