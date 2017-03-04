@@ -17,11 +17,12 @@ DeliverGear::DeliverGear(Utils::Alliance color, Utils::AutoLocation location) {
 	//if (Vision::getInstance()->canSeeGearHook()) {
 	if (location == Utils::AutoLocation::Boiler) {
 		addAction(new DriveStraight(50.0, 0.75));
+		float degrees = 56.0;
 			if (color == Utils::Alliance::Blue) {
-				addAction(new TurnDegrees(56.0));
+				addAction(new TurnDegrees(degrees));
 			}
 			else {
-				addAction(new TurnDegrees(-56.0));
+				addAction(new TurnDegrees(-degrees));
 			}
 		addAction(new DriveStraight(65.0, 0.75));
 		addAction(new DriveStraight(12.0, 0.25));

@@ -16,41 +16,48 @@
 
 
 DeliverGearandTravel::DeliverGearandTravel(Utils::Alliance color, Utils::AutoLocation location) {
-	if (color == Utils::Alliance::Blue) {
-		if (location == Utils::AutoLocation::Boiler) {		//previously leftforward
-			float degrees = 56.0;
-			float degrees2 = 90.0;
-			addAction(new DriveStraight(50.0, 0.75));
-			addAction(new TurnDegrees(degrees));					//previously left forward
-			addAction(new DriveStraight(65.0, 0.75));
-			addAction(new DriveStraight(12.0, 0.25));
-			addAction(new Wiggle(2.0));
-			addAction(new DropGear());
-			addAction(new DriveStraight(-12.0, 0.25));
-			addAction(new DriveStraight(-24.0, 0.75));
-			addAction(new CloseGearHolder());
-			addAction(new TurnDegrees(-degrees));
-			addAction(new DriveStraight(91.0));		//all estimated #s
-			addAction(new TurnDegrees(degrees2));
-			addAction(new DriveStraight(95.0));
-			addAction(new TurnDegrees(-degrees2));
-			addAction(new DriveStraight(120.0));
-		}
-		else if (location == Utils::AutoLocation::Middle) {		//previously middleforward
-			frc::DriverStation::ReportError("Doing middle forward");
-			float degrees = 50.0;
-			addAction(new DriveStraight(49.0, 0.75));
-			addAction(new DriveStraight(12.0, 0.25));
-			addAction(new Wiggle(2.0));
-			addAction(new DropGear());
-			addAction(new DriveStraight(-12.0, 0.25));
-			addAction(new DriveStraight(-24.0, 0.75));
-			addAction(new CloseGearHolder());
-			addAction(new TurnDegrees(degrees));		//all estimated from here
-			addAction(new DriveStraight(95.0));
-			addAction(new TurnDegrees(-degrees));
-			addAction(new DriveStraight(120.0));
-		}
+	if (location == Utils::AutoLocation::Boiler){
+		float degrees = 56.0;
+		addAction(new DeliverGear(color, location));
+			if (color == Utils::Alliance::Blue) {
+				addAction(new TurnDegrees(-degrees));
+			}
+			else if (color == Utils::Alliance::Red) {
+				addAction(new TurnDegrees(degrees));
+			}
+		addAction(new DriveStraight(91.0));
+		addAction(new TurnDegrees(90.0));
+		addAction(new DriveStraight(95.0));
+		addAction(new TurnDegrees(-90.0));
+		addAction(new DriveStraight(120.0));
+	}
+	else if (location == Utils::AutoLocation::Middle) {
+		frc::DriverStation::ReportError("Doing middle forward");
+		float degrees = 50.0;
+		addAction(new DriveStraight(49.0, 0.75));
+		addAction(new DriveStraight(12.0, 0.25));
+		addAction(new Wiggle(2.0));
+		addAction(new DropGear());
+		addAction(new DriveStraight(-12.0, 0.25));
+		addAction(new DriveStraight(-24.0, 0.75));
+		addAction(new CloseGearHolder());
+		addAction(new TurnDegrees(degrees));
+		addAction(new DriveStraight(95.0));
+		addAction(new TurnDegrees(-degrees));
+		addAction(new DriveStraight(120.0));
+	}
+	else if (location == Utils::AutoLocation::LoadingStation) {
+		float degrees = -60.0;
+		addAction(new DriveStraight(70.0, 0.75));
+			if (color == Utils::Alliance::Blue) {
+				addAction(new TurnDegrees(-degrees));
+			}
+			else if (color == Utils::Alliance::Red) {
+				addAction(new TurnDegrees(degrees));
+			}
+		addAction(new DriveStraight(190.0));
+	}
+/*
 		else if (location == Utils::AutoLocation::LoadingStation) {		//previously right forward
 			float degrees = -60.0;
 			addAction(new DriveStraight(70.0, 0.75));
@@ -80,41 +87,9 @@ DeliverGearandTravel::DeliverGearandTravel(Utils::Alliance color, Utils::AutoLoc
 			addAction(new CloseGearHolder());
 			addAction(new TurnDegrees(-degrees));
 			addAction(new DriveStraight(190.0));
-		}
-		else if (location == Utils::AutoLocation::Middle) {
-			float degrees = -50.0;
-			addAction(new DriveStraight(49.0, 0.75));
-			addAction(new DriveStraight(12.0, 0.25));
-			addAction(new Wiggle(2.0));
-			addAction(new DropGear());
-			addAction(new DriveStraight(-12.0, 0.25));
-			addAction(new DriveStraight(-24.0, 0.75));
-			addAction(new CloseGearHolder());
-			addAction(new TurnDegrees(degrees));		//all estimated from here
-			addAction(new DriveStraight(95.0));
-			addAction(new TurnDegrees(-degrees));
-			addAction(new DriveStraight(120.0));
-		}
-		else if (location == Utils::AutoLocation::Boiler) {
-			float degrees = -56.0;
-			float degrees2 = 90.0;
-			addAction(new DriveStraight(50.0, 0.75));
-			addAction(new TurnDegrees(-56.0));
-			addAction(new DriveStraight(65.0, 0.75));
-			addAction(new DriveStraight(12.0, 0.25));
-			addAction(new Wiggle(2.0));
-			addAction(new DropGear());
-			addAction(new DriveStraight(-12.0, 0.25));
-			addAction(new DriveStraight(-24.0, 0.75));
-			addAction(new CloseGearHolder());
-			addAction(new TurnDegrees(-degrees));
-			addAction(new DriveStraight(91.0));		//all estimated #s
-			addAction(new TurnDegrees(degrees2));
-			addAction(new DriveStraight(95.0));
-			addAction(new TurnDegrees(-degrees2));
-			addAction(new DriveStraight(120.0));
-		}
-	}
+
+
+	}*/
 
 }
 

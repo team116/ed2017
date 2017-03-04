@@ -12,7 +12,21 @@
 #include "AutoPlays/Actions/AimShooterManual.h"
 #include "AutoPlays/Actions/ShootShooter.h"
 
-Shoot::Shoot(Utils::Alliance color, Utils::AutoLocation location) {		//numbers here may need to change
+Shoot::Shoot(Utils::Alliance color, Utils::AutoLocation location) {
+	if (location == Utils::AutoLocation::Boiler) {
+		addAction(new DriveStraight(-5.0));
+		addAction(new AimShooterManual());
+	}
+	else if (location == Utils::AutoLocation::Middle) {
+		addAction (new DriveStraight(-146.0));
+		addAction(new AimShooterManual());
+	}
+	else if (location == Utils::AutoLocation::LoadingStation) {
+		addAction(new DriveStraight(-243.0));
+		addAction(new AimShooterManual());
+	}
+}
+/*Shoot::Shoot(Utils::Alliance color, Utils::AutoLocation location) {		//numbers here may need to change
 	//if (Vision::getInstance()->canSeeGearHook()) {
 		if (color == Utils::Alliance::Blue) {
 			if (location == Utils::AutoLocation::Boiler) {		//previously leftturntpositive
@@ -56,4 +70,4 @@ Shoot::Shoot(Utils::Alliance color, Utils::AutoLocation location) {		//numbers h
 		}
 	}
 
-
+*/
