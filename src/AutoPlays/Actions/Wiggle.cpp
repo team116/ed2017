@@ -28,36 +28,36 @@ void Wiggle::start() {
 	wiggle_timer->Start();
 		if (loc == Utils::AutoLocation::Boiler) {
 			if (colour == Utils::Alliance::Blue) {
-				left_side = false;
+				left_side = true;
 				mobility->setLeft(0.0);
 				mobility->setRight(SPEED);
 			}
 			else if (colour == Utils::Alliance::Red) {
-				left_side = true;
+				left_side = false;
 				mobility->setLeft(SPEED);
 				mobility->setRight(0.0);
 			}
 		}
 		else if (loc == Utils::AutoLocation::Middle) {
 			if (colour == Utils::Alliance::Blue) {
-				left_side = true;
+				left_side = false;
 				mobility->setLeft(SPEED);
 				mobility->setRight(0.0);
 			}
 			else if (colour == Utils::Alliance::Red) {
-				left_side = true;
+				left_side = false;
 				mobility->setLeft(SPEED);
 				mobility->setRight(0.0);
 			}
 		}
 		else if (loc == Utils::AutoLocation::LoadingStation) {
 			if (colour == Utils::Alliance::Blue) {
-				left_side = true;
+				left_side = false;
 				mobility->setLeft(SPEED);
 				mobility->setRight(0.0);
 			}
 			else if (colour == Utils::Alliance::Red) {
-				left_side = false;
+				left_side = true;
 				mobility->setLeft(0.0);
 				mobility->setRight(SPEED);
 			}

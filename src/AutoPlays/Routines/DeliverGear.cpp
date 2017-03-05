@@ -16,7 +16,7 @@
 DeliverGear::DeliverGear(Utils::Alliance color, Utils::AutoLocation location) {
 	//if (Vision::getInstance()->canSeeGearHook()) {
 	if (location == Utils::AutoLocation::Boiler) {
-		addAction(new DriveStraight(55.0, 0.75));
+		addAction(new DriveStraight(58.0, 0.75));
 		float degrees = 54.0;
 			if (color == Utils::Alliance::Blue) {
 				addAction(new TurnDegrees(degrees));
@@ -24,7 +24,7 @@ DeliverGear::DeliverGear(Utils::Alliance color, Utils::AutoLocation location) {
 			else {
 				addAction(new TurnDegrees(-degrees));
 			}
-		addAction(new DriveStraight(65.0, 0.75));
+		addAction(new DriveStraight(60.0, 0.75));
 		addAction(new DriveStraight(12.0, 0.25));
 		addAction(new Wiggle(color, location, 3.0));
 		addAction(new DropGear());
