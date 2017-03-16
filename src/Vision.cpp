@@ -84,7 +84,7 @@ float Vision::gearHookDistance() {
 }
 
 float Vision::highGoalOffset() {
-	return NetworkTable::GetTable("Vision/Shooter")->GetNumber("offset", 0.0);
+	return NetworkTable::GetTable("Vision/Shooter")->GetNumber("offset", 0.0) + 0.02;
 }
 
 float Vision::highGoalDistance() {

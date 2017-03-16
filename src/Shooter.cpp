@@ -52,12 +52,12 @@ Shooter::Shooter() {
 	azimuth_PID->Disable();
 
 	azimuth_vision_tracker = new AzimuthVisionTracker();
-	azimuth_vision_PID = new frc::PIDController(0.1, 0.0, 0.0, azimuth_vision_tracker, azimuth);
+	azimuth_vision_PID = new frc::PIDController(0.7, 0.01, 0.5, azimuth_vision_tracker, azimuth);
 	azimuth_vision_PID->SetContinuous(false);
 	azimuth_vision_PID->SetInputRange(-1.0, 1.0);
-	azimuth_vision_PID->SetOutputRange(-0.5, 0.5);
+	azimuth_vision_PID->SetOutputRange(-0.1, 0.1);
 	azimuth_vision_PID->SetPIDSourceType(frc::PIDSourceType::kDisplacement);
-	azimuth_vision_PID->SetAbsoluteTolerance(0.01);
+	azimuth_vision_PID->SetAbsoluteTolerance(0.02);
 	azimuth_vision_PID->SetSetpoint(0.0);
 	azimuth_vision_PID->Disable();
 
