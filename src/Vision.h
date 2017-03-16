@@ -30,11 +30,15 @@ public:
 
 	enum CameraMode {
 		Human,
-		Computer
+		Computer,
+		None
 	};
 
 	void setGearCamMode(CameraMode);
 	void setShooterCamMode(CameraMode);
+
+	CameraMode getGearCamMode();
+	CameraMode getShooterCamMode();
 
 private:
 	Vision();

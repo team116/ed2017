@@ -17,6 +17,7 @@
 #include "AutoPLays/Routines/CrossBaseline.h"
 #include "AutoPlays/Routines/DeliverGear.h"
 #include "AutoPlays/Routines/Test.h"
+#include "AutoPlays/Routines/PositionGear.h"
 #include <IterativeRobot.h>
 #include <Socket.h>
 
@@ -137,10 +138,15 @@ public:
 		mobility->disableRightEncoder();
 		mobility->enableLeftEncoder();
 
-		//NetworkTable::GetTable("SmartDashboard")->PutString("testkey", "team 116");
+		//NetworkTable::GetTable("TestTable")->PutNumber("test", 5);
+
+		//SmartDashboard::PutNumber("Mobile Speed", mobility->getLeftEncoderRates());
 	}
 
 	void DisabledInit() {
+		NetworkTable::GetTable("SmartDashboard")->PutBoolean("Auton Enabled", false);
+		NetworkTable::GetTable("SmartDashboard")->PutBoolean("Tele Enabled", false);
+
 		mobility->stopDriveStraight();
 		mobility->stopDriveDistance();
 		mobility->stopTurnDegrees();
@@ -172,9 +178,12 @@ public:
 			oi->process();
 
 			//Set the play here
-			auto_routine = new DeliverGear(Utils::Alliance::Red, Utils::AutoLocation::Boiler);
+			//auto_routine = new Test();
+			auto_routine = new Test(Utils::Alliance::Blue, Utils::AutoLocation::Middle);
 
 			auto_routine->start();
+
+			NetworkTable::GetTable("SmartDashboard")->PutBoolean("Auton Enabled", true);
 
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in AutonomousInit\n%s", e->what());
@@ -210,6 +219,7 @@ public:
 		try {
 			DisabledInit();
 			mobility->resetGyro();
+			NetworkTable::GetTable("SmartDashboard")->PutBoolean("Tele Enabled", true);
 		} catch(std::exception* e) {
 			log->write(Log::ERROR_LEVEL, "Error in TeleopInit\n%s", e->what());
 		}

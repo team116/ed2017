@@ -16,6 +16,7 @@
 #include "../navx/AHRS.h"
 #include "Log.h"
 #include "Vision.h"
+#include "MobilityRotationInput.h"
 
 class Mobility {
 public:
@@ -137,15 +138,6 @@ private:
 		bool enabled;
 	};
 
-
-	class GearTracker : public frc::PIDSource {
-	public:
-		GearTracker();
-		double PIDGet();
-	private:
-		Vision* vision;
-	};
-
 	static Mobility* INSTANCE;
 
 	Log* log;
@@ -177,7 +169,7 @@ private:
 	frc::PIDController* rotation_PID;
 	MobilityDistanceOutput* distance_output;
 
-	GearTracker* gear_track_input;
+	MobilityRotationInput* rotation_input;
 
 
 	//Other variables

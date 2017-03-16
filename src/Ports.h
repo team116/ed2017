@@ -105,7 +105,7 @@ namespace OIPorts
 	const unsigned int S2_CLIMBER_TOGGLE = 6;
 	const unsigned int S2_AUTO_AZIMUTH_TOGGLE = 7;
 	const unsigned int P_SHOOTER_AZIMUTH_ANGLE = 0;
-	const unsigned int P_SHOOTER_SPEED = 1;
+	const unsigned int P_SHOOTER_SPEED = 0;
 
 
 	//Button Box 2 controls

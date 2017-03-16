@@ -12,12 +12,13 @@ OI* OI::INSTANCE = nullptr;
 
 const float CLIMB_SPEED = 1.0;
 const float SHOOTER_SPEED = -1.0;
-const float INTAKE_SPEED = 1.0;
-const float OPPOSITE_INTAKE_SPEED = -1.0;
+const float INTAKE_SPEED = 0.8;
+const float OPPOSITE_INTAKE_SPEED = -INTAKE_SPEED;
 const float BLENDER_SPEED = 0.75;
-const float BLENDER_REVERSE_SPEED = -0.75;
-const float FEEDER_SPEED = 1.0;
-const float FEEDER_REVERSE_SPEED = -1.0;
+const float BLENDER_REVERSE_SPEED = -BLENDER_SPEED;
+const float FEEDER_SPEED = 0.5;
+const float FEEDER_REVERSE_SPEED = -FEEDER_SPEED;
+const float AZIMUTH_SPEED = 0.1;
 
 const float SHOOT_BUTTON_TIME = 1.0;
 
@@ -51,6 +52,7 @@ void OI::process() {
 			//If it isnt already driving straight, make it drive straight
 			if (!mobility->isDrivingStraight()) {
 				mobility->startDriveStraight();
+				frc::DriverStation::ReportError("OI Left Start Drive Straight");
 			}
 
 			//Set the straight speed according to this joystick
@@ -61,6 +63,7 @@ void OI::process() {
 			//If it isnt already driving straight, make it drive straight
 			if (!mobility->isDrivingStraight()) {
 				mobility->startDriveStraight();
+				frc::DriverStation::ReportError("OI Right Start Drive Straight");
 			}
 
 			//Set the straight speed according to this joystick
@@ -76,11 +79,23 @@ void OI::process() {
 			mobility->setLeft(joy_left->GetRawAxis(OIPorts::AXIS_Z));
 			mobility->setRight(joy_left->GetRawAxis(OIPorts::AXIS_Z) * -1);
 		}
+		else if(joy_right->GetRawButton(OIPorts::B_TURN_TO_GEAR)) {
+			if(vision->canSeeGearHook() && !mobility->isTrackingGear()) {
+				frc::DriverStation::ReportError("Start");
+				mobility->startTrackGear();
+			}
+			mobility->setStraightSpeed(joy_right->GetRawAxis(OIPorts::AXIS_Y) * -1);
+		}
+		else if(!joy_right->GetRawButton(OIPorts::B_TURN_TO_GEAR) && mobility->isTrackingGear()) {
+			frc::DriverStation::ReportError("Stop");
+			mobility->stopTrackGear();
+		}
 		//If we're not doing any of the fancy drive straight or rotate stuff, do normal driving
 		else {
 			//Disable drive straight if it's enabled (we know drive straight button isnt being pressed if we've made it to this else statement)
 			if(mobility->isDrivingStraight()) {
 				mobility->stopDriveStraight();
+				frc::DriverStation::ReportError("OI Stop Drive Straight");
 			}
 
 			//Set both sides to the speeds of their corresponding joysticks
@@ -123,13 +138,14 @@ void OI::process() {
 
 	//SHOOTER
 	//Get percent of shooter speed from shooter dial
-	percent = (-1 * button_box_1->GetRawAxis(OIPorts::P_SHOOTER_SPEED) * 0.4) + 0.6;
+	//percent = (-1 * button_box_1->GetRawAxis(OIPorts::P_SHOOTER_SPEED) * 0.4) + 0.6;
+	percent = button_box_1->GetRawAxis(OIPorts::P_SHOOTER_SPEED) * -0.3 + 0.7;
 	//Speed is the percent of our max speed constant
 	float speed = percent * SHOOTER_SPEED;
 	if(button_box_1->GetRawButton(OIPorts::S2_SHOOTER_WHEELS_TOGGLE) && (speed != shooter->getSpeed())) {
 		//Reading speed from driverstation right now, ignoring the dial.
 		//This is probably just for testing, but it lets us type in an exact speed manually
-		speed = std::stof(SmartDashboard::GetString("DB/String 0", std::to_string(0.0)));
+		//speed = std::stof(SmartDashboard::GetString("DB/String 0", std::to_string(0.0)));
 		//frc::DriverStation::ReportError(SmartDashboard::GetString("DB/String 0", std::to_string(0.0)));
 		shooter->setShooterSpeed(speed);
 		//shooter->setShooterRPM(speed);
@@ -192,10 +208,10 @@ void OI::process() {
 
 	if(!shooter->isAzimuthVisionTrack()) {
 		if(button_box_2->GetRawButton(OIPorts::B_AZIMUTH_LEFT)) {
-			shooter->setAzimuthSpeed(-0.2);
+			shooter->setAzimuthSpeed(-AZIMUTH_SPEED);
 		}
 		else if(button_box_2->GetRawButton(OIPorts::B_AZIMUTH_RIGHT)) {
-			shooter->setAzimuthSpeed(0.2);
+			shooter->setAzimuthSpeed(AZIMUTH_SPEED);
 		}
 		else {
 			shooter->setAzimuthSpeed(0.0);
@@ -271,26 +287,21 @@ void OI::process() {
 
 
 
-	if(button_box_1->GetRawButton(OIPorts::S2_CAMERA_TOGGLE) && (NetworkTable::GetTable("CameraPublisher/GearCam")->GetString("settings", "") == "vision")) {
-		NetworkTable::GetTable("CameraPublisher/GearCam")->PutString("settings", "human");
-		NetworkTable::GetTable("CameraPublisher/ShooterCam")->PutString("settings", "human");
+	if(button_box_1->GetRawButton(OIPorts::S2_CAMERA_TOGGLE)) {
+		if(vision->getGearCamMode() != Vision::CameraMode::Human)
+			NetworkTable::GetTable("CameraPublisher/GearCam")->PutString("settings", "human");
+		if(vision->getShooterCamMode() != Vision::CameraMode::Human)
+			NetworkTable::GetTable("CameraPublisher/ShooterCam")->PutString("settings", "human");
 	}
-	else if(!button_box_1->GetRawButton(OIPorts::S2_CAMERA_TOGGLE) && (NetworkTable::GetTable("CameraPublisher/GearCam")->GetString("settings", "") == "human")) {
-		NetworkTable::GetTable("CameraPublisher/GearCam")->PutString("settings", "vision");
-		NetworkTable::GetTable("CameraPublisher/ShooterCam")->PutString("settings", "vision");
+	else if(!button_box_1->GetRawButton(OIPorts::S2_CAMERA_TOGGLE)) {
+		if(vision->getGearCamMode() != Vision::CameraMode::Computer)
+			NetworkTable::GetTable("CameraPublisher/GearCam")->PutString("settings", "vision");
+		if(vision->getShooterCamMode() != Vision::CameraMode::Computer)
+			NetworkTable::GetTable("CameraPublisher/ShooterCam")->PutString("settings", "vision");
 	}
 
 
-	if(joy_right->GetRawButton(OIPorts::B_TURN_TO_GEAR)) {
-		if(vision->canSeeGearHook() && !mobility->isTrackingGear()) {
-			frc::DriverStation::ReportError("Start");
-			mobility->startTrackGear();
-		}
-	}
-	else {
-		//frc::DriverStation::ReportError("Stop");
-		mobility->stopTrackGear();
-	}
+
 
 	/*if(button_box_2->GetRawButton(OIPorts::B_GEAR_AUTO_ALIGN) && !vision->isTurningToGearHook()) {
 		frc::DriverStation::ReportError("Turn button");

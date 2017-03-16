@@ -1,0 +1,49 @@
+/*
+ * DriveToGearVision.cpp
+ *
+ *  Created on: Mar 15, 2017
+ *      Author: Will
+ */
+
+#include <AutoPlays/Actions/DriveToGearVision.h>
+
+const float SPEED1 = 0.3;
+const float SPEED2 = 0.2;
+const float SLOW_DISTANCE = 48.0;
+const float STOP_DISTANCE = 24.0;
+
+DriveToGearVision::DriveToGearVision() {
+	// TODO Auto-generated constructor stub
+	mobility = Mobility::getInstance();
+	vision = Vision::getInstance();
+
+	//setTimeout(vision->gearHookDistance() / 50);
+}
+
+void DriveToGearVision::start() {
+	mobility->startTrackGear();
+	if(vision->gearHookDistance() > SLOW_DISTANCE) {
+		mobility->setStraightSpeed(SPEED1);
+	}
+	else {
+		mobility->setStraightSpeed(SPEED2);
+	}
+}
+
+void DriveToGearVision::process() {
+	if((vision->gearHookDistance() <= SLOW_DISTANCE) && (mobility->getStraightSpeed() != SPEED2)) {
+		frc::DriverStation::ReportError("Changing to speed 2");
+		mobility->setStraightSpeed(SPEED2);
+	}
+}
+
+bool DriveToGearVision::isFinished() {
+	return (vision->gearHookDistance() <= STOP_DISTANCE);
+}
+
+void DriveToGearVision::end() {
+	mobility->stopTrackGear();
+	mobility->setStraightSpeed(0.0);
+	mobility->setLeft(0.0);
+	mobility->setRight(0.0);
+}

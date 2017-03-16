@@ -69,6 +69,8 @@ void Shooter::process() {
 	//frc::DriverStation::ReportError("Limit Switch: " + std::to_string(azimuth_limit_switch->Get()) + " Azimuth: " + std::to_string(azimuth_encoder->Get()) + " Speed: " + std::to_string(shooter->GetSpeed()));
 	//frc::DriverStation::ReportError("Raw AZ: " + std::to_string(azimuth_encoder->Get()) + " Adjusted AZ: " + std::to_string(az_enc->getAngle()));
 	//frc::DriverStation::ReportError("Shooter: " + std::to_string(shooter->GetEncVel()) + ", " + std::to_string(shooter->GetSpeed()));
+	NetworkTable::GetTable("Status/Shooter")->PutNumber("Azimuth Raw", azimuth_encoder->Get());
+	//NetworkTable::GetTable("Status/Shooter")->PutNumber("Azimuth Adjusted", az_enc->getAngle());
 }
 
 float Shooter::getShooterEncoderRate() {
@@ -124,7 +126,8 @@ void Shooter::setAzimuthSpeed(float speed) {
 }
 
 void Shooter::setShooterSpeed(float speed) {
-	shooter->Set(-speed);
+	//frc::DriverStation::ReportError("Shooter speed: " + std::to_string(speed));
+	shooter->Set(speed);
 
 }
 void Shooter::setShooterRPM(float speed) {

@@ -28,7 +28,7 @@ PositionGear::PositionGear(Utils::Alliance color, Utils::AutoLocation location) 
 	}
 	else if (location == Utils::AutoLocation::Middle) {
 			frc::DriverStation::ReportError("Doing middle forward");
-			addAction(new DriveStraight(49.0, 0.75));
+			addAction(new DriveStraight(47.0, 0.75));
 			addAction(new DriveStraight(12.0, 0.25));
 	}
 	else if (location == Utils::AutoLocation::LoadingStation) {

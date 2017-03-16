@@ -11,8 +11,10 @@
 #include "AutoPlays/Actions/DropGear.h"
 #include "AutoPlays/Actions/CloseGearHolder.h"
 #include "AutoPlays/Actions/Wiggle.h"
+#include "AutoPlays/Actions/DriveToGearVision.h"
 
 Test::Test(Utils::Alliance color, Utils::AutoLocation location) {
-	addAction(new Wiggle(color, location, 3.0));
+	addAction(new DriveToGearVision());
+	addAction(new DriveStraight(18, 0.2));
 }
 
