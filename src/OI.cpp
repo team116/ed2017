@@ -41,9 +41,85 @@ OI::OI() {
 	button_box_3 = new frc::Joystick(OIPorts::JOYSTICK_BUTTONS_3);
 
 	shoot_button_timer = new frc::Timer();
+
+	test_routine = nullptr;
 }
 
 void OI::process() {
+	if(joy_right->GetRawButton(OIPorts::B_TEST_AUTONOMOUS)) {
+		if(test_routine == nullptr) {
+			int auto_play = std::stoi(SmartDashboard::GetString("DB/String 0", std::to_string(0)));
+			int auto_loc = std::stoi(SmartDashboard::GetString("DB/String 1", std::to_string(0)));
+			int auto_all = std::stoi(SmartDashboard::GetString("DB/String 2", std::to_string(0)));
+			int auto_vis = std::stoi(SmartDashboard::GetString("DB/String 3", std::to_string(0)));
+			bool auto_vision = (auto_vis == 1) ? true : false;
+			Utils::AutoLocation auto_location;
+			switch(auto_loc) {
+			case 1:
+				auto_location = Utils::AutoLocation::Boiler;
+				break;
+			case 2:
+				auto_location = Utils::AutoLocation::Middle;
+				break;
+			case 3:
+				auto_location = Utils::AutoLocation::LoadingStation;
+				break;
+			default:
+				return;
+			}
+
+			Utils::Alliance auto_alliance;
+			switch(auto_all) {
+			case 1:
+				auto_alliance = Utils::Alliance::Red;
+				break;
+			case 2:
+				auto_alliance = Utils::Alliance::Red;
+				break;
+			default:
+				return;
+			}
+
+			switch(auto_play) {
+			case 1:
+				test_routine = new DoNothing();
+				break;
+			case 6:
+				test_routine = new CrossBaseline(auto_location);
+				break;
+			case 2:
+				test_routine = new PositionGear(auto_alliance, auto_location, auto_vision);
+				break;
+			case 3:
+				test_routine = new DeliverGear(auto_alliance, auto_location, auto_vision);
+				break;
+			case 4:
+				test_routine = new DeliverGearandShoot(auto_alliance, auto_location, auto_vision);
+				break;
+			case 5:
+				test_routine = new DeliverGearandTravel(auto_alliance, auto_location, auto_vision);
+				break;
+			}
+
+			test_routine->start();
+		}
+		else {
+			if(test_routine->isFinished()) {
+				test_routine->end();
+			}
+			else {
+				test_routine->process();
+			}
+		}
+
+		return;
+	}
+	else {
+		if(test_routine != nullptr) {
+			test_routine->end();
+			test_routine = nullptr;
+		}
+	}
 
 	//Make sure we're not doing an automated mobility thing
 	if(mobility->isTurnDegreesDone() && mobility->isDriveDistanceDone()) {

@@ -94,6 +94,7 @@ namespace OIPorts
 	const unsigned int B_DRIVE_STRAIGHT = 1;
 	const unsigned int B_ROTATE = 2;
 	const unsigned int B_TURN_TO_GEAR = 3;
+	const unsigned int B_TEST_AUTONOMOUS = 4;
 
 
 	//Button Box 1 controls

@@ -138,11 +138,63 @@ public:
 		mobility->disableRightEncoder();
 		mobility->enableLeftEncoder();
 
-		NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", 3);
-		NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPosition", 2);
-		NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoSide", 2);
+		/*
+		 * =====***!***=====
+		 * SET AUTO PLAY HERE
+		 * =====***!***=====
+		 */
+		Utils::Alliance auto_alliance = Utils::Alliance::Blue;
+		Utils::AutoLocation auto_location = Utils::AutoLocation::Middle;
+		auto_routine = new PositionGear(auto_alliance, auto_location, true);
 
-		//SmartDashboard::PutNumber("Mobile Speed", mobility->getLeftEncoderRates());
+		if(typeid(*auto_routine) == typeid(DoNothing)) {
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", 1);
+		}
+		else if(typeid(*auto_routine) == typeid(CrossBaseline)) {
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", 6);
+		}
+		else if(typeid(*auto_routine) == typeid(PositionGear)) {
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", 2);
+		}
+		else if(typeid(*auto_routine) == typeid(DeliverGear)) {
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", 3);
+		}
+		else if(typeid(*auto_routine) == typeid(DeliverGearandShoot)) {
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", 4);
+		}
+		else if(typeid(*auto_routine) == typeid(DeliverGearandTravel)) {
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", 5);
+		}
+		else {
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", -1);
+		}
+
+		switch(auto_alliance) {
+		case Utils::Alliance::Blue:
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoSide", 2);
+			break;
+		case Utils::Alliance::Red:
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoSide", 1);
+			break;
+		default:
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoSide", -1);
+			break;
+		}
+
+		switch(auto_location) {
+		case Utils::AutoLocation::Boiler:
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPosition", 1);
+			break;
+		case Utils::AutoLocation::Middle:
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPosition", 2);
+			break;
+		case Utils::AutoLocation::LoadingStation:
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPosition", 3);
+			break;
+		default:
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPosition", -1);
+			break;
+		}
 	}
 
 	void DisabledInit() {
@@ -179,10 +231,6 @@ public:
 		try {
 			//Makes sure the sensor toggles get read
 			oi->process();
-
-			//Set the play here
-			//auto_routine = new Test();
-			auto_routine = new PositionGear(Utils::Alliance::Blue, Utils::AutoLocation::Middle, true);
 
 			auto_routine->start();
 

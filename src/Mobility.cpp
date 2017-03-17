@@ -336,7 +336,7 @@ void Mobility::setStraightSpeed(float speed) {
 	straight_speed = speed;
 	if(use_gyro) {
 		rotation_output->setForwardSpeed(speed);
-		frc::DriverStation::ReportError("setting straight speed" + std::to_string(speed));
+		//frc::DriverStation::ReportError("setting straight speed " + std::to_string(speed));
 	}
 	else {
 		setLeft(speed);
