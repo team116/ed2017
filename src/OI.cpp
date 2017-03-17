@@ -8,6 +8,13 @@
 #include <OI.h>
 #include "Ports.h"
 
+#include "AutoPlays/Routines/DoNothing.h"
+#include "AutoPLays/Routines/CrossBaseline.h"
+#include "AutoPlays/Routines/DeliverGear.h"
+#include "AutoPlays/Routines/PositionGear.h"
+#include "AutoPlays/Routines/DeliverGearandShoot.h"
+#include "AutoPlays/Routines/DeliverGearandTravel.h"
+
 OI* OI::INSTANCE = nullptr;
 
 const float CLIMB_SPEED = 1.0;

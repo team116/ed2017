@@ -18,6 +18,8 @@
 #include "AutoPlays/Routines/DeliverGear.h"
 #include "AutoPlays/Routines/Test.h"
 #include "AutoPlays/Routines/PositionGear.h"
+#include "AutoPlays/Routines/DeliverGearandShoot.h"
+#include "AutoPlays/Routines/DeliverGearandTravel.h"
 #include <IterativeRobot.h>
 #include <Socket.h>
 
@@ -44,93 +46,93 @@ public:
 	void RobotInit() {
 		try {
 			log = Log::getInstance();
-		} catch(std::exception* e) {
+		} catch(std::exception& e) {
 			frc::DriverStation::ReportError("Error initializing Log");
-			frc::DriverStation::ReportError(e->what());
+			frc::DriverStation::ReportError(e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Log Initialized");
 
 		try {
 			autonomous = Autonomous::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Autonomous\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Autonomous\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Autonomous Initialized");
 		try	{
 		   //socket = new Socket();
-		} catch(std::exception* e) {
-					log->write(Log::ERROR_LEVEL, "Error initializing Socket\n%s", e->what());
+		} catch(std::exception& e) {
+					log->write(Log::ERROR_LEVEL, "Error initializing Socket\n%s", e.what());
 		}
 		try {
 			climber = Climber::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Climber\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Climber\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Climber Initialized");
 
 		try {
 			gear = Gear::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Gear\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Gear\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Gear Initialized");
 
 		try {
 			intake = Intake::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Intake\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Intake\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Intake Initialized");
 
 		try {
 			mobility = Mobility::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Mobility\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Mobility\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Mobility Initialized");
 
 		try {
 			oi = OI::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing OI\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing OI\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "OI Initialized");
 
 		try {
 			shooter = Shooter::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Shooter\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Shooter\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Shooter Initialized");
 
 		try {
 			feeder = Feeder::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Feeder\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Feeder\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Feeder Initialized");
 
 		try {
 			vision = Vision::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Vision\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Vision\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Vision Initialized");
 
 		try {
 			diagnostics = Diagnostics::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Diagnostics\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Diagnostics\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Diagnostics Initialized");
@@ -236,8 +238,8 @@ public:
 
 			NetworkTable::GetTable("SmartDashboard")->PutBoolean("Auton Enabled", true);
 
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error in AutonomousInit\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error in AutonomousInit\n%s", e.what());
 		}
 	}
 
@@ -261,8 +263,8 @@ public:
 				}
 			}
 
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error in AutonomousPeriodic\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error in AutonomousPeriodic\n%s", e.what());
 		}
 	}
 
@@ -271,8 +273,8 @@ public:
 			DisabledInit();
 			mobility->resetGyro();
 			NetworkTable::GetTable("SmartDashboard")->PutBoolean("Tele Enabled", true);
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error in TeleopInit\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error in TeleopInit\n%s", e.what());
 		}
 	}
 
@@ -286,15 +288,15 @@ public:
 			shooter->process();
 			feeder->process();
 			//diagnostics->process();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error in TeleopPeriodic\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error in TeleopPeriodic\n%s", e.what());
 		}
 	}
 
 	void TestInit() {
 		try {
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error in TestInit\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error in TestInit\n%s", e.what());
 		}
 	}
 
@@ -302,8 +304,8 @@ public:
 		try {
 			//TeleopPeriodic();
 			gear->enableCompressor();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error in TestPeriodic\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error in TestPeriodic\n%s", e.what());
 		}
 	}
 	~Robot(){
