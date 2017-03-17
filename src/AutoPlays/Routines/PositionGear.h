@@ -13,7 +13,7 @@
 
 class PositionGear: public Routine {
 public:
-	PositionGear(Utils::Alliance color, Utils::AutoLocation location);
+	PositionGear(Utils::Alliance color, Utils::AutoLocation location, bool use_vision);
 };
 
 #endif /* SRC_AUTOPLAYS_ROUTINES_POSITIONGEAR_H_ */

@@ -138,7 +138,9 @@ public:
 		mobility->disableRightEncoder();
 		mobility->enableLeftEncoder();
 
-		//NetworkTable::GetTable("TestTable")->PutNumber("test", 5);
+		NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", 3);
+		NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPosition", 2);
+		NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoSide", 2);
 
 		//SmartDashboard::PutNumber("Mobile Speed", mobility->getLeftEncoderRates());
 	}
@@ -172,6 +174,7 @@ public:
 			return;
 		}*/
 	}
+
 	void AutonomousInit() override {
 		try {
 			//Makes sure the sensor toggles get read
@@ -179,7 +182,7 @@ public:
 
 			//Set the play here
 			//auto_routine = new Test();
-			auto_routine = new Test(Utils::Alliance::Blue, Utils::AutoLocation::Middle);
+			auto_routine = new PositionGear(Utils::Alliance::Blue, Utils::AutoLocation::Middle, true);
 
 			auto_routine->start();
 

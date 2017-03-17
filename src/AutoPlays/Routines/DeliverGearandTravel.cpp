@@ -15,10 +15,10 @@
 #include <Vision.h>
 
 
-DeliverGearandTravel::DeliverGearandTravel(Utils::Alliance color, Utils::AutoLocation location) {
+DeliverGearandTravel::DeliverGearandTravel(Utils::Alliance color, Utils::AutoLocation location, bool use_vision) {
 	if (location == Utils::AutoLocation::Boiler){
 		float degrees = 56.0;
-		addAction(new DeliverGear(color, location));
+		addAction(new DeliverGear(color, location, use_vision));
 			if (color == Utils::Alliance::Blue) {
 				addAction(new TurnDegrees(-degrees));
 			}

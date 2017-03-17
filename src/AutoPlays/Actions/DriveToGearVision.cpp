@@ -7,10 +7,10 @@
 
 #include <AutoPlays/Actions/DriveToGearVision.h>
 
-const float SPEED1 = 0.3;
+const float SPEED1 = 0.4;
 const float SPEED2 = 0.2;
 const float SLOW_DISTANCE = 48.0;
-const float STOP_DISTANCE = 24.0;
+const float STOP_DISTANCE = 30.0;
 
 DriveToGearVision::DriveToGearVision() {
 	// TODO Auto-generated constructor stub
@@ -23,9 +23,11 @@ DriveToGearVision::DriveToGearVision() {
 void DriveToGearVision::start() {
 	mobility->startTrackGear();
 	if(vision->gearHookDistance() > SLOW_DISTANCE) {
+		frc::DriverStation::ReportError("Speed 1");
 		mobility->setStraightSpeed(SPEED1);
 	}
 	else {
+		frc::DriverStation::ReportError("Speed 2");
 		mobility->setStraightSpeed(SPEED2);
 	}
 }

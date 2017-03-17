@@ -13,7 +13,7 @@
 
 class DeliverGearandShoot: public Routine {
 public:
-	DeliverGearandShoot(Utils::Alliance color, Utils::AutoLocation location);
+	DeliverGearandShoot(Utils::Alliance color, Utils::AutoLocation location, bool use_vision);
 };
 
 #endif /* SRC_AUTOPLAYS_ROUTINES_DELIVERGEARANDSHOOT_H_ */
