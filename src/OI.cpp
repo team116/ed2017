@@ -53,6 +53,13 @@ void OI::process() {
 			int auto_all = std::stoi(SmartDashboard::GetString("DB/String 2", std::to_string(0)));
 			int auto_vis = std::stoi(SmartDashboard::GetString("DB/String 3", std::to_string(0)));
 			bool auto_vision = (auto_vis == 1) ? true : false;
+
+
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoSide", auto_all);
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPosition", auto_loc);
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", auto_vis);
+
+
 			Utils::AutoLocation auto_location;
 			switch(auto_loc) {
 			case 1:
