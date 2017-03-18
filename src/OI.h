@@ -44,6 +44,10 @@ private:
 	frc::Timer* shoot_button_timer;
 
 	Routine* test_routine;
+
+	bool use_slow;
+	float left_y;
+	float right_y;
 };
 
 #endif /* SRC_OI_H_ */

@@ -30,7 +30,7 @@ double MobilityRotationInput::PIDGet() {
 	case Source::Camera:
 		if(vision->canSeeGearHook()) {
 			NetworkTable::GetTable("Status/Mobility")->PutNumber("Rotation Input", vision->gearHookOffset() * -12.0);
-			return vision->gearHookOffset() * -12.0;
+			return vision->gearHookOffset() * -10.0;
 		}
 		else {
 			NetworkTable::GetTable("Status/Mobility")->PutNumber("Rotation Input", 0.0);

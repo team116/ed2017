@@ -89,6 +89,9 @@ Mobility::Mobility() {
 
 	drive_distance_timer = new Timer();
 	turn_degrees_timer = new Timer();
+
+	ultrasonic_front = new frc::Ultrasonic(RobotPorts::ULTRASONIC_PING, RobotPorts::ULTRASONIC_ECHO);
+	ultrasonic_front->SetAutomaticMode(true);
 }
 
 void Mobility::process() {
@@ -98,6 +101,8 @@ void Mobility::process() {
 	NetworkTable::GetTable("SmartDashboard")->PutNumber("Mobile Speed Left", getLeftEncoderRates());
 	NetworkTable::GetTable("SmartDashboard")->PutNumber("Mobile Speed Right", getRightEncoderRates());
 
+	NetworkTable::GetTable("Status/Mobility")->PutNumber("Mobile Front Ultrasonic Inches", ultrasonic_front->GetRangeInches());
+	NetworkTable::GetTable("Status/Mobility")->PutNumber("Mobile Front Ultrasonic Valid", ultrasonic_front->IsRangeValid());
 	NetworkTable::GetTable("Status/Mobility")->PutString("Encoder Left", std::to_string(getLeftEncoderRates()));
 	NetworkTable::GetTable("Status/Mobility")->PutString("Encoder Right", std::to_string(getRightEncoderRates()));
 	NetworkTable::GetTable("Status/Mobility")->PutString("Gyro", std::to_string(gyro->PIDGet()));

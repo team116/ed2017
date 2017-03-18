@@ -7,17 +7,17 @@
 
 #include <AutoPlays/Actions/DriveToGearVision.h>
 
-const float SPEED1 = 0.4;
+const float SPEED1 = 0.35;
 const float SPEED2 = 0.2;
 const float SLOW_DISTANCE = 48.0;
-const float STOP_DISTANCE = 30.0;
+const float STOP_DISTANCE = 22.0;
 
 DriveToGearVision::DriveToGearVision() {
 	// TODO Auto-generated constructor stub
 	mobility = Mobility::getInstance();
 	vision = Vision::getInstance();
 
-	//setTimeout(vision->gearHookDistance() / 50);
+	setTimeout(5.0);
 }
 
 void DriveToGearVision::start() {
@@ -40,7 +40,7 @@ void DriveToGearVision::process() {
 }
 
 bool DriveToGearVision::isFinished() {
-	return (vision->gearHookDistance() <= STOP_DISTANCE);
+	return ((vision->gearHookDistance() <= STOP_DISTANCE) && (vision->gearHookDistance() >= 0.0));
 }
 
 void DriveToGearVision::end() {

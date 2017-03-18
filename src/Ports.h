@@ -57,6 +57,8 @@ namespace RobotPorts
 	//Sensors
 	const unsigned int LS_SHOOTER_AZIMUTH = 5;
 	const unsigned int LS_CLIMBER = 4;
+	const unsigned int ULTRASONIC_ECHO = 2;
+	const unsigned int ULTRASONIC_PING = 3;
 
 
 	//Encoders
@@ -93,8 +95,9 @@ namespace OIPorts
 	//Drive Joystick controls
 	const unsigned int B_DRIVE_STRAIGHT = 1;
 	const unsigned int B_ROTATE = 2;
-	const unsigned int B_TURN_TO_GEAR = 3;
-	const unsigned int B_TEST_AUTONOMOUS = 4;
+	const unsigned int B_TURN_TO_GEAR = 5;
+	//const unsigned int B_TEST_AUTONOMOUS = 4;
+	const unsigned int B_SLOW_SPEED = 3;
 
 
 	//Button Box 1 controls
