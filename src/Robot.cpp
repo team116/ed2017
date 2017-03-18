@@ -17,6 +17,7 @@
 #include "AutoPLays/Routines/CrossBaseline.h"
 #include "AutoPlays/Routines/DeliverGear.h"
 #include "AutoPlays/Routines/Test.h"
+#include "AutoPlays/Routines/PositionGear.h"
 #include <IterativeRobot.h>
 #include <Socket.h>
 
@@ -172,7 +173,7 @@ public:
 			oi->process();
 
 			//Set the play here
-			auto_routine = new DeliverGear(Utils::Alliance::Red, Utils::AutoLocation::Boiler);
+			auto_routine = new PositionGear(Utils::Alliance::Blue, Utils::AutoLocation::Boiler);
 
 			auto_routine->start();
 
