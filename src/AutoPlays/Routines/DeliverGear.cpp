@@ -18,7 +18,7 @@ DeliverGear::DeliverGear(Utils::Alliance color, Utils::AutoLocation location, bo
 	//if (Vision::getInstance()->canSeeGearHook()) {
 	addAction(new PositionGear(color, location, use_vision));
 	if(use_vision) {
-		addAction(new DriveStraight(8.0, 0.25));
+		addAction(new DriveStraight(12.0, 0.25));
 	}
 	else {
 		addAction(new DriveStraight(2.0, 0.25));

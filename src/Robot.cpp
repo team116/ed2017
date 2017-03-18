@@ -145,9 +145,11 @@ public:
 		 * SET AUTO PLAY HERE
 		 * =====***!***=====
 		 */
-		Utils::Alliance auto_alliance = Utils::Alliance::Blue;
-		Utils::AutoLocation auto_location = Utils::AutoLocation::Middle;
-		auto_routine = new PositionGear(auto_alliance, auto_location, true);
+		Utils::Alliance auto_alliance = Utils::Alliance::Red;
+		Utils::AutoLocation auto_location = Utils::AutoLocation::LoadingStation;
+		auto_routine = new DeliverGear(auto_alliance, auto_location, true);
+
+
 
 		if(typeid(*auto_routine) == typeid(DoNothing)) {
 			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", 1);

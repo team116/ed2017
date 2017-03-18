@@ -26,6 +26,7 @@ PositionGear::PositionGear(Utils::Alliance color, Utils::AutoLocation location, 
 			}
 
 			if(use_vision) {
+				addAction(new DriveStraight(36.0, 0.75));
 				addAction(new DriveToGearVision());
 			}
 			else {
@@ -36,8 +37,9 @@ PositionGear::PositionGear(Utils::Alliance color, Utils::AutoLocation location, 
 	else if (location == Utils::AutoLocation::Middle) {
 			frc::DriverStation::ReportError("Doing middle forward");
 			if(use_vision) {
+				addAction(new DriveStraight(36.0, 0.75));
 				addAction(new DriveToGearVision());
-				addAction(new DriveStraight(0.0, 0.5));
+				//addAction(new DriveStraight(0.0, 0.5));
 			}
 			else {
 				addAction(new DriveStraight(47.0, 0.75));
@@ -47,13 +49,14 @@ PositionGear::PositionGear(Utils::Alliance color, Utils::AutoLocation location, 
 	else if (location == Utils::AutoLocation::LoadingStation) {
 			addAction(new DriveStraight(64.0, 0.75));
 			if (color == Utils::Alliance::Blue) {
-				addAction(new TurnDegrees(-60.0));
+				addAction(new TurnDegrees(-55.0));
 			}
 			else {
-				addAction(new TurnDegrees(60.0));
+				addAction(new TurnDegrees(55.0));
 			}
 
 			if(use_vision) {
+				addAction(new DriveStraight(24.0, 0.75));
 				addAction(new DriveToGearVision());
 			}
 			else {

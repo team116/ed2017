@@ -17,6 +17,7 @@
 #include "Log.h"
 #include "Vision.h"
 #include "MobilityRotationInput.h"
+#include <Ultrasonic.h>
 
 class Mobility {
 public:
@@ -163,6 +164,7 @@ private:
 
 	//Sensors
 	AHRS* gyro;
+	frc::Ultrasonic* ultrasonic_front;
 
 	//PID Stuff
 	MobilityRotationPID* rotation_output;

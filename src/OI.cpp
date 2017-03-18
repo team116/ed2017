@@ -18,14 +18,14 @@
 OI* OI::INSTANCE = nullptr;
 
 const float CLIMB_SPEED = 1.0;
-const float SHOOTER_SPEED = -1.0;
+const float SHOOTER_SPEED = 1.0;
 const float INTAKE_SPEED = 0.8;
 const float OPPOSITE_INTAKE_SPEED = -INTAKE_SPEED;
 const float BLENDER_SPEED = 0.75;
 const float BLENDER_REVERSE_SPEED = -BLENDER_SPEED;
 const float FEEDER_SPEED = 0.5;
 const float FEEDER_REVERSE_SPEED = -FEEDER_SPEED;
-const float AZIMUTH_SPEED = 0.1;
+const float AZIMUTH_SPEED = 0.15;
 
 const float SHOOT_BUTTON_TIME = 1.0;
 
@@ -50,23 +50,27 @@ OI::OI() {
 	shoot_button_timer = new frc::Timer();
 
 	test_routine = nullptr;
+
+	use_slow = false;
+
+	right_y = 0.0;
+	left_y = 0.0;
 }
 
 void OI::process() {
+	/*int auto_play = std::stoi(SmartDashboard::GetString("DB/String 0", std::to_string(0)));
+	int auto_loc = std::stoi(SmartDashboard::GetString("DB/String 1", std::to_string(0)));
+	int auto_all = std::stoi(SmartDashboard::GetString("DB/String 2", std::to_string(0)));
+	int auto_vis = std::stoi(SmartDashboard::GetString("DB/String 3", std::to_string(0)));
+	bool auto_vision = (auto_vis == 1) ? true : false;
+
+
+	NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoSide", auto_all);
+	NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPosition", auto_loc);
+	NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", auto_play);
+
 	if(joy_right->GetRawButton(OIPorts::B_TEST_AUTONOMOUS)) {
 		if(test_routine == nullptr) {
-			int auto_play = std::stoi(SmartDashboard::GetString("DB/String 0", std::to_string(0)));
-			int auto_loc = std::stoi(SmartDashboard::GetString("DB/String 1", std::to_string(0)));
-			int auto_all = std::stoi(SmartDashboard::GetString("DB/String 2", std::to_string(0)));
-			int auto_vis = std::stoi(SmartDashboard::GetString("DB/String 3", std::to_string(0)));
-			bool auto_vision = (auto_vis == 1) ? true : false;
-
-
-			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoSide", auto_all);
-			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPosition", auto_loc);
-			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", auto_vis);
-
-
 			Utils::AutoLocation auto_location;
 			switch(auto_loc) {
 			case 1:
@@ -133,10 +137,18 @@ void OI::process() {
 			test_routine->end();
 			test_routine = nullptr;
 		}
-	}
+	}*/
 
 	//Make sure we're not doing an automated mobility thing
 	if(mobility->isTurnDegreesDone() && mobility->isDriveDistanceDone()) {
+		if(joy_left->GetRawButton(OIPorts::B_SLOW_SPEED) || joy_right->GetRawButton(OIPorts::B_SLOW_SPEED)) {
+			left_y = joy_left->GetRawAxis(OIPorts::AXIS_Y) * -0.5;
+			right_y = joy_right->GetRawAxis(OIPorts::AXIS_Y) * -0.5;
+		}
+		else {
+			left_y = joy_left->GetRawAxis(OIPorts::AXIS_Y) * -1;
+			right_y = joy_right->GetRawAxis(OIPorts::AXIS_Y) * -1;
+		}
 		//Check left joystick drive straight button
 		if (joy_left->GetRawButton(OIPorts::B_DRIVE_STRAIGHT)) {
 			//If it isnt already driving straight, make it drive straight
@@ -146,7 +158,7 @@ void OI::process() {
 			}
 
 			//Set the straight speed according to this joystick
-			mobility->setStraightSpeed(joy_left->GetRawAxis(OIPorts::AXIS_Y) * -1);
+			mobility->setStraightSpeed(left_y);
 		}
 		//Check right joystick drive straight button
 		else if (joy_right->GetRawButton(OIPorts::B_DRIVE_STRAIGHT)) {
@@ -157,7 +169,7 @@ void OI::process() {
 			}
 
 			//Set the straight speed according to this joystick
-			mobility->setStraightSpeed(joy_right->GetRawAxis(OIPorts::AXIS_Y) * -1);
+			mobility->setStraightSpeed(right_y);
 		}
 		//Check right joystick rotate button
 		else if(joy_right->GetRawButton(OIPorts::B_ROTATE)) {
@@ -174,7 +186,7 @@ void OI::process() {
 				frc::DriverStation::ReportError("Start");
 				mobility->startTrackGear();
 			}
-			mobility->setStraightSpeed(joy_right->GetRawAxis(OIPorts::AXIS_Y) * -1);
+			mobility->setStraightSpeed(right_y);
 		}
 		else if(!joy_right->GetRawButton(OIPorts::B_TURN_TO_GEAR) && mobility->isTrackingGear()) {
 			frc::DriverStation::ReportError("Stop");
@@ -190,8 +202,8 @@ void OI::process() {
 
 			//Set both sides to the speeds of their corresponding joysticks
 			//Multiply by -1 because y axis is flipped on these joysticks
-			mobility->setLeft(joy_left->GetRawAxis(OIPorts::AXIS_Y) * -1);
-			mobility->setRight(joy_right->GetRawAxis(OIPorts::AXIS_Y) * -1);
+			mobility->setLeft(left_y);
+			mobility->setRight(right_y);
 		}
 	}
 
