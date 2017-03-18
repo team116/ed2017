@@ -52,6 +52,7 @@ public:
 	void startAzimuthVisionTrack();
 	void stopAzimuthVisionTrack();
 	bool isAzimuthVisionTrack();
+	bool isAzimuthVisionOnTarget();
 
 private:
 	Shooter();

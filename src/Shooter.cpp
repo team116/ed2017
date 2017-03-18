@@ -197,6 +197,10 @@ bool Shooter::isAzimuthVisionTrack() {
 	return azimuth_vision_PID->IsEnabled();
 }
 
+bool Shooter::isAzimuthVisionOnTarget() {
+	return azimuth_vision_PID->OnTarget();
+}
+
 Shooter::AzimuthVisionTracker::AzimuthVisionTracker() {
 	vision = Vision::getInstance();
 }
