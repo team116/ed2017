@@ -72,7 +72,7 @@ bool Vision::canSeeHighGoal() {
 }
 
 float Vision::gearHookDegreesHorizontal() {
-	return NetworkTable::GetTable("Vision/Gear")->GetNumber("angleOff", 0.0);
+	return gearHookOffset() * 18.666;
 }
 
 float Vision::gearHookOffset() {
@@ -80,11 +80,11 @@ float Vision::gearHookOffset() {
 }
 
 float Vision::gearHookDistance() {
-	return 0.0;
+	return NetworkTable::GetTable("Vision/Gear")->GetNumber("distance", 0.0);
 }
 
 float Vision::highGoalOffset() {
-	return NetworkTable::GetTable("Vision/Shooter")->GetNumber("offset", 0.0);
+	return NetworkTable::GetTable("Vision/Shooter")->GetNumber("offset", 0.0) + 0.02;
 }
 
 float Vision::highGoalDistance() {
@@ -108,37 +108,49 @@ bool Vision::isTurningToGearHook() {
 }
 
 void Vision::setGearCamMode(CameraMode mode) {
-	/*std::vector<cs::VideoProperty> props = gear_cam.EnumerateProperties();
 	switch(mode) {
 	case Human:
+		NetworkTable::GetTable("CameraPublisher/GearCam")->PutString("settings", "human");
 		break;
 	case Computer:
-		props[1].Set(0);//brightness
-		props[3].Set(100);//contrast
-		props[5].Set(100);//saturation
-		props[6].Set(0);//auto white balance
-		props[8].Set(10000);//white balance
-		props[12].Set(1);//auto exposure
-		props[14].Set(10);//exposure
+		NetworkTable::GetTable("CameraPublisher/GearCam")->PutString("settings", "vision");
 		break;
-	}*/
+	}
+}
+
+Vision::CameraMode Vision::getGearCamMode() {
+	std::string status = NetworkTable::GetTable("CameraPublisher/GearCam")->GetString("settings", "");
+
+	if(status.compare("vision") == 0) {
+		return CameraMode::Computer;
+	}
+	if(status.compare("human") == 0) {
+		return CameraMode::Human;
+	}
+	return CameraMode::None;
 }
 
 void Vision::setShooterCamMode(CameraMode mode) {
-	/*std::vector<cs::VideoProperty> props = shooter_cam.EnumerateProperties();
 	switch(mode) {
 	case Human:
+		NetworkTable::GetTable("CameraPublisher/ShooterCam")->PutString("settings", "human");
 		break;
 	case Computer:
-		props[1].Set(0);//brightness
-		props[3].Set(100);//contrast
-		props[5].Set(100);//saturation
-		props[6].Set(0);//auto white balance
-		props[8].Set(10000);//white balance
-		props[12].Set(1);//auto exposure
-		props[14].Set(10);//exposure
+		NetworkTable::GetTable("CameraPublisher/ShooterCam")->PutString("settings", "vision");
 		break;
-	}*/
+	}
+}
+
+Vision::CameraMode Vision::getShooterCamMode() {
+	std::string status = NetworkTable::GetTable("CameraPublisher/ShooterCam")->GetString("settings", "");
+
+	if(status.compare("vision") == 0) {
+		return CameraMode::Computer;
+	}
+	if(status.compare("human") == 0) {
+		return CameraMode::Human;
+	}
+	return CameraMode::None;
 }
 
 Vision* Vision::getInstance()

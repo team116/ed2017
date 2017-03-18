@@ -16,6 +16,7 @@
 #include <Feeder.h>
 #include "Vision.h"
 #include "Log.h"
+#include "AutoPlays/Routine.h"
 
 class OI {
 public:
@@ -41,6 +42,8 @@ private:
 	frc::Joystick* button_box_3;
 
 	frc::Timer* shoot_button_timer;
+
+	Routine* test_routine;
 };
 
 #endif /* SRC_OI_H_ */

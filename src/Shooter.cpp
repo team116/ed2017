@@ -52,12 +52,12 @@ Shooter::Shooter() {
 	azimuth_PID->Disable();
 
 	azimuth_vision_tracker = new AzimuthVisionTracker();
-	azimuth_vision_PID = new frc::PIDController(0.1, 0.0, 0.0, azimuth_vision_tracker, azimuth);
+	azimuth_vision_PID = new frc::PIDController(0.7, 0.01, 0.5, azimuth_vision_tracker, azimuth);
 	azimuth_vision_PID->SetContinuous(false);
 	azimuth_vision_PID->SetInputRange(-1.0, 1.0);
-	azimuth_vision_PID->SetOutputRange(-0.5, 0.5);
+	azimuth_vision_PID->SetOutputRange(-0.1, 0.1);
 	azimuth_vision_PID->SetPIDSourceType(frc::PIDSourceType::kDisplacement);
-	azimuth_vision_PID->SetAbsoluteTolerance(0.01);
+	azimuth_vision_PID->SetAbsoluteTolerance(0.02);
 	azimuth_vision_PID->SetSetpoint(0.0);
 	azimuth_vision_PID->Disable();
 
@@ -69,6 +69,8 @@ void Shooter::process() {
 	//frc::DriverStation::ReportError("Limit Switch: " + std::to_string(azimuth_limit_switch->Get()) + " Azimuth: " + std::to_string(azimuth_encoder->Get()) + " Speed: " + std::to_string(shooter->GetSpeed()));
 	//frc::DriverStation::ReportError("Raw AZ: " + std::to_string(azimuth_encoder->Get()) + " Adjusted AZ: " + std::to_string(az_enc->getAngle()));
 	//frc::DriverStation::ReportError("Shooter: " + std::to_string(shooter->GetEncVel()) + ", " + std::to_string(shooter->GetSpeed()));
+	NetworkTable::GetTable("Status/Shooter")->PutNumber("Azimuth Raw", azimuth_encoder->Get());
+	//NetworkTable::GetTable("Status/Shooter")->PutNumber("Azimuth Adjusted", az_enc->getAngle());
 }
 
 float Shooter::getShooterEncoderRate() {
@@ -124,7 +126,8 @@ void Shooter::setAzimuthSpeed(float speed) {
 }
 
 void Shooter::setShooterSpeed(float speed) {
-	shooter->Set(-speed);
+	//frc::DriverStation::ReportError("Shooter speed: " + std::to_string(speed));
+	shooter->Set(speed);
 
 }
 void Shooter::setShooterRPM(float speed) {

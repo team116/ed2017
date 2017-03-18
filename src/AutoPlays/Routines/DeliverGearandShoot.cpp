@@ -17,9 +17,9 @@
 #include "AutoPlays/Actions/Wiggle.h"
 #include <Vision.h>
 
-DeliverGearandShoot::DeliverGearandShoot(Utils::Alliance color, Utils::AutoLocation location) {
+DeliverGearandShoot::DeliverGearandShoot(Utils::Alliance color, Utils::AutoLocation location, bool use_vision) {
 	if (location == Utils::AutoLocation::Boiler) {
-		addAction(new DeliverGear(color, location));
+		addAction(new DeliverGear(color, location, use_vision));
 			if (color == Utils::Alliance::Blue) {
 				addAction(new TurnDegrees(170.0));
 			}
@@ -31,7 +31,7 @@ DeliverGearandShoot::DeliverGearandShoot(Utils::Alliance color, Utils::AutoLocat
 		addAction(new AimShooterManual());
 	}
 	else if (location == Utils::AutoLocation::Middle) {
-		addAction(new DeliverGear(color, location));
+		addAction(new DeliverGear(color, location, use_vision));
 			if (color == Utils::Alliance::Blue) {
 				addAction(new TurnDegrees(-100.0));
 			}

@@ -13,7 +13,7 @@
 
 class DeliverGearandTravel : public Routine {
 public:
-	DeliverGearandTravel(Utils::Alliance color, Utils::AutoLocation location);
+	DeliverGearandTravel(Utils::Alliance color, Utils::AutoLocation location, bool use_vision);
 };
 
 #endif /* SRC_AUTOPLAYS_ROUTINES_DELIVERGEARANDTRAVEL_H_ */

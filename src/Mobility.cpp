@@ -65,7 +65,8 @@ Mobility::Mobility() {
 	//PID controllers
 	rotation_output = new MobilityRotationPID(front_left, front_right, back_left, back_right);
 	rotation_output->Disable();
-	rotation_PID = new frc::PIDController(0.05, 0.0, 0.06, gyro, rotation_output);
+	rotation_input = new MobilityRotationInput(gyro);
+	rotation_PID = new frc::PIDController(0.05, 0.0, 0.06, rotation_input, rotation_output);
 	rotation_PID->Disable();
 	rotation_PID->SetContinuous(true);
 	rotation_PID->SetInputRange(-180, 180);
@@ -74,15 +75,13 @@ Mobility::Mobility() {
 	rotation_PID->SetAbsoluteTolerance(1.0);
 
 	distance_output = new MobilityDistanceOutput();
-	distance_PID = new frc::PIDController(0.15, 0, 0.3, encoders, distance_output);
+	distance_PID = new frc::PIDController(0.1, 0, 0.4, encoders, distance_output);
 	distance_PID->Disable();
 	distance_PID->SetContinuous(false);
 	distance_PID->SetInputRange(-650, 650);
 	distance_PID->SetOutputRange(-1.0, 1.0);
 	distance_PID->SetPIDSourceType(PIDSourceType::kDisplacement);
 	distance_PID->SetAbsoluteTolerance(1.0);
-
-	gear_track_input = new GearTracker();
 
 	tracking_gear = false;
 
@@ -93,6 +92,15 @@ Mobility::Mobility() {
 }
 
 void Mobility::process() {
+	//SmartDashboard::PutNumber("Mobile Speed Left", getLeftEncoderRates());
+	//SmartDashboard::PutNumber("Mobile Speed Right", getRightEncoderRates());
+
+	NetworkTable::GetTable("SmartDashboard")->PutNumber("Mobile Speed Left", getLeftEncoderRates());
+	NetworkTable::GetTable("SmartDashboard")->PutNumber("Mobile Speed Right", getRightEncoderRates());
+
+	NetworkTable::GetTable("Status/Mobility")->PutString("Encoder Left", std::to_string(getLeftEncoderRates()));
+	NetworkTable::GetTable("Status/Mobility")->PutString("Encoder Right", std::to_string(getRightEncoderRates()));
+	NetworkTable::GetTable("Status/Mobility")->PutString("Gyro", std::to_string(gyro->PIDGet()));
 	//DriverStation::ReportError("Gyro: " + std::to_string(gyro->PIDGet()));
 	//frc::DriverStation::ReportError("Left Encoder: " + std::to_string(encoders->getLeftEncoderRates()) + " Right Encoder: "  + std::to_string(encoders->getRightEncoderRates()));
 	if (is_turn_degrees_on) {
@@ -107,7 +115,7 @@ void Mobility::processDistance() {
 	if(use_left_drive_encoder || use_right_drive_encoder) {
 		if(distance_PID->OnTarget()) {
 			if(drive_distance_timer->Get() >= ONTARGET_TIME) {
-				frc::DriverStation::ReportError("Drive dist done");
+				//frc::DriverStation::ReportError("Drive dist done");
 				stopDriveDistance();
 				setStraightSpeed(0.0);
 				setLeft(0.0);
@@ -119,7 +127,7 @@ void Mobility::processDistance() {
 				drive_distance_timer->Reset();
 				drive_distance_timer->Start();
 			}
-			frc::DriverStation::ReportError("On Target");
+			//frc::DriverStation::ReportError("On Target");
 		}
 		else if(drive_distance_timer->Get() > 0.0) {
 			drive_distance_timer->Stop();
@@ -128,11 +136,11 @@ void Mobility::processDistance() {
 	}
 	else {
 		if(drive_distance_timer->Get() >= (drive_dist_time + std::min(0.3f, drive_dist_time))) {
-			frc::DriverStation::ReportError("Drive distance done");
+			//frc::DriverStation::ReportError("Drive distance done");
 			stopDriveStraight();
 		}
 		else if(drive_distance_timer->Get() >= drive_dist_time ) {
-			frc::DriverStation::ReportError("Stopping drive dist");
+			//frc::DriverStation::ReportError("Stopping drive dist");
 			setStraightSpeed(0.0);
 			setLeft(0.0);
 			setRight(0.0);
@@ -146,13 +154,14 @@ float Mobility::getDistanceError() {
 
 void Mobility::processTurningDegrees() {
 	if(use_gyro) {
+		//frc::DriverStation::ReportError("Processing turn degrees using gyro");
 		if (rotation_PID->OnTarget()) {
 			if(turn_degrees_timer->Get() == 0) {
 				turn_degrees_timer->Start();
 			}
 			else if(turn_degrees_timer->Get() >= ONTARGET_TIME) {
 				stopTurnDegrees();
-				frc::DriverStation::ReportError("Turn Degrees done");
+				//frc::DriverStation::ReportError("Turn Degrees done");
 			}
 		}
 		else if(turn_degrees_timer->Get() > 0) {
@@ -230,8 +239,8 @@ void Mobility::stopDriveDistance() {
 }
 
 float Mobility::estimateTimeFromPoints(const float points[][2], int size, float distance) {
-	frc::DriverStation::ReportError(std::to_string(points[1][0]) + "," + std::to_string(points[1][1]));
-	frc::DriverStation::ReportError(std::to_string(size));
+	//frc::DriverStation::ReportError(std::to_string(points[1][0]) + "," + std::to_string(points[1][1]));
+	//frc::DriverStation::ReportError(std::to_string(size));
 	for(int i = 0; i < size; i++) {
 		if(points[i][0] == distance) {
 			return points[i][1];
@@ -258,7 +267,7 @@ float Mobility::estimateTimeFromPoints(const float points[][2], int size, float 
 			float slope = (upper_time - lower_time) / (upper_dist - lower_dist);
 			float y_intercept = upper_time - slope * upper_dist;
 			//mx+b
-			frc::DriverStation::ReportError("Drive Distance Time: " + std::to_string(slope * distance + y_intercept));
+			//frc::DriverStation::ReportError("Drive Distance Time: " + std::to_string(slope * distance + y_intercept));
 			return slope * distance + y_intercept;
 		}
 	}
@@ -294,12 +303,14 @@ bool Mobility::isDriveDistanceDone() {
 
 //Drive Straight
 void Mobility::startDriveStraight() {
-	//frc::DriverStation::ReportError("Starting drive straight");
 	if(use_gyro) {
-		rotation_PID->SetSetpoint(gyro->GetYaw());
+		//gyro->Reset();
+		//frc::DriverStation::ReportError("Mobility Starting drive straight Gyro" + std::to_string(gyro->PIDGet()));
+		rotation_PID->SetSetpoint(gyro->PIDGet());
 		enableRotationPID();
 	}
 	else {
+		//frc::DriverStation::ReportError("Mobility Starting drive straight Manual");
 		Mobility::setLeft(getStraightSpeed());
 		Mobility::setRight(getStraightSpeed());
 	}
@@ -311,6 +322,7 @@ bool Mobility::isDrivingStraight() {
 }
 
 void Mobility::stopDriveStraight() {
+	//frc::DriverStation::ReportError("Mobility Stopping drive straight");
 	driving_straight = false;
 	if(use_gyro) {
 		disableRotationPID();
@@ -324,6 +336,7 @@ void Mobility::setStraightSpeed(float speed) {
 	straight_speed = speed;
 	if(use_gyro) {
 		rotation_output->setForwardSpeed(speed);
+		//frc::DriverStation::ReportError("setting straight speed " + std::to_string(speed));
 	}
 	else {
 		setLeft(speed);
@@ -383,11 +396,13 @@ void Mobility::stopTurnDegrees() {
 }
 
 void Mobility::disableRotationPID() {
+	//frc::DriverStation::ReportError("Disabling Rotation PID");
 	rotation_output->Disable();
 	rotation_PID->Disable();
 }
 
 void Mobility::enableRotationPID() {
+	//frc::DriverStation::ReportError("Enabling Rotation PID");
 	rotation_output->Enable();
 	rotation_PID->Enable();
 }
@@ -455,7 +470,13 @@ void Mobility::resetGyro() {
 }
 
 void Mobility::startTrackGear() {
-	rotation_PID = new frc::PIDController(ROT_P, ROT_I, ROT_D, gear_track_input, rotation_output);
+	//frc::DriverStation::ReportError("Starting track gear");
+	rotation_input->setSource(MobilityRotationInput::Source::Camera);
+	rotation_PID->SetContinuous(false);
+	rotation_PID->SetAbsoluteTolerance(0.05);
+	rotation_PID->SetSetpoint(0.0);
+	enableRotationPID();
+	//turnDegrees(Vision::getInstance()->gearHookDegreesHorizontal());
 	tracking_gear = true;
 }
 
@@ -464,7 +485,11 @@ bool Mobility::isTrackingGear() {
 }
 
 void Mobility::stopTrackGear() {
-	rotation_PID = new frc::PIDController(ROT_P, ROT_I, ROT_D, gyro, rotation_output);
+	//frc::DriverStation::ReportError("Stopping track gear");
+	rotation_input->setSource(MobilityRotationInput::Source::Gyro);
+	rotation_PID->SetContinuous(true);
+	rotation_PID->SetAbsoluteTolerance(1.0);
+	disableRotationPID();
 	tracking_gear = false;
 }
 
@@ -493,17 +518,4 @@ void Mobility::MobilityDistanceOutput::Enable() {
 
 void Mobility::MobilityDistanceOutput::Disable() {
 	enabled = false;
-}
-
-Mobility::GearTracker::GearTracker() {
-	vision = Vision::getInstance();
-}
-
-double Mobility::GearTracker::PIDGet() {
-	if(vision->canSeeGearHook()) {
-		return vision->gearHookOffset();
-	}
-	else {
-		return 0.0;
-	}
 }

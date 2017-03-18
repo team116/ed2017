@@ -7,6 +7,7 @@
 
 #include "MobilityRotationPID.h"
 #include <DriverStation.h>
+#include <networktables/NetworkTable.h>
 
 MobilityRotationPID::MobilityRotationPID(frc::SpeedController* fl, frc::SpeedController* fr, frc::SpeedController* bl,
 		frc::SpeedController* br) {
@@ -35,8 +36,14 @@ void MobilityRotationPID::PIDWrite(double output) {
 	if(!enabled) {
 		return;
 	}
+
 	float leftSpeed = forward + output;
 	float rightSpeed = forward - output;
+
+	//frc::DriverStation::ReportError("Rotation Output: " + std::to_string(output) + " Left: " + std::to_string(leftSpeed) + " Right: " + std::to_string(rightSpeed));
+	NetworkTable::GetTable("Status/Mobility")->PutNumber("Rotation Output Raw", output);
+	NetworkTable::GetTable("Status/Mobility")->PutNumber("Rotation Output Left", leftSpeed);
+	NetworkTable::GetTable("Status/Mobility")->PutNumber("Rotation Output Right", rightSpeed);
 
 	if (leftSpeed > 1.0) {
 		leftSpeed = 1.0;

@@ -18,6 +18,8 @@
 #include "AutoPlays/Routines/DeliverGear.h"
 #include "AutoPlays/Routines/Test.h"
 #include "AutoPlays/Routines/PositionGear.h"
+#include "AutoPlays/Routines/DeliverGearandShoot.h"
+#include "AutoPlays/Routines/DeliverGearandTravel.h"
 #include <IterativeRobot.h>
 #include <Socket.h>
 
@@ -44,93 +46,93 @@ public:
 	void RobotInit() {
 		try {
 			log = Log::getInstance();
-		} catch(std::exception* e) {
+		} catch(std::exception& e) {
 			frc::DriverStation::ReportError("Error initializing Log");
-			frc::DriverStation::ReportError(e->what());
+			frc::DriverStation::ReportError(e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Log Initialized");
 
 		try {
 			autonomous = Autonomous::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Autonomous\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Autonomous\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Autonomous Initialized");
 		try	{
 		   //socket = new Socket();
-		} catch(std::exception* e) {
-					log->write(Log::ERROR_LEVEL, "Error initializing Socket\n%s", e->what());
+		} catch(std::exception& e) {
+					log->write(Log::ERROR_LEVEL, "Error initializing Socket\n%s", e.what());
 		}
 		try {
 			climber = Climber::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Climber\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Climber\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Climber Initialized");
 
 		try {
 			gear = Gear::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Gear\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Gear\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Gear Initialized");
 
 		try {
 			intake = Intake::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Intake\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Intake\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Intake Initialized");
 
 		try {
 			mobility = Mobility::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Mobility\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Mobility\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Mobility Initialized");
 
 		try {
 			oi = OI::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing OI\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing OI\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "OI Initialized");
 
 		try {
 			shooter = Shooter::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Shooter\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Shooter\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Shooter Initialized");
 
 		try {
 			feeder = Feeder::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Feeder\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Feeder\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Feeder Initialized");
 
 		try {
 			vision = Vision::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Vision\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Vision\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Vision Initialized");
 
 		try {
 			diagnostics = Diagnostics::getInstance();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error initializing Diagnostics\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error initializing Diagnostics\n%s", e.what());
 		}
 
 		log->write(Log::DEBUG_LEVEL, "Diagnostics Initialized");
@@ -138,10 +140,69 @@ public:
 		mobility->disableRightEncoder();
 		mobility->enableLeftEncoder();
 
-		//NetworkTable::GetTable("SmartDashboard")->PutString("testkey", "team 116");
+		/*
+		 * =====***!***=====
+		 * SET AUTO PLAY HERE
+		 * =====***!***=====
+		 */
+		Utils::Alliance auto_alliance = Utils::Alliance::Blue;
+		Utils::AutoLocation auto_location = Utils::AutoLocation::Middle;
+		auto_routine = new PositionGear(auto_alliance, auto_location, true);
+
+		if(typeid(*auto_routine) == typeid(DoNothing)) {
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", 1);
+		}
+		else if(typeid(*auto_routine) == typeid(CrossBaseline)) {
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", 6);
+		}
+		else if(typeid(*auto_routine) == typeid(PositionGear)) {
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", 2);
+		}
+		else if(typeid(*auto_routine) == typeid(DeliverGear)) {
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", 3);
+		}
+		else if(typeid(*auto_routine) == typeid(DeliverGearandShoot)) {
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", 4);
+		}
+		else if(typeid(*auto_routine) == typeid(DeliverGearandTravel)) {
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", 5);
+		}
+		else {
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPlay", -1);
+		}
+
+		switch(auto_alliance) {
+		case Utils::Alliance::Blue:
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoSide", 2);
+			break;
+		case Utils::Alliance::Red:
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoSide", 1);
+			break;
+		default:
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoSide", -1);
+			break;
+		}
+
+		switch(auto_location) {
+		case Utils::AutoLocation::Boiler:
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPosition", 1);
+			break;
+		case Utils::AutoLocation::Middle:
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPosition", 2);
+			break;
+		case Utils::AutoLocation::LoadingStation:
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPosition", 3);
+			break;
+		default:
+			NetworkTable::GetTable("SmartDashboard")->PutNumber("AutoPosition", -1);
+			break;
+		}
 	}
 
 	void DisabledInit() {
+		NetworkTable::GetTable("SmartDashboard")->PutBoolean("Auton Enabled", false);
+		NetworkTable::GetTable("SmartDashboard")->PutBoolean("Tele Enabled", false);
+
 		mobility->stopDriveStraight();
 		mobility->stopDriveDistance();
 		mobility->stopTurnDegrees();
@@ -167,18 +228,22 @@ public:
 			return;
 		}*/
 	}
+
 	void AutonomousInit() override {
 		try {
 			//Makes sure the sensor toggles get read
 			oi->process();
 
 			//Set the play here
-			auto_routine = new PositionGear(Utils::Alliance::Blue, Utils::AutoLocation::Boiler);
+			auto_routine = new PositionGear(Utils::Alliance::Blue, Utils::AutoLocation::Boiler, true);
+
 
 			auto_routine->start();
 
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error in AutonomousInit\n%s", e->what());
+			NetworkTable::GetTable("SmartDashboard")->PutBoolean("Auton Enabled", true);
+
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error in AutonomousInit\n%s", e.what());
 		}
 	}
 
@@ -202,8 +267,8 @@ public:
 				}
 			}
 
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error in AutonomousPeriodic\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error in AutonomousPeriodic\n%s", e.what());
 		}
 	}
 
@@ -211,8 +276,9 @@ public:
 		try {
 			DisabledInit();
 			mobility->resetGyro();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error in TeleopInit\n%s", e->what());
+			NetworkTable::GetTable("SmartDashboard")->PutBoolean("Tele Enabled", true);
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error in TeleopInit\n%s", e.what());
 		}
 	}
 
@@ -226,15 +292,15 @@ public:
 			shooter->process();
 			feeder->process();
 			//diagnostics->process();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error in TeleopPeriodic\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error in TeleopPeriodic\n%s", e.what());
 		}
 	}
 
 	void TestInit() {
 		try {
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error in TestInit\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error in TestInit\n%s", e.what());
 		}
 	}
 
@@ -242,8 +308,8 @@ public:
 		try {
 			//TeleopPeriodic();
 			gear->enableCompressor();
-		} catch(std::exception* e) {
-			log->write(Log::ERROR_LEVEL, "Error in TestPeriodic\n%s", e->what());
+		} catch(std::exception& e) {
+			log->write(Log::ERROR_LEVEL, "Error in TestPeriodic\n%s", e.what());
 		}
 	}
 	~Robot(){

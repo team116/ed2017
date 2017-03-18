@@ -14,7 +14,7 @@
 
 class DeliverGear: public Routine {
 public:
-	DeliverGear(Utils::Alliance color, Utils::AutoLocation location);
+	DeliverGear(Utils::Alliance color, Utils::AutoLocation location, bool use_vision);
 };
 
 #endif /* SRC_AUTOPLAYS_ROUTINES_DELIVERGEAR_H_ */
