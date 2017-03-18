@@ -20,26 +20,37 @@
 DeliverGearandShoot::DeliverGearandShoot(Utils::Alliance color, Utils::AutoLocation location, bool use_vision) {
 	if (location == Utils::AutoLocation::Boiler) {
 		addAction(new DeliverGear(color, location, use_vision));
-			if (color == Utils::Alliance::Blue) {
-				addAction(new TurnDegrees(170.0));
-			}
-			else if (color == Utils::Alliance::Red) {
-				addAction(new TurnDegrees(-170.0));
-			}
+		if (color == Utils::Alliance::Blue) {
+			addAction(new TurnDegrees(170.0));
+		}
+		else if (color == Utils::Alliance::Red) {
+			addAction(new TurnDegrees(-170.0));
+		}
 
 		addAction(new DriveStraight(100.0, 0.75));
-		addAction(new AimShooterManual());
+		if (use_vision) {
+			addAction(new AimShooterVision());
+		}
+		else {
+			addAction(new AimShooterManual());
+		}
 	}
 	else if (location == Utils::AutoLocation::Middle) {
 		addAction(new DeliverGear(color, location, use_vision));
-			if (color == Utils::Alliance::Blue) {
-				addAction(new TurnDegrees(-100.0));
-			}
-			else if (color == Utils::Alliance::Red) {
-				addAction(new TurnDegrees(100.0));
-			}
+		if (color == Utils::Alliance::Blue) {
+			addAction(new TurnDegrees(-100.0));
+		}
+		else if (color == Utils::Alliance::Red) {
+			addAction(new TurnDegrees(100.0));
+		}
 		addAction(new DriveStraight(98.0, 0.75));
-		addAction(new AimShooterManual());
+		if (use_vision) {
+			addAction(new AimShooterManual());
+		}
+		else {
+			addAction(new AimShooterManual());
+		}
+
 	}
 	/*else if (location == Utils::AutoLocation::LoadingStation) {
 		addAction(new DeliverGear(color, location));
