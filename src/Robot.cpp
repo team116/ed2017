@@ -236,10 +236,6 @@ public:
 			//Makes sure the sensor toggles get read
 			oi->process();
 
-			//Set the play here
-			auto_routine = new PositionGear(Utils::Alliance::Blue, Utils::AutoLocation::Boiler, true);
-
-
 			auto_routine->start();
 
 			NetworkTable::GetTable("SmartDashboard")->PutBoolean("Auton Enabled", true);
