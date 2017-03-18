@@ -25,6 +25,7 @@ public:
 
 private:
 	Vision* vision;
+	Shooter* shooter;
 };
 
 #endif /* SRC_AUTOPLAYS_ACTIONS_AIMSHOOTERVISION_H_ */

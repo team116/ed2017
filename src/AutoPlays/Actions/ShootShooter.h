@@ -10,10 +10,11 @@
 
 #include <AutoPlays/Action.h>
 #include <Shooter.h>
+#include <Feeder.h>
 
 class ShootShooter: public Action {
 public:
-	ShootShooter(float time);
+	ShootShooter(float speed, float time);
 	void start();
 
 	void process();
@@ -24,6 +25,9 @@ public:
 
 private:
 	Shooter* shooter;
+	Feeder* feeder;
+
+	float shooter_speed;
 };
 
 #endif /* SRC_AUTOPLAYS_ACTIONS_SHOOTSHOOTER_H_ */
