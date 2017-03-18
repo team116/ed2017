@@ -57,8 +57,8 @@ namespace RobotPorts
 	//Sensors
 	const unsigned int LS_SHOOTER_AZIMUTH = 5;
 	const unsigned int LS_CLIMBER = 4;
-	const unsigned int ULTRASONIC_ECHO = 2;
-	const unsigned int ULTRASONIC_PING = 3;
+	const unsigned int ULTRASONIC_ECHO = 3;
+	const unsigned int ULTRASONIC_PING = 2;
 
 
 	//Encoders
