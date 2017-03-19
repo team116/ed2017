@@ -8,13 +8,30 @@
 #include <AutoPlays/Actions/DropGear.h>
 #include <DriverStation.h>
 
-DropGear::DropGear() {
+const float DISTANCE = 16.0;
+
+DropGear::DropGear(bool use_ultrasonic) {
 	gear = Gear::getInstance();
+	mobility = Mobility::getInstance();
+
+	ultrasonic = use_ultrasonic;
+
 	setTimeout(1.0);
 }
 void DropGear::start() {
 	log->write(Log::INFO_LEVEL, "[Action] Starting Drop Gear. Timeout: %f", getTimeout());
-	gear->open();
+	if(ultrasonic && mobility->isFrontDistanceValid())
+	{
+		if(mobility->getFrontDistance() <= DISTANCE) {
+			gear->open();
+		}
+		else {
+			setTimeout(0.0);
+		}
+	}
+	else {
+		gear->open();
+	}
 }
 void DropGear::process() {
 

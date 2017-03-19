@@ -11,11 +11,14 @@ const float SPEED1 = 0.35;
 const float SPEED2 = 0.2;
 const float SLOW_DISTANCE = 48.0;
 const float STOP_DISTANCE = 22.0;
+const float ULTRASONIC_DISTANCE = 16.0;
 
-DriveToGearVision::DriveToGearVision() {
+DriveToGearVision::DriveToGearVision(bool use_ultrasonic) {
 	// TODO Auto-generated constructor stub
 	mobility = Mobility::getInstance();
 	vision = Vision::getInstance();
+
+	ultrasonic = use_ultrasonic;
 
 	setTimeout(5.0);
 }
@@ -40,7 +43,12 @@ void DriveToGearVision::process() {
 }
 
 bool DriveToGearVision::isFinished() {
-	return ((vision->gearHookDistance() <= STOP_DISTANCE) && (vision->gearHookDistance() >= 0.0));
+	if(ultrasonic && mobility->isFrontDistanceValid()) {
+		return (((vision->gearHookDistance() <= STOP_DISTANCE) && (vision->gearHookDistance() >= 0.0)) || (mobility->getFrontDistance() < ULTRASONIC_DISTANCE));
+	}
+	else {
+		return ((vision->gearHookDistance() <= STOP_DISTANCE) && (vision->gearHookDistance() >= 0.0));
+	}
 }
 
 void DriveToGearVision::end() {

@@ -8,10 +8,12 @@
 #include <AutoPlays/Actions/DriveStraight.h>
 #include "Ports.h"
 
-DriveStraight::DriveStraight(float dis, float s) {
+DriveStraight::DriveStraight(float dis, float s, float ultrasonic_distance) {
 	mobility = Mobility::getInstance();
 	distance = dis;
 	speed = fabs(s);
+
+	ultrasonic = ultrasonic_distance;
 
 	setTimeout(fabs(dis) / 50 / speed);
 }
@@ -29,6 +31,14 @@ void DriveStraight::end() {
 	log->write(Log::INFO_LEVEL, "[Action] Drive Straight Ended. Distance: %f Speed %f Timeout: %f", distance, speed, getTimeout());
 }
 bool DriveStraight::isFinished() {
-	return mobility->isDriveDistanceDone();
+	if((ultrasonic >= 0.0) && mobility->isFrontDistanceValid()) {
+		if(mobility->getFrontDistance() <= ultrasonic) {
+			frc::DriverStation::ReportError("Ultrasonic is true, " + std::to_string(mobility->getFrontDistance()));
+		}
+		return mobility->isDriveDistanceDone() || (mobility->getFrontDistance() <= ultrasonic);
+	}
+	else {
+		return mobility->isDriveDistanceDone();
+	}
 }
 

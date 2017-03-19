@@ -189,6 +189,14 @@ float Mobility::getRightEncoderRates() {
 	return encoders->getRightEncoderRates();
 }
 
+float Mobility::getFrontDistance() {
+	return ultrasonic_front->GetRangeInches();
+}
+
+bool Mobility::isFrontDistanceValid() {
+	return ultrasonic_front->IsRangeValid();
+}
+
 float Mobility::getGyroAngle() {
 	return gyro->PIDGet();
 }

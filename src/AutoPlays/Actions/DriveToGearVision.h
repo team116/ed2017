@@ -14,7 +14,7 @@
 
 class DriveToGearVision: public Action {
 public:
-	DriveToGearVision();
+	DriveToGearVision(bool use_ultrasonic);
 
 	//Called once when the routine starts
 	void start();
@@ -31,6 +31,8 @@ public:
 private:
 	Mobility* mobility;
 	Vision* vision;
+
+	bool ultrasonic;
 };
 
 #endif /* SRC_AUTOPLAYS_ACTIONS_DRIVETOGEARVISION_H_ */

@@ -37,7 +37,7 @@ DeliverGearandTravel::DeliverGearandTravel(Utils::Alliance color, Utils::AutoLoc
 		addAction(new DriveStraight(49.0, 0.75));
 		addAction(new DriveStraight(12.0, 0.25));
 		addAction(new Wiggle(color, location, 2.0));
-		addAction(new DropGear());
+		addAction(new DropGear(true));
 		addAction(new DriveStraight(-12.0, 0.25));
 		addAction(new DriveStraight(-24.0, 0.75));
 		addAction(new CloseGearHolder());

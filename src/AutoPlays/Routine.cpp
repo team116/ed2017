@@ -35,7 +35,7 @@ void Routine::start() {
 
 void Routine::process() {
 	if(current_action != nullptr) {
-		bool timed_out = (current_action->getTimeout() > 0.0) && (timeout_timer->Get() >= current_action->getTimeout());
+		bool timed_out = (current_action->getTimeout() >= 0.0) && (timeout_timer->Get() >= current_action->getTimeout());
 		if(current_action->isFinished() || timed_out) {
 			current_action->end();
 			if(!actions.empty()) {

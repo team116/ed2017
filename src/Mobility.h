@@ -98,6 +98,9 @@ public:
 	float getLeftSetValue();
 	float getRightSetValue();
 
+	float getFrontDistance();
+	bool isFrontDistanceValid();
+
 	void startTrackGear();
 	bool isTrackingGear();
 	void stopTrackGear();

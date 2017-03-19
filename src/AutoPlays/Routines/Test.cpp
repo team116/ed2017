@@ -14,7 +14,6 @@
 #include "AutoPlays/Actions/DriveToGearVision.h"
 
 Test::Test(Utils::Alliance color, Utils::AutoLocation location) {
-	addAction(new DriveToGearVision());
-	addAction(new DriveStraight(18, 0.2));
+
 }
 

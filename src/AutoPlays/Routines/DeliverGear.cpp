@@ -18,13 +18,13 @@ DeliverGear::DeliverGear(Utils::Alliance color, Utils::AutoLocation location, bo
 	//if (Vision::getInstance()->canSeeGearHook()) {
 	addAction(new PositionGear(color, location, use_vision));
 	if(use_vision) {
-		addAction(new DriveStraight(12.0, 0.25));
+		addAction(new DriveStraight(12.0, 0.25, 4.0));
 	}
 	else {
 		addAction(new DriveStraight(2.0, 0.25));
 		addAction(new Wiggle(color, location, 2.0));
 	}
-	addAction(new DropGear());
+	addAction(new DropGear(true));
 	addAction(new DriveStraight(-12.0, 0.25));
 	addAction(new DriveStraight(-24.0, 0.75));
 	addAction(new CloseGearHolder());

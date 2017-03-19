@@ -10,10 +10,11 @@
 
 #include <AutoPlays/Action.h>
 #include <Gear.h>
+#include <Mobility.h>
 
 class DropGear: public Action {
 public:
-	DropGear();
+	DropGear(bool use_ultrasonic);
 	void start();
 
 	void process();
@@ -24,6 +25,9 @@ public:
 
 private:
 	Gear* gear;
+	Mobility* mobility;
+
+	bool ultrasonic;
 };
 
 #endif /* SRC_AUTOPLAYS_ACTIONS_DROPGEAR_H_ */

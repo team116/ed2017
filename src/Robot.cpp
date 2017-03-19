@@ -146,7 +146,7 @@ public:
 		 * =====***!***=====
 		 */
 		Utils::Alliance auto_alliance = Utils::Alliance::Red;
-		Utils::AutoLocation auto_location = Utils::AutoLocation::LoadingStation;
+		Utils::AutoLocation auto_location = Utils::AutoLocation::Middle;
 		auto_routine = new DeliverGear(auto_alliance, auto_location, true);
 
 
