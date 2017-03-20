@@ -224,6 +224,7 @@ public:
 	void DisabledPeriodic(){
 		//Makes sure the sensor toggles get read
 		oi->process();
+		shooter->process();
 
 		/*int AP = socket->process();
 		if(AP == -1){

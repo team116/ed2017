@@ -70,7 +70,8 @@ void Shooter::process() {
 	//frc::DriverStation::ReportError("Raw AZ: " + std::to_string(azimuth_encoder->Get()) + " Adjusted AZ: " + std::to_string(az_enc->getAngle()));
 	//frc::DriverStation::ReportError("Shooter: " + std::to_string(shooter->GetEncVel()) + ", " + std::to_string(shooter->GetSpeed()));
 	NetworkTable::GetTable("Status/Shooter")->PutNumber("Azimuth Raw", azimuth_encoder->Get());
-	//NetworkTable::GetTable("Status/Shooter")->PutNumber("Azimuth Adjusted", az_enc->getAngle());
+	NetworkTable::GetTable("Status/Shooter")->PutNumber("Shooter Tach enc vel", getShooterEncoderRate());
+	NetworkTable::GetTable("Status/Shooter")->PutNumber("Shooter Tach speed", shooter->GetSpeed());
 }
 
 float Shooter::getShooterEncoderRate() {
